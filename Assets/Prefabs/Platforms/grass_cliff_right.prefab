@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2140908260922937524}
   - component: {fileID: 7216568451395714703}
   m_Layer: 0
-  m_Name: blockCliff
+  m_Name: grass_cliff_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,6 +91,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 14
-  m_Mesh: {fileID: -2126654696912633001, guid: f4a73a9b9315fec44985be363d81e3d4, type: 3}
+  m_Mesh: {fileID: 8216602991948031331, guid: 457189dcc6e628b41b10935ff65bb663, type: 3}

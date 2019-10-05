@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 3150603158475655769, guid: fea11d61bf372fa40aebb9e5d8b78e82,
         type: 3}
       propertyPath: m_Name
-      value: dirt_cliff_left
+      value: dirt_cliff_right
       objectReference: {fileID: 0}
     - target: {fileID: 2153399268167956554, guid: fea11d61bf372fa40aebb9e5d8b78e82,
         type: 3}
@@ -41,6 +41,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2153399268167956554, guid: fea11d61bf372fa40aebb9e5d8b78e82,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2153399268167956554, guid: fea11d61bf372fa40aebb9e5d8b78e82,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2153399268167956554, guid: fea11d61bf372fa40aebb9e5d8b78e82,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea11d61bf372fa40aebb9e5d8b78e82, type: 3}

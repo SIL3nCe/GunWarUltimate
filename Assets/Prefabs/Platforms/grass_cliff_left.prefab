@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 399376385150346344, guid: cfe1a35091d5c234086c2da374d4439d,
         type: 3}
       propertyPath: m_Name
-      value: grass_cliff_right
+      value: grass_cliff_left
       objectReference: {fileID: 0}
     - target: {fileID: 3733914465050433147, guid: cfe1a35091d5c234086c2da374d4439d,
         type: 3}
