@@ -17,9 +17,12 @@ public class PlayerGameplay : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ammo"))
         {
-            //TODO get damages to deal
-            //Debug.Log(percentage);
-            percentage += 10.0f;
+            BulletParameters bulletParams = collision.gameObject.GetComponent<BulletParameters>();
+            if (null != bulletParams)
+            {
+                percentage += bulletParams.GetDamages();
+                Debug.Log(percentage);
+            }
 
             Destroy(collision.gameObject); // Remove bullet
         }

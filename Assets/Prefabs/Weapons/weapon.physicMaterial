@@ -6,7 +6,7 @@ PhysicMaterial:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: machinegun
+  m_Name: weapon
   dynamicFriction: 0.6
   staticFriction: 4.14
   bounciness: 0

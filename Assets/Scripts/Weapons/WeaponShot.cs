@@ -12,13 +12,19 @@ public class WeaponShot : MonoBehaviour
     public GameObject   shellSocket;
     public GameObject   bulletShellPrefab;
 
-    [Tooltip("Bullet start velocity")]
-    public float        bulletSpeed;
-
     [Tooltip("Bullet/s")]
-    public int          firingRate;
-    private float       firingRateDt;
-    private float       firingDt;
+    public int      firingRate;
+    private float   firingRateDt;
+    private float   firingDt;
+
+    [Tooltip("Bullet start velocity")]
+    public float    bulletSpeed;
+
+    [Tooltip("% of damage per bullet")]
+    public float    bulletDamages;
+
+    [Tooltip("Number of bullets it can shoot")]
+    public int      loaderSize;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +44,9 @@ public class WeaponShot : MonoBehaviour
         }
     }
 
-    public void Shoot()
+    void Shoot()
     {
-        if (firingDt > firingRateDt)
+        if (firingDt > firingRateDt && loaderSize > 0)
         {
             if (null != muzzleSocket)
             {
@@ -49,6 +55,12 @@ public class WeaponShot : MonoBehaviour
                 Quaternion bulletRotation = muzzleSocket.transform.rotation;
                 GameObject shotBullet = Instantiate(bulletPrefab, bulletLocation, bulletRotation);
                 shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * bulletSpeed;
+
+                BulletParameters bulletParams = shotBullet.GetComponent<BulletParameters>();
+                if (null != bulletParams)
+                {
+                    bulletParams.SetDamages(bulletDamages);
+                }
             }
 
             // spawn shell on socket location
@@ -61,6 +73,10 @@ public class WeaponShot : MonoBehaviour
             }
 
             firingDt = 0.0f;
+            if (--loaderSize <= 0)
+            { // Tell the player to drop the weapon
+                //TODO
+            }
         }
     }
 }
