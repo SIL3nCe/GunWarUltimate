@@ -13,18 +13,28 @@ public class PlayerGameplay : MonoBehaviour
         percentage = 0.0f;
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void TakeDamages(float damages)
     {
-        if (collision.gameObject.CompareTag("Ammo"))
-        {
-            BulletParameters bulletParams = collision.gameObject.GetComponent<BulletParameters>();
-            if (null != bulletParams)
-            {
-                percentage += bulletParams.GetDamages();
-                Debug.Log(percentage);
-            }
+        percentage += damages;
+        Debug.Log(percentage);
+    }
 
-            Destroy(collision.gameObject); // Remove bullet
+    public void OnDie()
+    {
+        lifes--;
+        percentage = 0.0f;
+
+        if (lifes > 0)
+        {
+            //TODO set to spawn location
+            return;
         }
+
+        // TODO Game over for this player
+    }
+
+    public float GetPercentage()
+    {
+        return percentage;
     }
 }

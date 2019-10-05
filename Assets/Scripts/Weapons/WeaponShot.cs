@@ -56,7 +56,7 @@ public class WeaponShot : MonoBehaviour
                 GameObject shotBullet = Instantiate(bulletPrefab, bulletLocation, bulletRotation);
                 shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * bulletSpeed;
 
-                BulletParameters bulletParams = shotBullet.GetComponent<BulletParameters>();
+                BulletGameplay bulletParams = shotBullet.GetComponent<BulletGameplay>();
                 if (null != bulletParams)
                 {
                     bulletParams.SetDamages(bulletDamages);
