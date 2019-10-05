@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8703514130908298470}
   - component: {fileID: 1428816356693561653}
   m_Layer: 0
-  m_Name: blockSlope
+  m_Name: grass_slope_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,6 +91,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 6467632969057345830, guid: aba12bc635f6f094d9db5fa6c0380c75, type: 3}
