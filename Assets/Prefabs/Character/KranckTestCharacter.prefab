@@ -445,11 +445,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 679ebecd5170a0d4faf25a0eb7f5ab2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fPlayerSpeed: 0.2
-  m_fPlayerAirSpeed: 0.2
-  m_stringAxisHorizontal: 
-  m_keyCodeJump: 0
-  m_keyCodeShoot: 0
+  m_fPlayerSpeed: 20
+  m_fPlayerAirSpeed: 20
+  m_stringAxisHorizontal: Horizontal
+  m_keyCodeJump: 32
+  m_keyCodeShoot: 13
   m_fGravityScale: 0.98
   m_fJumpScale: 14
   m_bEnableDoubleJump: 1

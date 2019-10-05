@@ -27,11 +27,23 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fPlayerSpeed
-    value: 0.2
+    value: 20
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fPlayerAirSpeed
-    value: 0.2
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_stringAxisHorizontal
+    value: Horizontal
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_keyCodeJump
+    value: 32
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_keyCodeShoot
+    value: 13
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fGravityScale
@@ -55,9 +67,5 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_vMoveDirection.z
-    value: 0
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_bAlreadyDoubleJumped
     value: 0
     objectReference: {fileID: 0}
