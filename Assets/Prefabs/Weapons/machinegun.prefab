@@ -94,12 +94,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzleSocket: {fileID: 5402972679378992619}
-  shellSocket: {fileID: 2380855208491267136}
   bulletPrefab: {fileID: 5007208187286607476, guid: 302289d5d06e1eb4ca51ca77ab11cb97,
     type: 3}
+  shellSocket: {fileID: 2380855208491267136}
   bulletShellPrefab: {fileID: 5342551422268578448, guid: 7c7bc8dd2f256bb458a5095574ec4b5c,
     type: 3}
   bulletSpeed: 7
+  firingRate: 30
 --- !u!114 &3629499233128275777
 MonoBehaviour:
   m_ObjectHideFlags: 0

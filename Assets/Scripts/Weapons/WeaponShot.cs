@@ -4,44 +4,63 @@ using UnityEngine;
 
 public class WeaponShot : MonoBehaviour
 {
+    [Tooltip("Bullet spawn location")]
     public GameObject   muzzleSocket;
-    public GameObject   shellSocket;
     public GameObject   bulletPrefab;
+
+    [Tooltip("Shell spawn location")]
+    public GameObject   shellSocket;
     public GameObject   bulletShellPrefab;
+
+    [Tooltip("Bullet start velocity")]
     public float        bulletSpeed;
+
+    [Tooltip("Bullet/s")]
+    public int          firingRate;
+    private float       firingRateDt;
+    private float       firingDt;
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
+        firingDt = 0.0f;
+        firingRateDt = 1.0f / firingRate;
     }
 
     void Update()
     {
+        firingDt += Time.deltaTime;
+
         //Debug only
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            Shot();
+            Shoot();
         }
     }
 
-    public void Shot()
+    public void Shoot()
     {
-        if (null != muzzleSocket)
+        if (firingDt > firingRateDt)
         {
-            // spawn bullet on socket location
-            Vector3 bulletLocation = muzzleSocket.transform.position;
-            Quaternion bulletRotation = muzzleSocket.transform.rotation;
-            GameObject shotBullet = Instantiate(bulletPrefab, bulletLocation, bulletRotation);
-            shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * bulletSpeed;
-        }
+            if (null != muzzleSocket)
+            {
+                // spawn bullet on socket location
+                Vector3 bulletLocation = muzzleSocket.transform.position;
+                Quaternion bulletRotation = muzzleSocket.transform.rotation;
+                GameObject shotBullet = Instantiate(bulletPrefab, bulletLocation, bulletRotation);
+                shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * bulletSpeed;
+            }
 
-        // spawn shell on socket location
-        if (null != muzzleSocket)
-        {
-            Vector3 shellLocation = shellSocket.transform.position;
-            Quaternion shellRotation = shellSocket.transform.rotation;
-            GameObject fireShell = Instantiate(bulletShellPrefab, shellLocation, shellRotation);
-            fireShell.GetComponent<Rigidbody>().velocity = -gameObject.transform.forward * 3.0f;
+            // spawn shell on socket location
+            if (null != muzzleSocket)
+            {
+                Vector3 shellLocation = shellSocket.transform.position;
+                Quaternion shellRotation = shellSocket.transform.rotation;
+                GameObject fireShell = Instantiate(bulletShellPrefab, shellLocation, shellRotation);
+                fireShell.GetComponent<Rigidbody>().velocity = -gameObject.transform.forward * 3.0f;
+            }
+
+            firingDt = 0.0f;
         }
     }
 }
