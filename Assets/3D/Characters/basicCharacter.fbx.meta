@@ -308,7 +308,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Neck1
       parentName: Spine2
-      position: {x: -2.8067917e-18, y: 0.0009999999, z: 5.5172073e-22}
+      position: {x: -2.8067915e-18, y: 0.0009999999, z: 5.5172073e-22}
       rotation: {x: 3.2011086e-19, y: -0.0010802204, z: 1.8388024e-16, w: 0.9999994}
       scale: {x: 1, y: 1, z: 1}
     - name: ArmL1
@@ -323,7 +323,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: ArmL3
       parentName: ArmL2
-      position: {x: -0.0029998883, y: -0.000025861107, z: -3.6736603e-19}
+      position: {x: -0.002999888, y: -0.000025861109, z: -3.6736603e-19}
       rotation: {x: 0.70405245, y: 0.710148, z: 8.65948e-17, w: -3.732465e-19}
       scale: {x: 1, y: 1, z: 1}
     - name: ArmR1
@@ -333,12 +333,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: ArmR2
       parentName: ArmR1
-      position: {x: -0.0020235088, y: 0.00095153094, z: -2.4780837e-19}
+      position: {x: -0.0020235088, y: 0.000951531, z: -2.4780837e-19}
       rotation: {x: 2.619345e-10, y: 3.49246e-10, z: -0.3353086, w: 0.9421084}
       scale: {x: 1, y: 1, z: 1}
     - name: ArmR3
       parentName: ArmR2
-      position: {x: -0.0029999998, y: -1.24344974e-17, z: -3.672874e-19}
+      position: {x: -0.0029999998, y: -1.24344974e-17, z: -3.6728737e-19}
       rotation: {x: 0.7071068, y: 0.7071068, z: 8.659561e-17, w: -5.229459e-32}
       scale: {x: 1, y: 1, z: 1}
     - name: LegL1
@@ -353,7 +353,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: LegL3
       parentName: LegL2
-      position: {x: -0.0030004499, y: -0.0000025125785, z: 0}
+      position: {x: -0.0030004499, y: -0.0000025125787, z: 0}
       rotation: {x: 0, y: -0, z: -0.7006501, w: 0.713505}
       scale: {x: 1, y: 1, z: 1}
     - name: LegR1
@@ -363,7 +363,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: LegR2
       parentName: LegR1
-      position: {x: -0.0029997532, y: -0.000038458373, z: -3.6736383e-19}
+      position: {x: -0.002999753, y: -0.000038458376, z: -3.6736383e-19}
       rotation: {x: 0, y: 0, z: 0.0064098616, w: 0.9999795}
       scale: {x: 1, y: 1, z: 1}
     - name: LegR3
