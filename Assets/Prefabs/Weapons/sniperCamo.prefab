@@ -364,7 +364,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3250242896851250472}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4b2becf63777ab2488dd7250641add62, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -420,8 +420,8 @@ MonoBehaviour:
   shellSocket: {fileID: 6067932105342133059}
   bulletShellPrefab: {fileID: 5975187071392946569, guid: 1a7e605276d61504ea06c3a00ab7b2e9,
     type: 3}
-  bulletSpeed: 30
   firingRate: 2
+  bulletSpeed: 30
   bulletDamages: 30
 --- !u!114 &297629626355168038
 MonoBehaviour:
