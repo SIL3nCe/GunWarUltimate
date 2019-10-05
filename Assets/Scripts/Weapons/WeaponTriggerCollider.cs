@@ -44,9 +44,9 @@ public class WeaponTriggerCollider : MonoBehaviour
         Component componentPickWeapon = other.GetComponent<PickWeapon>();
         if(null != componentPickWeapon)
         {
-            //
-            // TODO : destroy current weapon
-
+			//
+			// TODO : destroy current weapon
+			
             //
             // TODO : show correct weapon in body
         }
