@@ -5,6 +5,7 @@ using UnityEngine;
 public enum EWeaponType
 {
 	machine_gun,
+	sniper,
 }
 
 public class Weapon : MonoBehaviour
