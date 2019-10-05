@@ -45,13 +45,12 @@ public class WeaponTriggerCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Component componentPickWeapon = other.GetComponent<PickWeapon>();
-        if(null != componentPickWeapon)
+		WeaponHolder componentWeaponHolder = other.gameObject.GetComponent<WeaponHolder>();
+        if(null != componentWeaponHolder)
         {
 			//
 			// Show correct weapon in body
-			PickWeapon pickWeapon = other.gameObject.GetComponent<PickWeapon>();
-			bool bCanSwitch = pickWeapon.SetWeaponTypeToSwitchTo(_Weapon.WeaponType);
+			bool bCanSwitch = componentWeaponHolder.SetWeaponTypeToSwitchTo(_Weapon.WeaponType);
 
 			//
 			// Destroy current weapon

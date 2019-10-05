@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickWeapon : MonoBehaviour
+public class WeaponHolder : MonoBehaviour
 {
 	private EWeaponType?	CurrentWeaponType;
 	private GameObject		CurrentWeapon;
