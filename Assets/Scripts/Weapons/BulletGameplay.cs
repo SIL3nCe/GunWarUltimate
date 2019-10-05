@@ -13,13 +13,6 @@ public class BulletGameplay : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {  
-        BulletGameplay bullet = collision.gameObject.GetComponent<BulletGameplay>();
-        if (null != bullet)
-        { 
-            // Do not delete bullet if hit another one
-            return;
-        }
-
         PlayerGameplay player = collision.gameObject.GetComponent<PlayerGameplay>();
         if (null != player)
         {
