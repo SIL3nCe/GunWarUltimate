@@ -19,7 +19,7 @@ public class WeaponSpawner : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         Instantiate(m_weaponPrefab, m_spawnLocation.transform.position, gameObject.transform.rotation);
     }
