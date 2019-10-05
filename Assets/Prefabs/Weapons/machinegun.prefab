@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 161815021450801716}
   - component: {fileID: 7606437815810149050}
   - component: {fileID: 6412189252006731721}
+  - component: {fileID: 3629499233128275777}
   m_Layer: 0
   m_Name: machinegun
   m_TagString: Untagged
@@ -81,6 +82,18 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5007208187286607476, guid: 302289d5d06e1eb4ca51ca77ab11cb97,
     type: 3}
   bulletSpeed: 5
+--- !u!114 &3629499233128275777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734068171252819072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c2db7cfa629314e8864153b97e0b57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &734068171252819074
 GameObject:
   m_ObjectHideFlags: 0
