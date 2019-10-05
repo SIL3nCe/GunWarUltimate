@@ -78,7 +78,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzleSocket: {fileID: 5402972679378992619}
-  bulletPrefab: {fileID: 100000, guid: f6f9cbe8c064c444eb97e80e2d2135e3, type: 3}
+  bulletPrefab: {fileID: 5007208187286607476, guid: 302289d5d06e1eb4ca51ca77ab11cb97,
+    type: 3}
   bulletSpeed: 5
 --- !u!1 &734068171252819074
 GameObject:
