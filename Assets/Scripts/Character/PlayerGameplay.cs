@@ -2,39 +2,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerEnum
+{
+	p1,
+	p2,
+}
+
 public class PlayerGameplay : MonoBehaviour
 {
-    private int lifes;
+	public PlayerEnum playerEnum;
+
+    private uint? stocks;
     private float percentage;
 
-    void Start()
+	private UIManager UiManager;
+
+	void Start()
     {
-        lifes = 3;
         percentage = 0.0f;
     }
 
     public void TakeDamages(float damages)
     {
         percentage += damages;
-        Debug.Log(percentage);
+
+		//
+		// Notify death
+		UiManager.OnPlayerDamageTaken(this);
     }
 
     public void OnDie()
     {
-        lifes--;
+		if(null != stocks)
+		{
+			--stocks;
+		}
         percentage = 0.0f;
 
-        if (lifes > 0)
+		//
+		// Notify death
+		UiManager.OnPlayerDied(this);
+
+        if (null != stocks && stocks > 0)
         {
             //TODO set to spawn location
             return;
         }
+	}
 
-        // TODO Game over for this player
-    }
+	public float GetPercentage()
+	{
+		return percentage;
+	}
 
-    public float GetPercentage()
-    {
-        return percentage;
-    }
+	public uint? GetRemainingStocks()
+	{
+		return stocks;
+	}
+
+	public void SetUiManager(UIManager Manager)
+	{
+		UiManager = Manager;
+	}
+
+	public void SetStocks(uint? iStocks)
+	{
+		stocks = iStocks;
+	}
 }

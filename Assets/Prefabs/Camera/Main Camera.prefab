@@ -424,8 +424,11 @@ MonoBehaviour:
   UiTime: {fileID: 1787476334010238542}
   UiP1Percentage: {fileID: 1787476334584863446}
   UiP2Percentage: {fileID: 1787476333086321757}
+  eRules: 1
   RoundDurationMinute: 3
   RoundDurationSeconds: 0
+  Player1: {fileID: 0}
+  Player2: {fileID: 0}
 --- !u!1 &1787476334010238540
 GameObject:
   m_ObjectHideFlags: 0
