@@ -24,10 +24,13 @@ public class WeaponShot : MonoBehaviour
 
     public void Shot()
     {
-        Transform bulletTransfo = muzzleSocket.transform;
-
+        Vector3 bulletLocation = muzzleSocket.transform.position;
+        Quaternion bulletRotation = muzzleSocket.transform.rotation;
+        
         // spawn bullet on socket location
-        GameObject shotBullet = Instantiate(bulletPrefab, muzzleSocket.transform.position, muzzleSocket.transform.rotation);
-        shotBullet.GetComponent<Rigidbody>().velocity = shotBullet.transform.forward * bulletSpeed;
+        GameObject shotBullet = Instantiate(bulletPrefab, bulletLocation, bulletRotation);
+        shotBullet.transform.Rotate(0.0f, 90.0f, 0.0f);
+
+        shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * bulletSpeed;
     }
 }
