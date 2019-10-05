@@ -15,7 +15,7 @@ public class WeaponShot : MonoBehaviour
     { 
     }
 
-    void FixedUpdate()
+    void Update()
     {
         //Debug only
         if (Input.GetKeyDown(KeyCode.Space))

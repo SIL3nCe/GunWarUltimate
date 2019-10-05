@@ -20,6 +20,8 @@ public class PlayerGameplay : MonoBehaviour
             //TODO get damages to deal
             //Debug.Log(percentage);
             percentage += 10.0f;
+
+            Destroy(collision.gameObject); // Remove bullet
         }
     }
 }
