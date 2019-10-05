@@ -103,7 +103,7 @@ MonoBehaviour:
   bulletShellPrefab: {fileID: 5342551422268578448, guid: 7c7bc8dd2f256bb458a5095574ec4b5c,
     type: 3}
   firingRate: 30
-  bulletSpeed: 7
+  bulletSpeed: 10
   bulletDamages: 20
   loaderSize: 30
 --- !u!114 &3629499233128275777
