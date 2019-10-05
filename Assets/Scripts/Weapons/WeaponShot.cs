@@ -8,23 +8,26 @@ public class WeaponShot : MonoBehaviour
     public GameObject   bulletPrefab;
     public float        bulletSpeed;
 
-    private Vector3     vMuzzleLocation;
-
     // Start is called before the first frame update
     void Start()
-    {
-        vMuzzleLocation = muzzleSocket.transform.position;
+    { 
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    
-    //}
+    void FixedUpdate()
+    {
+        //Debug only
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shot();
+        }
+    }
 
     public void Shot()
     {
-        // get muzzle socket orientation
+        Transform bulletTransfo = muzzleSocket.transform;
+
         // spawn bullet on socket location
+        GameObject shotBullet = Instantiate(bulletPrefab, muzzleSocket.transform.position, muzzleSocket.transform.rotation);
+        shotBullet.GetComponent<Rigidbody>().velocity = shotBullet.transform.forward * bulletSpeed;
     }
 }
