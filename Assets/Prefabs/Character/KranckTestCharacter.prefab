@@ -383,7 +383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6993655524484161634}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000013411042}
-  m_LocalPosition: {x: -1.21, y: 1.9, z: -7.85}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6993655524484201556}
@@ -447,11 +447,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_fPlayerSpeed: 0.2
   m_fPlayerAirSpeed: 0.2
+  m_stringAxisHorizontal: 
+  m_keyCodeJump: 0
+  m_keyCodeShoot: 0
   m_fGravityScale: 0.98
   m_fJumpScale: 14
   m_bEnableDoubleJump: 1
   m_vMoveDirection: {x: 0, y: 0, z: 0}
-  m_bAlreadyDoubleJumped: 0
 --- !u!1 &6993655524484161636
 GameObject:
   m_ObjectHideFlags: 0
