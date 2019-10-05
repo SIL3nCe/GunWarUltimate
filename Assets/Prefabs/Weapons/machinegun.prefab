@@ -50,7 +50,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.96, y: 0.44, z: 0.1}
+  m_Size: {x: 0.94, y: 0.42, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7606437815810149050
 Rigidbody:
@@ -104,7 +104,7 @@ MonoBehaviour:
     type: 3}
   firingRate: 30
   bulletSpeed: 7
-  bulletDamages: 15
+  bulletDamages: 20
   loaderSize: 30
 --- !u!114 &3629499233128275777
 MonoBehaviour:
