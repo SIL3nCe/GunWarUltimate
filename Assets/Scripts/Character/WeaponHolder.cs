@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WeaponHolder : MonoBehaviour
 {
+	//
+	// Current Weapon
 	private EWeaponType?	CurrentWeaponType;
 	private GameObject		CurrentWeapon;
 
@@ -11,8 +13,14 @@ public class WeaponHolder : MonoBehaviour
 	// Sockets
 	public GameObject		SocketMachineGun;
 
+	//
+	// Switch
 	private EWeaponType?	WeaponTypeToSwitchTo;
 	private bool			bDirtySwitchWeapon;
+
+	//
+	// Drop-related
+	public float			DropForce = 15.0f;
 
 	// Start is called before the first frame update
 	void Start()
@@ -27,6 +35,15 @@ public class WeaponHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		//
+		// Weapon drop
+		if(Input.GetKeyUp(KeyCode.Return))
+		{
+			DropWeapon();
+		}
+
+		//
+		// Weapon switch
 		if(bDirtySwitchWeapon)
 		{
 			if(null == CurrentWeapon)
@@ -76,4 +93,27 @@ public class WeaponHolder : MonoBehaviour
 		}
 	}
 	
+	void DropWeapon()
+	{
+		if(null != CurrentWeapon)
+		{
+			//
+			// Create new prefab of current weapon
+			GameObject newWeapon = Instantiate(CurrentWeapon, CurrentWeapon.transform.position + gameObject.transform.forward, CurrentWeapon.transform.rotation);
+
+			//
+			// Hide current weapon
+			CurrentWeapon.SetActive(false);
+			CurrentWeapon = null;
+			CurrentWeaponType = null;
+
+			//
+			// Throw new weapon in player's direction
+			Rigidbody body = newWeapon.GetComponent<Rigidbody>();
+			body.isKinematic = false;
+			body.velocity = gameObject.transform.forward * DropForce;
+			newWeapon.GetComponent<Weapon>().Drop();
+			newWeapon.GetComponent<BoxCollider>().enabled = true;
+		}
+	}
 }
