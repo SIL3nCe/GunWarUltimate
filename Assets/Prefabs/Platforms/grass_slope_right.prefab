@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1428816356693561653}
   m_Layer: 0
   m_Name: grass_slope_right
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
