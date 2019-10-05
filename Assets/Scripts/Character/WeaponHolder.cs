@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickWeapon : MonoBehaviour
+public class WeaponHolder : MonoBehaviour
 {
 	private EWeaponType?	CurrentWeaponType;
 	private GameObject		CurrentWeapon;
@@ -29,16 +29,21 @@ public class PickWeapon : MonoBehaviour
     {
 		if(bDirtySwitchWeapon)
 		{
-			SwitchWeapon();
+			if(null == CurrentWeapon)
+			{
+				SwitchWeapon();
+			}
 
 			bDirtySwitchWeapon = false;
 		}
     }
 
-	public void SetWeaponTypeToSwitchTo(EWeaponType type)
+	public bool SetWeaponTypeToSwitchTo(EWeaponType type)
 	{
 		WeaponTypeToSwitchTo = type;
 		bDirtySwitchWeapon = true;
+
+		return null == CurrentWeapon;
 	}
 
 	void SwitchWeapon()
