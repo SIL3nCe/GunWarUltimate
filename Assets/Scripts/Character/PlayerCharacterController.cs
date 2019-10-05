@@ -18,6 +18,7 @@ public class PlayerCharacterController : MonoBehaviour
     private Vector3 m_vCurrentVelocity;
     private bool m_bGrounded = false;
     private Rigidbody m_rigidbody;
+    private bool m_bCanDoubleJump = true;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +51,14 @@ public class PlayerCharacterController : MonoBehaviour
             {
                 vTargetVelocity.y = m_fJumpFactor;
             }
+
+            //
+            // Reset the double jump
+            m_bCanDoubleJump = true;
+        }
+        else
+        {
+
         }
 
         //
