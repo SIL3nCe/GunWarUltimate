@@ -104,6 +104,7 @@ MonoBehaviour:
     type: 3}
   bulletSpeed: 7
   firingRate: 30
+  bulletDamages: 15
 --- !u!114 &3629499233128275777
 MonoBehaviour:
   m_ObjectHideFlags: 0

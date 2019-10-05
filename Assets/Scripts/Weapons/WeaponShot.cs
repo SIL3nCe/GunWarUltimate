@@ -12,13 +12,16 @@ public class WeaponShot : MonoBehaviour
     public GameObject   shellSocket;
     public GameObject   bulletShellPrefab;
 
-    [Tooltip("Bullet start velocity")]
-    public float        bulletSpeed;
-
     [Tooltip("Bullet/s")]
     public int          firingRate;
     private float       firingRateDt;
     private float       firingDt;
+
+    [Tooltip("Bullet start velocity")]
+    public float bulletSpeed;
+
+    [Tooltip("% of damage per bullet")]
+    public float        bulletDamages;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +41,7 @@ public class WeaponShot : MonoBehaviour
         }
     }
 
-    public void Shoot()
+    void Shoot()
     {
         if (firingDt > firingRateDt)
         {
@@ -49,6 +52,12 @@ public class WeaponShot : MonoBehaviour
                 Quaternion bulletRotation = muzzleSocket.transform.rotation;
                 GameObject shotBullet = Instantiate(bulletPrefab, bulletLocation, bulletRotation);
                 shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * bulletSpeed;
+
+                BulletParameters bulletParams = shotBullet.GetComponent<BulletParameters>();
+                if (null != bulletParams)
+                {
+                    bulletParams.SetDamages(bulletDamages);
+                }
             }
 
             // spawn shell on socket location

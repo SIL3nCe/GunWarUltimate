@@ -399,6 +399,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponType: 1
+  ThresholdBlink: 7
+  ThresholdBlinking: 0.25
+  ThresholdDisappear: 10
 --- !u!114 &4081857899223864893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,6 +422,7 @@ MonoBehaviour:
     type: 3}
   bulletSpeed: 30
   firingRate: 2
+  bulletDamages: 30
 --- !u!114 &297629626355168038
 MonoBehaviour:
   m_ObjectHideFlags: 0
