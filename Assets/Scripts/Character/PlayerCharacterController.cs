@@ -11,6 +11,11 @@ public class PlayerCharacterController : MonoBehaviour
     public float m_fPlayerSpeed;    //< The speed of the player when grounded
     public float m_fPlayerAirSpeed; //< The speed of the player when he is in air
 
+    [Header("Inputs")]
+    public string m_stringAxisHorizontal;
+    public KeyCode m_keyCodeJump;
+    public KeyCode m_keyCodeShoot;
+
     [Header("Jump")]
     public float m_fGravityScale;   //< The gravity scale of the player controller
     public float m_fJumpScale;  //< A scale to modulate the jump height of the player
@@ -19,7 +24,13 @@ public class PlayerCharacterController : MonoBehaviour
     private CharacterController m_characterController; //< Store the CharacterController component of this GameObject
     public Vector3 m_vMoveDirection; //< The move direction is a Vector3 computed with the move vector of the player depending on its state (jumping/falling etc...)
 
-    public bool m_bAlreadyDoubleJumped = false;
+    //public ParticleSystem m_hangOnWallParticleSystem;
+
+    private bool m_bAlreadyDoubleJumped = false;    //< Boolean that is a true when the player already double jumped
+                                                    //  since he left the ground. False if he hasn't double jumped since he left
+                                                    //  the ground
+    private bool m_bHangOnWall = false; //< Boolean that is true if the player is hanging on a wall (if he is colliding on a wall
+                                        //  while going on the same direction and falling)
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +39,8 @@ public class PlayerCharacterController : MonoBehaviour
         // Retrieve Character Controller
         m_characterController = GetComponent<CharacterController>();
         Assert.IsNotNull(m_characterController);
+
+        //m_hangOnWallParticleSystem.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -46,7 +59,7 @@ public class PlayerCharacterController : MonoBehaviour
 
             //
             // If the character is grounder we can jump pressing space for now
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(m_keyCodeJump))
             {
                 //
                 // To jump we multiply the gravity scale with the jumps scale
@@ -57,7 +70,9 @@ public class PlayerCharacterController : MonoBehaviour
             //
             // Retrieve the direction of the Horizontal axis to set the player speed in X axis
             // Because we are grounded we simply use the player speed 
-            m_vMoveDirection.x = Input.GetAxis("Horizontal") * m_fPlayerSpeed;
+            m_vMoveDirection.x = Input.GetAxis(m_stringAxisHorizontal) * m_fPlayerSpeed;
+
+            //m_hangOnWallParticleSystem.gameObject.SetActive(false);
 
         }
         else
@@ -66,11 +81,34 @@ public class PlayerCharacterController : MonoBehaviour
             // Retrieve the direction of the Horizontal axis to set the player speed in X axis
             // Because we are not grounded in this case, we use the air speed instead of the normal speed
             // because air control is different thant grounded control
-            m_vMoveDirection.x = Input.GetAxis("Horizontal") * m_fPlayerAirSpeed;
+            m_vMoveDirection.x = Input.GetAxis(m_stringAxisHorizontal) * m_fPlayerAirSpeed;
+
+            //
+            //
+            RaycastHit raycastHitInfos;
+            if (Physics.Raycast(transform.position, new Vector3(m_vMoveDirection.x, 0.0f, 0.0f), out raycastHitInfos, 0.6f))
+            {
+                //
+                //
+                m_bHangOnWall = true;
+                //m_hangOnWallParticleSystem.gameObject.SetActive(true);
+            }else
+            {
+                m_bHangOnWall = false;
+                //m_hangOnWallParticleSystem.gameObject.SetActive(false);
+            }
 
             //
             // Because we are in air we substract the gravity of the player to make him fall
-            m_vMoveDirection.y -= m_fGravityScale * Time.deltaTime;
+            // If the player is hanging on a wall, we reduce its falling speed (wall jump system)
+            if (m_bHangOnWall)
+            {
+                m_vMoveDirection.y -= (m_fGravityScale / 2.0f) * Time.deltaTime;
+            }
+            else
+            {
+                m_vMoveDirection.y -= m_fGravityScale * Time.deltaTime;
+            }
 
             //
             // If the double jump is enabled
@@ -78,11 +116,12 @@ public class PlayerCharacterController : MonoBehaviour
             {
                 //
                 // If the player has not double jumped already (reset when grounded)
-                if (!m_bAlreadyDoubleJumped)
+                // AND that he is not hanging on a wall
+                if (!m_bAlreadyDoubleJumped && !m_bHangOnWall)
                 {
                     //
                     // If the player pressed the jump button
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKeyDown(m_keyCodeJump))
                     {
                         //
                         // When doing a double jump it is the same thing as the normal jump but we reduce the jump scale
@@ -95,6 +134,33 @@ public class PlayerCharacterController : MonoBehaviour
                     }
                 }
             }
+
+            //
+            // If the player is hanging on a wall we can wall jump
+            if (m_bHangOnWall)
+            {
+                //
+                // IF the player press space
+                if (Input.GetKeyDown(m_keyCodeJump))
+                {
+                    //
+                    // The player will do a wall jump, he jumps a certain height and 
+                    // in the opposite direction of the wall he is hanging on
+                    if (m_vMoveDirection.x > 0.0f)
+                    {
+                        m_vMoveDirection.x = - (m_fPlayerSpeed * 4.0f);
+                    }
+                    else
+                    {
+                        m_vMoveDirection.x = (m_fPlayerSpeed * 4.0f);
+                    }
+
+                    //
+                    // The move direction y is also set to jump height
+                    m_vMoveDirection.y = (m_fJumpScale * m_fGravityScale) * Time.deltaTime;
+                }
+            }
+
         }
 
         //
@@ -105,5 +171,10 @@ public class PlayerCharacterController : MonoBehaviour
     private void FixedUpdate()
     {
         // ...
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0.6f, 0.0f, 0.0f));
     }
 }
