@@ -5954,7 +5954,7 @@ PrefabInstance:
     - target: {fileID: 6993655523890551640, guid: 2002448d9c0315d46848ceeac2f52f75,
         type: 3}
       propertyPath: m_fPlayerAirSpeed
-      value: 20
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6993655524484201540, guid: 2002448d9c0315d46848ceeac2f52f75,
         type: 3}
