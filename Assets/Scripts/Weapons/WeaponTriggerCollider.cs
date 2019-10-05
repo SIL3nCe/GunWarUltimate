@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WeaponTriggerCollider : MonoBehaviour
 {
+	private Weapon _Weapon;
+
 	void CopyComponent<T>(T original, T newComponent, GameObject destination) where T : Component
 	{
 		System.Type type = original.GetType();
@@ -28,16 +30,18 @@ public class WeaponTriggerCollider : MonoBehaviour
 		//
 		// Create TriggerCollider in function of Collider
 		BoxCollider colliderRigid = gameObject.GetComponent<BoxCollider>();
-		BoxCollider colliderTrigger = gameObject.AddComponent<BoxCollider>() as BoxCollider;
-		CopyComponent<BoxCollider>(colliderRigid, colliderTrigger, gameObject);
-		colliderTrigger.isTrigger = true;
-    }
+		if(null != colliderRigid && colliderRigid.enabled)
+		{
+			BoxCollider colliderTrigger = gameObject.AddComponent<BoxCollider>() as BoxCollider;
+			CopyComponent<BoxCollider>(colliderRigid, colliderTrigger, gameObject);
+			colliderTrigger.isTrigger = true;
+		}
 
-	// Update is called once per frame
-	void Update()
-    {
-        
-    }
+		//
+		// Store weapon script
+		_Weapon = gameObject.GetComponent<Weapon>();
+
+	}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -45,10 +49,13 @@ public class WeaponTriggerCollider : MonoBehaviour
         if(null != componentPickWeapon)
         {
 			//
-			// TODO : destroy current weapon
-			
-            //
-            // TODO : show correct weapon in body
-        }
-    }
+			// Show correct weapon in body
+			PickWeapon pickWeapon = other.gameObject.GetComponent<PickWeapon>();
+			pickWeapon.SetWeaponTypeToSwitchTo(_Weapon.WeaponType);
+
+			//
+			// Destroy current weapon
+			Destroy(gameObject);
+		}
+	}
 }

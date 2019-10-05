@@ -970,6 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559d717335e99914eb1dd491099cfe64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SocketMachineGun: {fileID: 433719387084881245}
 --- !u!1 &876810361911862365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,8 +1161,24 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 161815021450801716, guid: e5133309d1776bd49a5dfad33896e0ad,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7606437815810149050, guid: e5133309d1776bd49a5dfad33896e0ad,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5133309d1776bd49a5dfad33896e0ad, type: 3}
+--- !u!1 &433719387084881245 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 876810361206282717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &433719387084775805 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
