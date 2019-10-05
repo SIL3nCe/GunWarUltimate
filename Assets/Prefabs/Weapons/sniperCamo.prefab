@@ -423,6 +423,7 @@ MonoBehaviour:
   firingRate: 2
   bulletSpeed: 30
   bulletDamages: 30
+  loaderSize: 10
 --- !u!114 &297629626355168038
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,15 +13,18 @@ public class WeaponShot : MonoBehaviour
     public GameObject   bulletShellPrefab;
 
     [Tooltip("Bullet/s")]
-    public int          firingRate;
-    private float       firingRateDt;
-    private float       firingDt;
+    public int      firingRate;
+    private float   firingRateDt;
+    private float   firingDt;
 
     [Tooltip("Bullet start velocity")]
-    public float bulletSpeed;
+    public float    bulletSpeed;
 
     [Tooltip("% of damage per bullet")]
-    public float        bulletDamages;
+    public float    bulletDamages;
+
+    [Tooltip("Number of bullets it can shoot")]
+    public int      loaderSize;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +46,7 @@ public class WeaponShot : MonoBehaviour
 
     void Shoot()
     {
-        if (firingDt > firingRateDt)
+        if (firingDt > firingRateDt && loaderSize > 0)
         {
             if (null != muzzleSocket)
             {
@@ -70,6 +73,10 @@ public class WeaponShot : MonoBehaviour
             }
 
             firingDt = 0.0f;
+            if (--loaderSize <= 0)
+            { // Tell the player to drop the weapon
+                //TODO
+            }
         }
     }
 }
