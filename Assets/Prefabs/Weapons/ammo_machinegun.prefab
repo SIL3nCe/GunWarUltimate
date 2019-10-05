@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5007208187286440528}
   - component: {fileID: 5007208187285637750}
   - component: {fileID: 5007208187284670646}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh2_Group3_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 5007208187286440532}
   - component: {fileID: 3409089269610233147}
   - component: {fileID: 4789974745024505306}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ammo_machinegun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 5007208187286440534}
   - component: {fileID: 5007208187285637748}
   - component: {fileID: 5007208187284670644}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh1_Group2_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
