@@ -18,6 +18,7 @@ public class PlayerGameplay : MonoBehaviour
         if (collision.gameObject.CompareTag("Ammo"))
         {
             //TODO get damages to deal
+            //Debug.Log(percentage);
             percentage += 10.0f;
         }
     }
