@@ -51,11 +51,14 @@ public class WeaponTriggerCollider : MonoBehaviour
 			//
 			// Show correct weapon in body
 			PickWeapon pickWeapon = other.gameObject.GetComponent<PickWeapon>();
-			pickWeapon.SetWeaponTypeToSwitchTo(_Weapon.WeaponType);
+			bool bCanSwitch = pickWeapon.SetWeaponTypeToSwitchTo(_Weapon.WeaponType);
 
 			//
 			// Destroy current weapon
-			Destroy(gameObject);
+			if(bCanSwitch)
+			{
+				Destroy(gameObject);
+			}
 		}
 	}
 }
