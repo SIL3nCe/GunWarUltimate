@@ -20,8 +20,11 @@ TagManager:
   - Character
   - Weapon
   - Ammo
+  - UIChooseCharacter
+  - UIChooseCharacterFront
   - RocketFix
   - 
+  -
   - 
   - 
   - 

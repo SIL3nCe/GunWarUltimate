@@ -452,7 +452,7 @@ MonoBehaviour:
     type: 3}
   rocketMesh: {fileID: 0}
   firingRate: 60
-  bulletSpeed: 15
+  bulletSpeed: 13
   bulletDamages: 10
   loaderSize: 50
   m_audioClipNoAmmo: {fileID: 8300000, guid: 923749c2b73c20d47be5e0f479fb9e63, type: 3}

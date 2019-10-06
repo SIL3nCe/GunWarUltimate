@@ -13,6 +13,9 @@ public class PlayerGameplay : MonoBehaviour
 	public EPlayerEnum playerEnum;
 	public SkinnedMeshRenderer Head;
 
+    [Tooltip("Effect to trigger on respawn location")]
+    public GameObject RespawnEffect;
+
     [Header("Sounds")]
     public AudioClip[] m_aAudioClipsScream;
     public AudioClip[] m_aAudioClipsDamage;
@@ -66,7 +69,7 @@ public class PlayerGameplay : MonoBehaviour
         float fRangedVal = (percentage / 999) * 6;
 
         float fForceFactor = Mathf.Exp(fRangedVal);
-        Debug.Log("factor" + fEjectionFactor);
+
         rigidBody.AddForce(orientation * fForceFactor * fEjectionFactor, ForceMode.Impulse);
     }
 
@@ -119,7 +122,12 @@ public class PlayerGameplay : MonoBehaviour
 	{
 		nextSpawnLocation = newPose;
 
-		Invoke("Spawn", 3.0f);
+        if (null != RespawnEffect)
+        {
+            Instantiate(RespawnEffect, newPose);
+        }
+
+        Invoke("Spawn", 3.0f);
 	}
 
 	private void Spawn()
