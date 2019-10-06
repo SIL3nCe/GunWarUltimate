@@ -317,9 +317,12 @@ public class UIManager : MonoBehaviour
 				foreach(PlayerUI playerUI in PlayerArray)
 				{
 					bFinished = true;
-					playerUI.UiPanelStock3.SetActive(false);
-					playerUI.UiPanelStock2.SetActive(false);
-					playerUI.UiPanelStock1.SetActive(false);
+					if(null != playerUI.Player)
+					{
+						playerUI.UiPanelStock3.SetActive(false);
+						playerUI.UiPanelStock2.SetActive(false);
+						playerUI.UiPanelStock1.SetActive(false);
+					}
 				}
 			}
 		}
