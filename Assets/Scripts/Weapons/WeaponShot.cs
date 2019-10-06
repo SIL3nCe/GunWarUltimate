@@ -63,7 +63,7 @@ public class WeaponShot : MonoBehaviour
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
         if (firingDt > firingRateDt && loaderSize > 0)
         {

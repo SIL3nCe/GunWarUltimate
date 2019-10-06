@@ -5215,6 +5215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302b1de20e4880041971274df428c377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_iPlayerIndex: 0
   m_fPlayerSpeed: 10
   m_fMovementsSmoothTime: 0.01
   m_fJumpFactor: 6
@@ -5244,6 +5245,86 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 643c024bb0b3fab4a979174272ecb453, type: 3}
   m_audioClipLand: {fileID: 8300000, guid: d55ccfee3845bd441a68b79117ad6bce, type: 3}
   m_audioClipHang: {fileID: 8300000, guid: 5056cd05442c7264eb20e51a8f19f465, type: 3}
+  m_inputActionJump:
+    m_Name: Input Action Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fe26ed0c-f728-4bcd-b42c-babc8383540f
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 8a11b94a-a7ec-4198-85c5-aa8c1c8335f6
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Jump
+      m_Flags: 0
+  m_inputActionMove:
+    m_Name: Input Action Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 24bc5e84-78fb-4440-89d0-e051828412c5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: 763d64bd-8210-4a66-b329-c733216db124
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Move
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 982dcd66-25e4-4744-b0db-708bad9a0341
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Move
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 2334533c-673d-4ed0-b705-4cc0aaaa9011
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Move
+      m_Flags: 8
+  m_inputActionShoot:
+    m_Name: Input Action Shoot
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 835d59bf-3a89-4e7d-929b-2b3671026185
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 1136d891-f21c-46ba-9fb3-ea5ba5a5eb7d
+      m_Path: <Keyboard>/v
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Shoot
+      m_Flags: 0
+  m_inputActionThrow:
+    m_Name: Input Action Throw
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 35085ac9-dee9-4048-a4c6-e15c7e488690
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 2d3df5f3-bb8c-409c-a377-e6d7538e6cc3
+      m_Path: <Keyboard>/b
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Throw
+      m_Flags: 0
 --- !u!136 &657409927
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5275,7 +5356,7 @@ MonoBehaviour:
   SocketUzi: {fileID: 0}
   SocketPistolSilencer: {fileID: 0}
   SocketRocketLauncher: {fileID: 0}
-  DropForce: 40
+  DropForce: 15
 --- !u!114 &763541238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5322,7 +5403,8 @@ AudioSource:
   m_GameObject: {fileID: 6993655524484161634}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8704855953135662278, guid: 62c99edf9ec811c449d381c315defbf9,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

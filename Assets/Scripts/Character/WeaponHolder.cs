@@ -116,7 +116,7 @@ public class WeaponHolder : MonoBehaviour
 		}
 	}
 
-	void DropWeapon()
+	public void DropWeapon()
 	{
 		if(null != CurrentWeapon)
 		{
@@ -139,4 +139,9 @@ public class WeaponHolder : MonoBehaviour
 			newWeapon.GetComponent<BoxCollider>().enabled = true;
 		}
 	}
+
+    public Weapon GetCurrentWeapon()
+    {
+        return CurrentWeapon.GetComponent<Weapon>();
+    }
 }
