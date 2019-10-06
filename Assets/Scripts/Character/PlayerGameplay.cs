@@ -80,7 +80,10 @@ public class PlayerGameplay : MonoBehaviour
 
         //
         // Notify death
-        UiManager.OnPlayerDied(this);
+        if (null != UiManager)
+        {
+            UiManager.OnPlayerDied(this);
+        }
 
         //
         // Emit die sounds
