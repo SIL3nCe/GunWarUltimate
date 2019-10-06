@@ -154,3 +154,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitEffect: {fileID: 194062, guid: 407e117d1a12c604f8f040e4db45becf, type: 3}
+  LifeTime: 2
