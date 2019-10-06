@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 8359842012912443547}
   m_Layer: 9
   m_Name: uziGoldLong
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -454,6 +454,9 @@ MonoBehaviour:
   bulletSpeed: 15
   bulletDamages: 10
   loaderSize: 50
+  m_audioClipPick: {fileID: 0}
+  m_audioClipNoAmmo: {fileID: 0}
+  m_aAudioClipsShot: []
 --- !u!114 &8359842012912443547
 MonoBehaviour:
   m_ObjectHideFlags: 0

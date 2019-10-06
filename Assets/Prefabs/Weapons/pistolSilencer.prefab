@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 4055955734150280754}
   m_Layer: 9
   m_Name: pistolSilencer
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -327,6 +327,9 @@ MonoBehaviour:
   bulletSpeed: 7
   bulletDamages: 15
   loaderSize: 15
+  m_audioClipPick: {fileID: 0}
+  m_audioClipNoAmmo: {fileID: 0}
+  m_aAudioClipsShot: []
 --- !u!114 &4055955734150280754
 MonoBehaviour:
   m_ObjectHideFlags: 0

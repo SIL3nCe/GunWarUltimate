@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5260953327557977860}
   m_Layer: 9
   m_Name: rocketlauncherSide
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,11 +100,15 @@ MonoBehaviour:
     type: 3}
   shellSocket: {fileID: 0}
   bulletShellPrefab: {fileID: 0}
+  MuzzleFlash: {fileID: 0}
   rocketMesh: {fileID: 1147337142602539989}
   firingRate: 1
   bulletSpeed: 5
   bulletDamages: 100
   loaderSize: 3
+  m_audioClipPick: {fileID: 0}
+  m_audioClipNoAmmo: {fileID: 0}
+  m_aAudioClipsShot: []
 --- !u!114 &5260953327557977860
 MonoBehaviour:
   m_ObjectHideFlags: 0
