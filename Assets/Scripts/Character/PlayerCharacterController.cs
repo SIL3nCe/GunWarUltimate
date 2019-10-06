@@ -172,6 +172,12 @@ public class PlayerCharacterController : MonoBehaviour
         // Only if we are grounded
         if (m_bGrounded)
         {
+            if (m_inputActionMove.ReadValue<float>() == 0.0f)
+            {
+                vTargetVelocity.x = 0.0f;
+                m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, m_rigidbody.velocity.z);
+            }
+
             //if (Input.GetKeyDown(KeyCode.Space))
             if (m_inputActionJump.triggered)
             {
@@ -206,6 +212,7 @@ public class PlayerCharacterController : MonoBehaviour
         }
         else
         {
+
             bool bHitAWall = HitAWallTest(fPlayerHorizontalInput);
             bool bWallIsHangable = false;
 
