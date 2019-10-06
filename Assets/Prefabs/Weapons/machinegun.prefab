@@ -102,6 +102,9 @@ MonoBehaviour:
   shellSocket: {fileID: 2380855208491267136}
   bulletShellPrefab: {fileID: 5342551422268578448, guid: 7c7bc8dd2f256bb458a5095574ec4b5c,
     type: 3}
+  MuzzleFlash: {fileID: 3693660425838998991, guid: 026355ff225244841baae4cead319f80,
+    type: 3}
+  rocketMesh: {fileID: 0}
   firingRate: 30
   bulletSpeed: 10
   bulletDamages: 20

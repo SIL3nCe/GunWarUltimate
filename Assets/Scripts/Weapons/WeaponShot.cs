@@ -12,6 +12,9 @@ public class WeaponShot : MonoBehaviour
     public GameObject shellSocket;
     public GameObject bulletShellPrefab;
 
+    [Tooltip("Muzzle Flash prefab to enable on shot")]
+    public GameObject MuzzleFlash;
+
     [Tooltip("Rocket to hide when shooting with rocket launcher")]
     public GameObject rocketMesh;
 
@@ -59,6 +62,11 @@ public class WeaponShot : MonoBehaviour
                 GameObject shotBullet = Instantiate(bulletPrefab, bulletLocation, bulletRotation);
                 shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * bulletSpeed;
 
+                if (null != MuzzleFlash)
+                {
+                    Destroy(Instantiate(MuzzleFlash, bulletLocation, bulletRotation), 0.05f);
+                }
+
                 BulletGameplay bulletParams = shotBullet.GetComponent<BulletGameplay>();
                 if (null != bulletParams)
                 {
@@ -101,19 +109,6 @@ public class WeaponShot : MonoBehaviour
                 Quaternion shellRotation = shellSocket.transform.rotation;
                 GameObject fireShell = Instantiate(bulletShellPrefab, shellLocation, shellRotation);
                 fireShell.GetComponent<Rigidbody>().velocity = -gameObject.transform.forward * 3.0f;
-            }
-        }
-    }
-
-    void UnHideRocket()
-    {
-        if (null != rocketMesh)
-        { // hide rocket for firingRateDt time
-            MeshRenderer mesh = rocketMesh.GetComponent<MeshRenderer>();
-            if (null != mesh)
-            {
-                mesh.enabled = true;
-                Invoke("", firingRateDt);
             }
         }
     }

@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5056790240512870731}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.247, y: 0.1358, z: 0}
+  m_LocalPosition: {x: 0.3121, y: 0.1358, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8899948716667694205}
@@ -321,6 +321,8 @@ MonoBehaviour:
   shellSocket: {fileID: 199178524093040709}
   bulletShellPrefab: {fileID: 1240541736691338086, guid: cb1ac01318c1a1940b40051a9a161a5c,
     type: 3}
+  MuzzleFlash: {fileID: 0}
+  rocketMesh: {fileID: 0}
   firingRate: 5
   bulletSpeed: 7
   bulletDamages: 15
