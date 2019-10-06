@@ -16,6 +16,9 @@ public class PlayerGameplay : MonoBehaviour
     [Header("Sounds")]
     public AudioClip[] m_aAudioClipsScream;
 
+    [Tooltip("Effect to play when dying out of map")]
+    public GameObject DeathEffect;
+
     private uint? stocks;
     private float percentage;
 
@@ -42,15 +45,23 @@ public class PlayerGameplay : MonoBehaviour
 
     public void OnDie()
     {
-		if(null != stocks)
+		if (null != stocks)
 		{
 			--stocks;
 		}
         percentage = 0.0f;
 
-		//
-		// Notify death
-		UiManager.OnPlayerDied(this);
+        if (null != DeathEffect)
+        {
+            Vector3 bulletLocation = gameObject.transform.position;
+            Quaternion bulletRotation = gameObject.transform.rotation;
+            GameObject effect = Instantiate(DeathEffect, gameObject.transform);
+            effect.transform.Rotate(new Vector3(0.0f, 180.0f, 0.0f)); // Fixme
+        }
+
+        //
+        // Notify death
+        UiManager.OnPlayerDied(this);
 
         //
         // Emit die sounds
