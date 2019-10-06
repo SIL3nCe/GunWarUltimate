@@ -368,7 +368,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.65, y: 0.45, z: 0.2}
+  m_Size: {x: 1.64, y: 0.45, z: 0.16}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1883688955770335191
 Rigidbody:
@@ -423,6 +423,7 @@ MonoBehaviour:
   firingRate: 2
   bulletSpeed: 30
   bulletDamages: 30
+  loaderSize: 10
 --- !u!114 &297629626355168038
 MonoBehaviour:
   m_ObjectHideFlags: 0

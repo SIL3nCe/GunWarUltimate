@@ -448,8 +448,9 @@ MonoBehaviour:
   bulletShellPrefab: {fileID: 8254614603280278347, guid: f9f9185beec535e4bac30cc6fdbf8925,
     type: 3}
   firingRate: 60
-  bulletSpeed: 10
+  bulletSpeed: 15
   bulletDamages: 10
+  loaderSize: 50
 --- !u!114 &8359842012912443547
 MonoBehaviour:
   m_ObjectHideFlags: 0

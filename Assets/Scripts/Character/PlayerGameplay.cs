@@ -2,29 +2,72 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerEnum
+{
+	p1,
+	p2,
+}
+
 public class PlayerGameplay : MonoBehaviour
 {
-    private int lifes;
+	public PlayerEnum playerEnum;
+	public SkinnedMeshRenderer Head;
+
+    private uint? stocks;
     private float percentage;
 
-    void Start()
+	private UIManager UiManager;
+
+	void Start()
     {
-        lifes = 3;
         percentage = 0.0f;
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void TakeDamages(float damages)
     {
-        if (collision.gameObject.CompareTag("Ammo"))
-        {
-            BulletParameters bulletParams = collision.gameObject.GetComponent<BulletParameters>();
-            if (null != bulletParams)
-            {
-                percentage += bulletParams.GetDamages();
-                Debug.Log(percentage);
-            }
+        percentage += damages;
 
-            Destroy(collision.gameObject); // Remove bullet
-        }
+		//
+		// Notify death
+		UiManager.OnPlayerDamageTaken(this);
     }
+
+    public void OnDie()
+    {
+		if(null != stocks)
+		{
+			--stocks;
+		}
+        percentage = 0.0f;
+
+		//
+		// Notify death
+		UiManager.OnPlayerDied(this);
+
+        if (null != stocks && stocks > 0)
+        {
+            //TODO set to spawn location
+            return;
+        }
+	}
+
+	public float GetPercentage()
+	{
+		return percentage;
+	}
+
+	public uint? GetRemainingStocks()
+	{
+		return stocks;
+	}
+
+	public void SetUiManager(UIManager Manager)
+	{
+		UiManager = Manager;
+	}
+
+	public void SetStocks(uint? iStocks)
+	{
+		stocks = iStocks;
+	}
 }
