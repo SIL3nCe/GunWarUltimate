@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerEnum
+public enum EPlayerEnum
 {
 	p1,
 	p2,
@@ -10,7 +10,7 @@ public enum PlayerEnum
 
 public class PlayerGameplay : MonoBehaviour
 {
-	public PlayerEnum playerEnum;
+	public EPlayerEnum playerEnum;
 	public SkinnedMeshRenderer Head;
 
     private uint? stocks;
