@@ -11,18 +11,19 @@ public class PlayerCharacterController : MonoBehaviour
 
     [Header("Jump")]
     public float m_fJumpFactor = 10.0f;
+    public int m_iWallJumpMaxCount = 4;
+    private int m_iWallJumpRemainingCount;
 
     //
     // private
     //
+    private bool m_bHitAWall = false;
     private Vector3 m_vCurrentVelocity;
     private bool m_bGrounded = false;
     private Rigidbody m_rigidbody;
     private bool m_bCanDoubleJump = true;
     private bool m_bHangOnWall = false;
     private float m_fHangOnWallDirection = 0.0f;
-
-    public float m_fWallStamina = 1.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,10 @@ public class PlayerCharacterController : MonoBehaviour
         // Ensure rigidbody is present
         m_rigidbody = GetComponent<Rigidbody>();
         Assert.IsNotNull(m_rigidbody);
+
+        //
+        // Initialize / Reset
+        ResetWallJump();
     }
 
     // Update is called once per frame
@@ -60,6 +65,8 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //
+        //
         float fPlayerHorizontalInput = Input.GetAxis("Horizontal");
         Vector3 vTargetVelocity = new Vector3(m_fPlayerSpeed * fPlayerHorizontalInput, m_rigidbody.velocity.y);
         
@@ -85,94 +92,134 @@ public class PlayerCharacterController : MonoBehaviour
             EndHangOn();
 
             //
-            // Reset wall stamina
-            m_fWallStamina = 1.3f;
+            // Reset wall jump
+            ResetWallJump();
         }
         else
         {
+            bool bHitAWall = HitAWallTest(fPlayerHorizontalInput);
+            bool bWallIsHangable = false;
             //
-            // If we press space
-            if (Input.GetKeyDown(KeyCode.Space))
+            // We test if we hit a wall
+            //Debug.DrawRay(transform.position, new Vector3(fPlayerHorizontalInput, 0.0f, 0.0f), Color.red);
+            // We test this if we do not already hanging ona wall
+            if (!m_bHangOnWall)
             {
-                //
-                // If we can double jump
-                if (m_bCanDoubleJump)
-                {
-                    //
-                    // We can't double jump anymore
-                    m_bCanDoubleJump = false;
-
-                    //
-                    // Add another jump velocity
-                    vTargetVelocity.y = m_fJumpFactor * 1.4f;
-
-                    GetComponent<Animator>().SetBool("bFall", true);
-                }
-            }
-
-            //
-            //
-            if (fPlayerHorizontalInput != 0.0f)
-            {
-                Debug.DrawRay(transform.position, new Vector3(fPlayerHorizontalInput, 0.0f, 0.0f), Color.red);
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, new Vector3(fPlayerHorizontalInput, 0.0f, 0.0f), out hit, 0.6f))
                 {
-                    //
-                    // TODO: Comment 
-                    // TODO: Need the normal.y check ??
-                    if (!m_bHangOnWall && hit.normal.y == 0.0f)
+                    bHitAWall = true;
+                    if (hit.normal.y == 0.0f)
                     {
-                        m_fHangOnWallDirection = -fPlayerHorizontalInput;
-
                         //
-                        // Start Hang On
+                        // We store the hang wall direction and the flag that we hang a wall
+                        if (fPlayerHorizontalInput > 0.0f) { m_fHangOnWallDirection = -1.0f; }
+                        if (fPlayerHorizontalInput < 0.0f) { m_fHangOnWallDirection = 1.0f; }
                         StartHangOn();
-
-                        GetComponent<Animator>().SetBool("bFall", false);
+                        bWallIsHangable = true;
                     }
-                }
-                else
-                {
-                    m_bHangOnWall = false;
                 }
             }
-
-            if (m_bHangOnWall)
+            else
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                //
+                // We raycast in the hangonwalldirection (inverted) to test if we are still to the right distance of the wall
+                RaycastHit hit;
+                if (!Physics.Raycast(transform.position, new Vector3(-m_fHangOnWallDirection, 0.0f, 0.0f), out hit, 0.6f))
                 {
-                    //
-                    // This is a wall jump, we jump in Y and in X
-                    vTargetVelocity.y = m_fJumpFactor * m_fWallStamina;
-                    vTargetVelocity.x = m_fHangOnWallDirection * (m_fPlayerSpeed / 4.0f) * m_fWallStamina;
+                    EndHangOn();
+                }
 
-                    //
-                    // TODO: Comment
-                    if (m_fWallStamina > 0.0f)
-                    {
-                        m_fWallStamina -= 0.3f;
-                    }else
-                    {
-                        m_fWallStamina = 0.0f;
-                    }
-
-                    //
-                    // We do not hang on anymore
+                //
+                // If we already hand on a wall, we test if we press the opposite direction button
+                // NB : We test hangonwalldirection and player input is equal
+                // because the hang on wall direction is already the opposite wall direction
+                if (m_fHangOnWallDirection > 0.0f && fPlayerHorizontalInput > 0.0f)
+                {
+                    EndHangOn();
+                }
+                else if (m_fHangOnWallDirection < 0.0f && fPlayerHorizontalInput < 0.0f)
+                {
                     EndHangOn();
                 }
                 else
                 {
-                    //
-                    // When hanging on a wall the y velocity is reduced
-                    vTargetVelocity.y = m_rigidbody.velocity.y / 1.6f;
+                    bHitAWall = true;
+                    bWallIsHangable = true;
                 }
+            }
 
-                //GetComponent<Animator>().Play("HangOn");
+            //
+            // If we hit a wall
+            if (bHitAWall)
+            {
+                //
+                // If the wall is hangable
+                if (bWallIsHangable)
+                {
+                    //
+                    // We hang on the wall, so we stop the x velocity
+                    vTargetVelocity.x = 0.0f;
+
+                    //
+                    //
+                    vTargetVelocity.y = m_rigidbody.velocity.y / 1.6f;
+
+                    //
+                    // If the wall is hangable we can jump
+                    if (Input.GetKeyDown(KeyCode.Space) && m_iWallJumpRemainingCount > 0)
+                    {
+                        //
+                        // This is a wall jump, we jump in Y and in X
+                        vTargetVelocity.y = m_fJumpFactor * 1.3f;
+                        vTargetVelocity.x = m_fHangOnWallDirection * (m_fPlayerSpeed / 4.0f);
+
+                        //
+                        // TODO: Comment
+                        m_iWallJumpRemainingCount--;
+
+                        //
+                        // We do not hang on anymore
+                        EndHangOn();
+                    }
+                }
+                else
+                {
+                    //
+                    // We hit a wall that is not climbable, we stop the x velocity to fall 
+                    vTargetVelocity.x = 0.0f;
+                }
             }
             else
             {
-                GetComponent<Animator>().SetBool("bFall", true);
+                //
+                // We do not hit a wall, we can double jump
+                // If we press space
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    //
+                    // If we can double jump
+                    if (m_bCanDoubleJump)
+                    {
+                        //
+                        // We can't double jump anymore
+                        m_bCanDoubleJump = false;
+
+                        //
+                        // Add another jump velocity
+                        vTargetVelocity.y = m_fJumpFactor * 1.4f;
+
+                        GetComponent<Animator>().SetBool("bFall", true);
+                    }
+                }
+
+                //
+                // If we do not hit a wall the velocity in x is our directio  * speed (it doesn't change)
+                
+                //
+                // We reset the hang on wall values
+                m_bHangOnWall = false;
+                m_fHangOnWallDirection = 0.0f;
             }
         }
 
@@ -222,14 +269,36 @@ public class PlayerCharacterController : MonoBehaviour
         if (fMovementDirection > 0.0f)
         {
             Vector3 vRotation = transform.rotation.eulerAngles;
-            //transform.rotation.SetEulerAngles(new Vector3(vRotation.x, 90.0f, vRotation.z));
             transform.rotation = Quaternion.Euler(new Vector3(vRotation.x, 90.0f, vRotation.z));
         }
         else if (fMovementDirection < 0.0f)
         {
             Vector3 vRotation = transform.rotation.eulerAngles;
-            //transform.rotation.SetEulerAngles(new Vector3(vRotation.x, -90.0f, vRotation.z));
             transform.rotation = Quaternion.Euler(new Vector3(vRotation.x, -90.0f, vRotation.z));
         }
+    }
+
+    public void ResetWallJump()
+    {
+        m_iWallJumpRemainingCount = m_iWallJumpMaxCount;
+    }
+
+    public bool HitAWallTest(float fPlayerHorizontalInput)
+    {
+        //
+        // Here we do 20 raycasts to be sure to detect walls hits
+        float fDirection = fPlayerHorizontalInput > 0.0f ? 1.0f : -1.0f;
+        int iNbRays = 20;
+
+        for (int iRay = 0; iRay < iNbRays; ++iRay)
+        {
+            Debug.DrawLine(transform.position + new Vector3(0.0f, iRay * 0.1f, 0.0f), transform.position + new Vector3(0.0f, iRay * 0.1f, 0.0f) + new Vector3(fPlayerHorizontalInput, 0.0f, 0.0f));
+            if (Physics.Raycast(transform.position + new Vector3(0.0f, iRay * 0.1f, 0.0f), new Vector3(fDirection, 0.0f, 0.0f), 0.6f))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

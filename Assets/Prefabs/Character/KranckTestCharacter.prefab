@@ -4982,7 +4982,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6993655524484161562}
-  m_LocalRotation: {x: -0.0007638312, y: 0.0007638312, z: -0.70710635, w: 0.70710635}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0.59999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4991,7 +4991,7 @@ Transform:
   - {fileID: 6993655524484201592}
   m_Father: {fileID: 6993655524484201538}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90.00001}
 --- !u!1 &6993655524484161566
 GameObject:
   m_ObjectHideFlags: 0
@@ -5123,6 +5123,8 @@ GameObject:
   - component: {fileID: 1970284474}
   - component: {fileID: 1970284471}
   - component: {fileID: 657409927}
+  - component: {fileID: 763541237}
+  - component: {fileID: 763541238}
   m_Layer: 0
   m_Name: KranckTestCharacter
   m_TagString: Untagged
@@ -5215,7 +5217,7 @@ MonoBehaviour:
   m_fPlayerSpeed: 10
   m_fMovementsSmoothTime: 0.01
   m_fJumpFactor: 6
-  m_fWallStamina: 1
+  m_iWallJumpMaxCount: 4
 --- !u!136 &657409927
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5230,6 +5232,34 @@ CapsuleCollider:
   m_Height: 1.6754766
   m_Direction: 1
   m_Center: {x: -0.008446515, y: 0.805042, z: -3.6039558e-17}
+--- !u!114 &763541237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6993655524484161634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559d717335e99914eb1dd491099cfe64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SocketMachineGun: {fileID: 6067562149858209006}
+  DropForce: 40
+--- !u!114 &763541238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6993655524484161634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a9ebd22f47b59b4da800849e6e13a49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerEnum: 0
+  Head: {fileID: 6993655524487277940}
 --- !u!1 &6993655524484161636
 GameObject:
   m_ObjectHideFlags: 0
@@ -5879,6 +5909,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6993655524484201566}
     m_Modifications:
+    - target: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
+        type: 3}
+      propertyPath: m_Name
+      value: machinegun
+      objectReference: {fileID: 0}
+    - target: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5934,31 +5974,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
+    - target: {fileID: 7606437815810149050, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
-      propertyPath: m_Name
-      value: machinegun
-      objectReference: {fileID: 0}
-    - target: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 161815021450801716, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7606437815810149050, guid: e5133309d1776bd49a5dfad33896e0ad,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5133309d1776bd49a5dfad33896e0ad, type: 3}
 --- !u!4 &6067562149857784014 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 6781190393495455854}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6067562149858209006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
     type: 3}
   m_PrefabInstance: {fileID: 6781190393495455854}
   m_PrefabAsset: {fileID: 0}
