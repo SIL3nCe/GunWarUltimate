@@ -88,6 +88,12 @@ public class PlayerGameplay : MonoBehaviour
             UiManager.OnPlayerDied(this);
         }
 
+        WeaponHolder weaponHolder = gameObject.GetComponent<WeaponHolder>();
+        if (null != weaponHolder)
+        { // Remove current weapon
+            weaponHolder.OnPlayerDied();
+        }
+
         //
         // Emit die sounds
         int iSound = Random.Range(0, m_aAudioClipsScream.Length);
