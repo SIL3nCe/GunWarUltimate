@@ -63,17 +63,6 @@ public class WeaponHolder : MonoBehaviour
     void Update()
     {
 		//
-		// Weapon drop
-		//if (Input.GetKeyUp(KeyCode.Return))
-		//{
-		//	DropWeapon();
-		//}
-		//else if (Input.GetKeyUp(KeyCode.KeypadEnter))
-		//{
-		//	DebugDropWeapon();
-		//}
-
-		//
 		// Weapon switch
 		if (bDirtySwitchWeapon)
 		{
@@ -97,7 +86,7 @@ public class WeaponHolder : MonoBehaviour
 
 	void SwitchWeapon()
 	{
-		if(null != CurrentWeapon)
+		if (null != CurrentWeapon)
 		{
 			CurrentWeapon.SetActive(false);
 		}
@@ -106,10 +95,20 @@ public class WeaponHolder : MonoBehaviour
 		WeaponTypeToSwitchTo = null;
 		CurrentWeapon = AvailableWeapons[(int)CurrentWeaponType];
 
-		if(null != CurrentWeapon)
+		if (null != CurrentWeapon)
 		{
 			CurrentWeapon.SetActive(true);
-			CurrentWeapon.GetComponent<WeaponShot>().loaderSize = NextAmmoCount;
+            WeaponShot weapon = CurrentWeapon.GetComponent<WeaponShot>();
+
+            if (null != weapon)
+            {
+                weapon.loaderSize = NextAmmoCount;
+
+                if (NextAmmoCount > 0)
+                { // Reset rocket laucher alpha
+                    weapon.ResetRocketAlpha();
+                } 
+            }
 		}
 	}
 

@@ -176,4 +176,23 @@ public class WeaponShot : MonoBehaviour
     {
         m_bCanPlayWeaponSound = true;
     }
+
+    public void ResetRocketAlpha()
+    {
+        if (null != rocketMesh)
+        {
+            rocketMesh.SetActive(true);
+            MeshRenderer mesh = rocketMesh.GetComponent<MeshRenderer>();
+            if (null != mesh)
+            {
+                Material[] materialList = mesh.materials;
+                for (int i = 0; i < materialList.Length; ++i)
+                {
+                    Color newColor = materialList[i].color;
+                    newColor.a = 1.0f;
+                    materialList[i].color = newColor;
+                }
+            }
+        }
+    }
 }

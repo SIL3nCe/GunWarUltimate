@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 1147337142601285589}
   - component: {fileID: 1147337142600285461}
   - component: {fileID: 8597048593277436826}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Mesh1_Group2_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
