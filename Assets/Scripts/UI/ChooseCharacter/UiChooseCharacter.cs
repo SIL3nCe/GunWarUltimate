@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 
 public class UiChooseCharacter : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class UiChooseCharacter : MonoBehaviour
 	public Camera			ChooseCharacterCamera;
 	public Camera			GameCamera;
 	public GameObject		GameScene;
+	public GameObject		Player1;
+	public GameObject		Player2;
 
 	private struct Character
 	{
@@ -93,6 +96,9 @@ public class UiChooseCharacter : MonoBehaviour
 		aSelectors[1].preview = CharacterPreviewP2;
 		aSelectors[0].name = CharacterNameP1;
 		aSelectors[1].name = CharacterNameP2;
+
+		Assert.IsNotNull(Player1);
+		Assert.IsNotNull(Player2);
 	}
 
 	// Update is called once per frame
@@ -231,5 +237,25 @@ public class UiChooseCharacter : MonoBehaviour
 		GameCamera.enabled = true;
 		GameScene.SetActive(true);
 		gameObject.SetActive(false);
+
+		//
+		// P1
+		{
+			SkinnedMeshRenderer[] meshes = Player1.GetComponentsInChildren<SkinnedMeshRenderer>();
+			for (int iMeshIndex = 0; iMeshIndex < meshes.Length; ++iMeshIndex)
+			{
+				meshes[iMeshIndex].material = CharacterArray[aSelectors[0].iSelectionIndex].material;
+			}
+		}
+
+		//
+		// P2
+		{
+			SkinnedMeshRenderer[] meshes = Player2.GetComponentsInChildren<SkinnedMeshRenderer>();
+			for (int iMeshIndex = 0; iMeshIndex < meshes.Length; ++iMeshIndex)
+			{
+				meshes[iMeshIndex].material = CharacterArray[aSelectors[1].iSelectionIndex].material;
+			}
+		}
 	}
 }
