@@ -5243,6 +5243,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b38a350d0864af542a6d6cdaea8314ed, type: 3}
   - {fileID: 8300000, guid: 643c024bb0b3fab4a979174272ecb453, type: 3}
   m_audioClipLand: {fileID: 8300000, guid: d55ccfee3845bd441a68b79117ad6bce, type: 3}
+  m_audioClipHang: {fileID: 8300000, guid: 5056cd05442c7264eb20e51a8f19f465, type: 3}
 --- !u!136 &657409927
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5298,6 +5299,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1feb7d8f380bf7a449258f88ca25b905, type: 3}
   - {fileID: 8300000, guid: 6ee1419ea49f3644a803d5eb87152e74, type: 3}
   - {fileID: 8300000, guid: 0d7d50caf3e685341a954ec22d113761, type: 3}
+  m_aAudioClipsDamage:
+  - {fileID: 8300000, guid: 2acdd42651609dd41af857db965e6c9f, type: 3}
+  - {fileID: 8300000, guid: 90ec9e321b9f3ef408fd017b57d45a08, type: 3}
+  - {fileID: 8300000, guid: 8b08dd0d964d3a2448d94c66db8afccd, type: 3}
+  - {fileID: 8300000, guid: d9456071d32401e4dac9c26c040f412c, type: 3}
+  - {fileID: 8300000, guid: 75ad9834ea18e154ab3d35a86ee8a022, type: 3}
+  - {fileID: 8300000, guid: 2d52bfd139d701b4fa66e884fc0c67c9, type: 3}
+  - {fileID: 8300000, guid: a57db360396bed54a811b18e73ab05fb, type: 3}
+  - {fileID: 8300000, guid: 690766ad57d8e9c4a8a369cb360f5386, type: 3}
+  - {fileID: 8300000, guid: 42315a2164ac9fe48b3d5587bdefadcf, type: 3}
+  - {fileID: 8300000, guid: ba6d911d72762e24880bc0c6d4e548e3, type: 3}
+  - {fileID: 8300000, guid: a56a318619575254a8e1986a16d2adfe, type: 3}
+  - {fileID: 8300000, guid: 1f8cdb2e6b62a004989c3bc43e1939d6, type: 3}
+  - {fileID: 8300000, guid: bfbd3c2d267c862498e882dfa1ce27cf, type: 3}
 --- !u!82 &1571041756811314892
 AudioSource:
   m_ObjectHideFlags: 0

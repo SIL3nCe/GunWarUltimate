@@ -18,6 +18,7 @@ public class PlayerCharacterController : MonoBehaviour
     public AudioClip[] m_aAudioClipsSteps;
     public AudioClip[] m_aAudioClipsJump;
     public AudioClip m_audioClipLand;
+    public AudioClip m_audioClipHang;
     private AudioSource m_audioSource;
     private bool m_bCanPlayStepSound = true;
 
@@ -313,7 +314,7 @@ public class PlayerCharacterController : MonoBehaviour
         {
             if (!m_bGrounded)
             {
-                m_audioSource.PlayOneShot(m_audioClipLand);
+                m_audioSource.PlayOneShot(m_audioClipLand, 0.2f);
             }
             m_bGrounded = true;
         }
@@ -330,6 +331,10 @@ public class PlayerCharacterController : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("bHangOn", true);
         m_bHangOnWall = true;
+
+        //
+        // Play sound
+        m_audioSource.PlayOneShot(m_audioClipHang, 0.3f);
     }
 
     private void EndHangOn()
@@ -364,6 +369,8 @@ public class PlayerCharacterController : MonoBehaviour
         float fDirection = fPlayerHorizontalInput > 0.0f ? 1.0f : -1.0f;
         int iNbRays = 20;
 
+        //
+        // Cast all the rays and display the debugged ray
         for (int iRay = 0; iRay < iNbRays; ++iRay)
         {
             Debug.DrawLine(transform.position + new Vector3(0.0f, iRay * 0.1f, 0.0f), transform.position + new Vector3(0.0f, iRay * 0.1f, 0.0f) + new Vector3(fPlayerHorizontalInput, 0.0f, 0.0f));
@@ -385,7 +392,7 @@ public class PlayerCharacterController : MonoBehaviour
     private void PlayJumpSound()
     {
         int iIndex = Random.Range(0, m_aAudioClipsJump.Length);
-        m_audioSource.PlayOneShot(m_aAudioClipsJump[iIndex]);        
+        m_audioSource.PlayOneShot(m_aAudioClipsJump[iIndex], 0.3f);        
     }
 
     private void ResetCanPlayStepSound()

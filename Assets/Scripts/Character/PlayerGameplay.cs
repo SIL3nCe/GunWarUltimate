@@ -15,6 +15,9 @@ public class PlayerGameplay : MonoBehaviour
 
     [Header("Sounds")]
     public AudioClip[] m_aAudioClipsScream;
+    public AudioClip[] m_aAudioClipsDamage;
+    private AudioSource m_audioSource;
+    private bool m_bCanPlayDamageSound = true;
 
     private uint? stocks;
     private float percentage;
@@ -26,11 +29,23 @@ public class PlayerGameplay : MonoBehaviour
 	void Start()
     {
         percentage = 0.0f;
+
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     public void TakeDamages(float damages)
     {
         percentage += damages;
+
+        //
+        // Play damage sound
+        if (m_bCanPlayDamageSound)
+        {
+            int iSound = Random.Range(0, m_aAudioClipsDamage.Length);
+            m_audioSource.PlayOneShot(m_aAudioClipsDamage[iSound], 0.2f);
+            m_bCanPlayDamageSound = false;
+            Invoke("ResetCanPlayDamageSound", 0.4f);
+        }
 
         //
         // Notify death
@@ -55,7 +70,7 @@ public class PlayerGameplay : MonoBehaviour
         //
         // Emit die sounds
         int iSound = Random.Range(0, m_aAudioClipsScream.Length);
-        GetComponent<AudioSource>().PlayOneShot(m_aAudioClipsScream[iSound]);
+        m_audioSource.PlayOneShot(m_aAudioClipsScream[iSound], 0.2f);
 
         //
         //
@@ -100,4 +115,10 @@ public class PlayerGameplay : MonoBehaviour
 			gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
 		}
 	}
+
+    private void ResetCanPlayDamageSound()
+    {
+        m_bCanPlayDamageSound = true;
+    }
 }
+
