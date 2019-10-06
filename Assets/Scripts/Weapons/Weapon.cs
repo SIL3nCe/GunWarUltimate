@@ -70,4 +70,9 @@ public class Weapon : MonoBehaviour
 	{
 		bEquipped = false;
 	}
+
+	public void PickUp()
+	{
+		bEquipped = true;
+	}
 }
