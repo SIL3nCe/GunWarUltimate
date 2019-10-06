@@ -21,6 +21,7 @@ public class WeaponHolder : MonoBehaviour
 	// Switch
 	private EWeaponType?	WeaponTypeToSwitchTo;
 	private bool			bDirtySwitchWeapon;
+	private int				NextAmmoCount;
 
 	//
 	// Drop-related
@@ -41,14 +42,18 @@ public class WeaponHolder : MonoBehaviour
     {
 		//
 		// Weapon drop
-		if(Input.GetKeyUp(KeyCode.Return))
+		if (Input.GetKeyUp(KeyCode.Return))
 		{
 			DropWeapon();
+		}
+		else if (Input.GetKeyUp(KeyCode.KeypadEnter))
+		{
+			DebugDropWeapon();
 		}
 
 		//
 		// Weapon switch
-		if(bDirtySwitchWeapon)
+		if (bDirtySwitchWeapon)
 		{
 			if(null == CurrentWeapon)
 			{
@@ -59,10 +64,11 @@ public class WeaponHolder : MonoBehaviour
 		}
     }
 
-	public bool SetWeaponTypeToSwitchTo(EWeaponType type)
+	public bool SetWeaponTypeToSwitchTo(EWeaponType type, int ammoCount)
 	{
 		WeaponTypeToSwitchTo = type;
 		bDirtySwitchWeapon = true;
+		NextAmmoCount = ammoCount;
 
 		return null == CurrentWeapon;
 	}
@@ -94,9 +100,22 @@ public class WeaponHolder : MonoBehaviour
 		if(null != CurrentWeapon)
 		{
 			CurrentWeapon.SetActive(true);
+			CurrentWeapon.GetComponent<WeaponShot>().loaderSize = NextAmmoCount;
 		}
 	}
-	
+
+	void DebugDropWeapon()
+	{
+		if(null == WeaponTypeToSwitchTo)
+		{
+			WeaponTypeToSwitchTo = EWeaponType.machine_gun;
+			SwitchWeapon();
+			DropWeapon();
+			WeaponTypeToSwitchTo = null;
+			bDirtySwitchWeapon = false;
+		}
+	}
+
 	void DropWeapon()
 	{
 		if(null != CurrentWeapon)
