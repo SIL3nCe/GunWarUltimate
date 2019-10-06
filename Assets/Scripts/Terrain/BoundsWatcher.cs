@@ -10,17 +10,17 @@ public class BoundsWatcher : MonoBehaviour
     private void OnTriggerExit(Collider other)
 	{
 		PlayerGameplay pgpComponent = other.GetComponent<PlayerGameplay>();
-		if(null != pgpComponent)
-		{
-			pgpComponent.OnDie();
-		}
-
-        if (null != DeathEffect)
+        if (null != pgpComponent)
         {
-            Vector3 bulletLocation = gameObject.transform.position;
-            Quaternion bulletRotation = gameObject.transform.rotation;
-            GameObject effect = Instantiate(DeathEffect, bulletLocation, bulletRotation);
-            //effect.transform.Rotate(new Vector3(0.0f, 180.0f, 0.0f)); // Fixme
+            pgpComponent.OnDie();
+
+            if (null != DeathEffect)
+            {
+                Vector3 bulletLocation = pgpComponent.transform.position;
+                Quaternion bulletRotation = pgpComponent.transform.rotation;
+                GameObject effect = Instantiate(DeathEffect, bulletLocation, bulletRotation);
+                //effect.transform.Rotate(new Vector3(0.0f, 180.0f, 0.0f)); // Fixme
+            }
         }
     }
 }
