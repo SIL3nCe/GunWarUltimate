@@ -10,6 +10,9 @@ public class BulletGameplay : MonoBehaviour
     [Tooltip("Time before bullet desappear if no hit")]
     public float LifeTime;
 
+    [Tooltip("Factor applied to damage impulse on player hit")]
+    public float EjectionFactor;
+
     private float Damages; // Set by weapon on shot
     private bool IsRocket;
     
@@ -49,7 +52,7 @@ public class BulletGameplay : MonoBehaviour
                 Vector3 dir = collision.contacts[0].point - transform.position;
                 // Opposite
                 dir = -dir.normalized;
-                player.TakeDamages(Damages, dir);
+                player.TakeDamages(Damages, dir, EjectionFactor);
                 TriggerHitEffect();
             }
         }
@@ -68,6 +71,7 @@ public class BulletGameplay : MonoBehaviour
             if (null != rocketScript)
             {
                 rocketScript.SetDamages(Damages);
+                rocketScript.SetEjectionFactor(EjectionFactor);
             }
         }
     }

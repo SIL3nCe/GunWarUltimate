@@ -31,7 +31,7 @@ public class PlayerGameplay : MonoBehaviour
         percentage = 0.0f;
     }
 
-    public void TakeDamages(float fDamages, Vector3 orientation)
+    public void TakeDamages(float fDamages, Vector3 orientation, float fEjectionFactor)
     {
         percentage = Mathf.Min(percentage + fDamages, 999.0f);
 
@@ -50,7 +50,8 @@ public class PlayerGameplay : MonoBehaviour
         float fRangedVal = (percentage / 999) * 6;
 
         float fForceFactor = Mathf.Exp(fRangedVal);
-        rigidBody.AddForce(orientation * fForceFactor, ForceMode.Impulse);
+        Debug.Log("factor" + fEjectionFactor);
+        rigidBody.AddForce(orientation * fForceFactor * fEjectionFactor, ForceMode.Impulse);
     }
 
     public void OnDie()
