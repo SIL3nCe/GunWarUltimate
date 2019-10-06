@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 6367612086865926794}
   - component: {fileID: 2584540566039156637}
   - component: {fileID: 7960761075225406570}
-  - component: {fileID: 269575662757060436}
+  - component: {fileID: 4446983271487947733}
   m_Layer: 10
   m_Name: ammo_rocket
   m_TagString: Ammo
@@ -142,7 +142,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &269575662757060436
+--- !u!114 &4446983271487947733
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -154,3 +154,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3491c1ce5d9fc7140a733f9619e1ce13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExplosionPrefab: {fileID: 191186, guid: 0ac1bb90ffa5c6947af8b1a3e8aebe09, type: 3}

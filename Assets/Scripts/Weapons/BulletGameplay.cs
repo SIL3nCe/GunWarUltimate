@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BulletGameplay : MonoBehaviour
 {
+    [Tooltip("Prefab to Instantiate on hit")]
+    public GameObject ExplosionPrefab;
+
     private float damages; // Set by weapon on shot
 
     public void SetDamages(float InDamages)
@@ -12,11 +15,21 @@ public class BulletGameplay : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision)
-    {  
-        PlayerGameplay player = collision.gameObject.GetComponent<PlayerGameplay>();
-        if (null != player)
+    {
+        if (null != ExplosionPrefab)
         {
-            player.TakeDamages(damages);
+            Vector3 bulletLocation = gameObject.transform.position;
+            Quaternion bulletRotation = gameObject.transform.rotation;
+            GameObject hitExplosion = Instantiate(ExplosionPrefab, bulletLocation, bulletRotation);
+            hitExplosion.GetComponent<RocketExplosion>().SetDamages(damages);
+        }
+        else
+        {
+            PlayerGameplay player = collision.gameObject.GetComponent<PlayerGameplay>();
+            if (null != player)
+            {
+                player.TakeDamages(damages);
+            }
         }
 
         Destroy(gameObject);
