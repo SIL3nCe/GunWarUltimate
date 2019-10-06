@@ -5245,6 +5245,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SocketMachineGun: {fileID: 6067562149858209006}
+  SocketSniper: {fileID: 0}
+  SocketUzi: {fileID: 0}
+  SocketPistolSilencer: {fileID: 0}
+  SocketRocketLauncher: {fileID: 0}
   DropForce: 40
 --- !u!114 &763541238
 MonoBehaviour:
@@ -5779,14 +5783,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6993655524484161658}
-  m_LocalRotation: {x: 0.6985376, y: 0.7155726, z: 0.00075457495, w: 0.00077297655}
+  m_LocalRotation: {x: 0.4944897, y: 0.50545025, z: -0.50545025, w: 0.4944897}
   m_LocalPosition: {x: 0.19999953, y: 3.5527135e-16, z: 0.00043208787}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6993655524484201560}
   m_Father: {fileID: 6993655524484201598}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &6993655524484161660
 GameObject:
   m_ObjectHideFlags: 0
@@ -5937,22 +5941,22 @@ PrefabInstance:
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.4989173
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: -0.49999914
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.5010794
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.50000185
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
@@ -5962,17 +5966,17 @@ PrefabInstance:
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
+      value: 180.124
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90.12399
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -90
+      value: -270
       objectReference: {fileID: 0}
     - target: {fileID: 7606437815810149050, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}

@@ -41,7 +41,7 @@ public class WeaponShot : MonoBehaviour
         firingDt += Time.deltaTime;
 
         //Debug only
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.C))
         {
             Shoot();
         }

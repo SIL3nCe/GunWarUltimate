@@ -971,6 +971,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SocketMachineGun: {fileID: 433719387084881245}
+  SocketSniper: {fileID: 0}
+  SocketUzi: {fileID: 0}
+  SocketPistolSilencer: {fileID: 0}
+  SocketRocketLauncher: {fileID: 0}
+  DropForce: 15
 --- !u!1 &876810361911862365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,22 +1124,22 @@ PrefabInstance:
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -8.3303725e-11
+      value: -0.00000056624407
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 8.132059e-11
+      value: 0.70710534
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000059604645
+      value: 0.00000044703478
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1
+      value: -0.7071083
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
@@ -1149,12 +1154,17 @@ PrefabInstance:
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7606437815810149050, guid: e5133309d1776bd49a5dfad33896e0ad,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 161815021450801716, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
@@ -1165,11 +1175,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7606437815810149050, guid: e5133309d1776bd49a5dfad33896e0ad,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5133309d1776bd49a5dfad33896e0ad, type: 3}
