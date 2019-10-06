@@ -21,6 +21,7 @@ public class WeaponHolder : MonoBehaviour
 	// Switch
 	private EWeaponType?	WeaponTypeToSwitchTo;
 	private bool			bDirtySwitchWeapon;
+	private int				NextAmmoCount;
 
 	//
 	// Drop-related
@@ -63,10 +64,11 @@ public class WeaponHolder : MonoBehaviour
 		}
     }
 
-	public bool SetWeaponTypeToSwitchTo(EWeaponType type)
+	public bool SetWeaponTypeToSwitchTo(EWeaponType type, int ammoCount)
 	{
 		WeaponTypeToSwitchTo = type;
 		bDirtySwitchWeapon = true;
+		NextAmmoCount = ammoCount;
 
 		return null == CurrentWeapon;
 	}
@@ -98,6 +100,7 @@ public class WeaponHolder : MonoBehaviour
 		if(null != CurrentWeapon)
 		{
 			CurrentWeapon.SetActive(true);
+			CurrentWeapon.GetComponent<WeaponShot>().loaderSize = NextAmmoCount;
 		}
 	}
 

@@ -50,7 +50,7 @@ public class WeaponTriggerCollider : MonoBehaviour
         {
 			//
 			// Show correct weapon in body
-			bool bCanSwitch = componentWeaponHolder.SetWeaponTypeToSwitchTo(_Weapon.WeaponType);
+			bool bCanSwitch = componentWeaponHolder.SetWeaponTypeToSwitchTo(_Weapon.WeaponType, gameObject.GetComponent<WeaponShot>().loaderSize);
 
 			//
 			// Destroy current weapon
