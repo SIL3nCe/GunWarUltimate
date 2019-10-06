@@ -16,9 +16,6 @@ public class PlayerGameplay : MonoBehaviour
     [Header("Sounds")]
     public AudioClip[] m_aAudioClipsScream;
 
-    [Tooltip("Effect to play when dying out of map")]
-    public GameObject DeathEffect;
-
     private uint? stocks;
     private float percentage;
 
@@ -51,14 +48,6 @@ public class PlayerGameplay : MonoBehaviour
 		}
         percentage = 0.0f;
 
-        if (null != DeathEffect)
-        {
-            Vector3 bulletLocation = gameObject.transform.position;
-            Quaternion bulletRotation = gameObject.transform.rotation;
-            GameObject effect = Instantiate(DeathEffect, gameObject.transform);
-            effect.transform.Rotate(new Vector3(0.0f, 180.0f, 0.0f)); // Fixme
-        }
-
         //
         // Notify death
         UiManager.OnPlayerDied(this);
@@ -68,13 +57,7 @@ public class PlayerGameplay : MonoBehaviour
         int iSound = Random.Range(0, m_aAudioClipsScream.Length);
         GetComponent<AudioSource>().PlayOneShot(m_aAudioClipsScream[iSound]);
 
-        //
-        //
-        if (null != stocks && stocks > 0)
-        {
-            //TODO set to spawn location
-            return;
-        }
+        gameObject.SetActive(false);
 	}
 
 	public float GetPercentage()
@@ -105,8 +88,10 @@ public class PlayerGameplay : MonoBehaviour
 	}
 
 	private void Spawn()
-	{
-		if(null != stocks && stocks > 0)
+    {
+        gameObject.SetActive(true);
+
+        if (null != stocks && stocks > 0)
 		{
 			gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
 		}
