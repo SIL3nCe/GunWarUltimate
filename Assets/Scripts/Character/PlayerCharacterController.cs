@@ -21,8 +21,10 @@ public class PlayerCharacterController : MonoBehaviour
     public AudioClip[] m_aAudioClipsJump;
     public AudioClip m_audioClipLand;
     public AudioClip m_audioClipHang;
+    public AudioClip m_audioClipNoWeapon;
     private AudioSource m_audioSource;
     private bool m_bCanPlayStepSound = true;
+    private bool m_bCanPlayNoWeaponSound = true;
 
     //
     // private
@@ -48,19 +50,6 @@ public class PlayerCharacterController : MonoBehaviour
 
     public void Awake()
     {
-        //m_playerInputActions = new PlayerInputActions();
-
-        //Debug.Log(InputSystem.devices[2]);
-        //if (m_iPlayerIndex > 1)
-        //{
-        //    m_inputActionJump = m_playerInputActions.Movements.Jump.Clone();
-        //    m_inputActionJump.ApplyBindingOverridesOnMatchingControls(InputSystem.devices[2]);
-        //    m_inputActionJump.ApplyBindingOverridesOnMatchingControls(InputSystem.devices[2]);
-        //}
-        //else
-        //{
-        //    m_inputActionJump = m_playerInputActions.Movements.Jump;
-        //}
 
     }
 
@@ -117,7 +106,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         //
         //
-        if (Input.GetAxis("Horizontal") != 0.0f)
+        if (m_inputActionMove.ReadValue<float>() != 0.0f )
         {
             GetComponent<Animator>().SetBool("bRunning", true);
 
@@ -142,7 +131,19 @@ public class PlayerCharacterController : MonoBehaviour
         //
         if (m_inputActionShoot.ReadValue<float>() > 0.0f)
         {
-            GetComponent<WeaponHolder>().GetCurrentWeapon().GetComponent<WeaponShot>().Shoot();
+            if (null != GetComponent<WeaponHolder>().GetCurrentWeapon())
+            {
+                GetComponent<WeaponHolder>().GetCurrentWeapon().GetComponent<WeaponShot>().Shoot();
+            }
+            else
+            {
+                if (m_bCanPlayNoWeaponSound)
+                {
+                    m_audioSource.PlayOneShot(m_audioClipNoWeapon, 0.2f);
+                    m_bCanPlayNoWeaponSound = false;
+                    Invoke("ResetCanPayNoWeaponSound", 0.6f);
+                }
+            }
         }
 
         //
@@ -471,9 +472,9 @@ public class PlayerCharacterController : MonoBehaviour
     {
         m_bCanPlayStepSound = true;
     }
-
-    //public PlayerInputActions GetInputActions()
-    //{
-    //    return m_playerInputActions;
-    //}
+    
+    private void ResetCanPayNoWeaponSound()
+    {
+        m_bCanPlayNoWeaponSound = true;
+    }
 }

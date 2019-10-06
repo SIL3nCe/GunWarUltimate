@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WeaponTriggerCollider : MonoBehaviour
 {
+    [Header("Sound")]
+    public AudioClip m_pickSound;
+
 	private Weapon _Weapon;
 
 	void CopyComponent<T>(T original, T newComponent, GameObject destination) where T : Component
@@ -57,7 +60,11 @@ public class WeaponTriggerCollider : MonoBehaviour
 			if(bCanSwitch)
 			{
 				Destroy(gameObject);
-			}
+
+                //
+                // Play the pick sound
+                AudioManager.GetInstance().PlaySoundEffect(m_pickSound, 1.0f);
+            }
 		}
 	}
 }

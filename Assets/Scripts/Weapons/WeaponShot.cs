@@ -34,11 +34,11 @@ public class WeaponShot : MonoBehaviour
     public int loaderSize;
 
     [Header("Sounds")]
-    public AudioClip m_audioClipPick;
     public AudioClip m_audioClipNoAmmo;
     public AudioClip[] m_aAudioClipsShot;
     private AudioSource m_audioSource;
     private bool m_bCanPlayNoAmmoSound = true;
+    private bool m_bCanPlayWeaponSound = true;
 
     // Start is called before the first frame update
     void Start()
@@ -126,10 +126,12 @@ public class WeaponShot : MonoBehaviour
 
             //
             // Emit sound
-            if (m_aAudioClipsShot.Length > 0)
+            if (m_aAudioClipsShot.Length > 0 && m_bCanPlayWeaponSound)
             {
                 int iSound = Random.Range(0, m_aAudioClipsShot.Length);
                 m_audioSource.PlayOneShot(m_aAudioClipsShot[iSound]);
+                m_bCanPlayWeaponSound = false;
+                Invoke("ResetCanPlayWeaponSound", 0.05f);
             }
             
         }
@@ -165,9 +167,13 @@ public class WeaponShot : MonoBehaviour
             }
         }
     }
-
-    public void ResetNoAmmoSound()
+    private void ResetNoAmmoSound()
     {
         m_bCanPlayNoAmmoSound = true;
+    }
+
+    private void ResetCanPlayWeaponSound()
+    {
+        m_bCanPlayWeaponSound = true;
     }
 }

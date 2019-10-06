@@ -29,6 +29,9 @@ public class WeaponHolder : MonoBehaviour
 	// Drop-related
 	public float			DropForce = 15.0f;
 
+    [Header("Sounds")]
+    public AudioClip m_audioClipThrowWeapon;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -61,14 +64,14 @@ public class WeaponHolder : MonoBehaviour
     {
 		//
 		// Weapon drop
-		if (Input.GetKeyUp(KeyCode.Return))
-		{
-			DropWeapon();
-		}
-		else if (Input.GetKeyUp(KeyCode.KeypadEnter))
-		{
-			DebugDropWeapon();
-		}
+		//if (Input.GetKeyUp(KeyCode.Return))
+		//{
+		//	DropWeapon();
+		//}
+		//else if (Input.GetKeyUp(KeyCode.KeypadEnter))
+		//{
+		//	DebugDropWeapon();
+		//}
 
 		//
 		// Weapon switch
@@ -143,11 +146,22 @@ public class WeaponHolder : MonoBehaviour
 			body.velocity = gameObject.transform.forward * DropForce;
 			newWeapon.GetComponent<Weapon>().Drop();
 			newWeapon.GetComponent<BoxCollider>().enabled = true;
+
+            //
+            //
+            AudioManager.GetInstance().PlaySoundEffect(m_audioClipThrowWeapon, 0.8f);
 		}
 	}
 
     public Weapon GetCurrentWeapon()
     {
-        return CurrentWeapon.GetComponent<Weapon>();
+        if (null != CurrentWeapon)
+        {
+            return CurrentWeapon.GetComponent<Weapon>();
+        }
+        else
+        {
+            return null;
+        }
     }
 }

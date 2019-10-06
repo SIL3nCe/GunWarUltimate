@@ -16,6 +16,7 @@ public class PlayerGameplay : MonoBehaviour
     [Header("Sounds")]
     public AudioClip[] m_aAudioClipsScream;
     public AudioClip[] m_aAudioClipsDamage;
+    public AudioClip m_aAudioClipImplose;
     private AudioSource m_audioSource;
     private bool m_bCanPlayDamageSound = true;
 
@@ -73,10 +74,12 @@ public class PlayerGameplay : MonoBehaviour
         //
         // Emit die sounds
         int iSound = Random.Range(0, m_aAudioClipsScream.Length);
-        m_audioSource.PlayOneShot(m_aAudioClipsScream[iSound], 0.2f);
+        AudioManager.GetInstance().PlaySoundEffect(m_aAudioClipsScream[iSound], 0.6f);
+        AudioManager.GetInstance().PlaySoundEffect(m_aAudioClipImplose, 1.0f);
 
         gameObject.SetActive(false);
-	}
+
+    }
 
 	public float GetPercentage()
 	{

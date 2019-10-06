@@ -5245,6 +5245,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 643c024bb0b3fab4a979174272ecb453, type: 3}
   m_audioClipLand: {fileID: 8300000, guid: d55ccfee3845bd441a68b79117ad6bce, type: 3}
   m_audioClipHang: {fileID: 8300000, guid: 5056cd05442c7264eb20e51a8f19f465, type: 3}
+  m_audioClipNoWeapon: {fileID: 8300000, guid: 610af0e3027000d4983fda7171df8bf9, type: 3}
   m_inputActionJump:
     m_Name: Input Action Jump
     m_Type: 0
@@ -5357,6 +5358,8 @@ MonoBehaviour:
   SocketPistolSilencer: {fileID: 6578618641677038550}
   SocketRocketLauncher: {fileID: 3631504680296392757}
   DropForce: 40
+  m_audioClipThrowWeapon: {fileID: 8300000, guid: 02a947b6a72bec342a39337f3de1e23d,
+    type: 3}
 --- !u!114 &763541238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5394,6 +5397,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a56a318619575254a8e1986a16d2adfe, type: 3}
   - {fileID: 8300000, guid: 1f8cdb2e6b62a004989c3bc43e1939d6, type: 3}
   - {fileID: 8300000, guid: bfbd3c2d267c862498e882dfa1ce27cf, type: 3}
+  m_aAudioClipImplose: {fileID: 8300000, guid: 6e3b3cc7d9c12ae4ebe21a44b808ac8a, type: 3}
 --- !u!82 &1571041756811314892
 AudioSource:
   m_ObjectHideFlags: 0
