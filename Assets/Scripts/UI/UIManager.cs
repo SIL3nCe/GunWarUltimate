@@ -64,8 +64,24 @@ public class UIManager : MonoBehaviour
 	// Player-related
 	public PlayerGameplay	Player1;
 	public PlayerGameplay	Player2;
-	private bool			bP1Dead;
-	private bool			bP2Dead;
+
+	struct PlayerUI
+	{
+		public PlayerGameplay	Player;
+		public bool				bDead;
+
+		public Text				UiPercentage;
+
+		public GameObject		UiPanelStock;
+		public GameObject		UiPanelStock1;
+		public GameObject		UiPanelStock2;
+		public GameObject		UiPanelStock3;
+		public GameObject		UiPanelStockX;
+		public RawImage			UiImageStockX;
+		public Text				UiTextStockX;
+	}
+
+	private PlayerUI[]	PlayerArray;
 
 	// Start is called before the first frame update
 	void Start()
@@ -75,13 +91,8 @@ public class UIManager : MonoBehaviour
 		eInGameState = EInGameState.countdown;
 
 		//
-		// UI
-		UiP1Percentage.text = 0.ToString("D3") + "%";
-		UiP2Percentage.text = 0.ToString("D3") + "%";
-
-		//
 		// Time-related
-		if(EInGameEndRules.stock_and_time == Rules || EInGameEndRules.time == Rules)
+		if (EInGameEndRules.stock_and_time == Rules || EInGameEndRules.time == Rules)
 		{
 			RoundDurationMinute = (uint)(Mathf.Min(99, RoundDurationMinute));
 			RoundDurationSeconds = (uint)(Mathf.Min(59, RoundDurationSeconds));
@@ -92,95 +103,105 @@ public class UIManager : MonoBehaviour
 		}
 
 		//
+		// Player-related
+		{
+			int iPlayerCount = System.Enum.GetValues(typeof(EPlayerEnum)).Length;
+			PlayerArray = new PlayerUI[iPlayerCount];
+			for (int iPlayerUIIndex = 0; iPlayerUIIndex < iPlayerCount; ++iPlayerUIIndex)
+			{
+				PlayerArray[iPlayerUIIndex].Player = null;
+			}
+
+			if (null != Player1)
+			{
+				PlayerArray[(int)(EPlayerEnum.p1)].Player = Player1;
+				PlayerArray[(int)(EPlayerEnum.p1)].bDead = false;
+				PlayerArray[(int)(EPlayerEnum.p1)].UiPercentage		= UiP1Percentage;
+				PlayerArray[(int)(EPlayerEnum.p1)].UiPanelStock		= UiPanelStockP1;
+				PlayerArray[(int)(EPlayerEnum.p1)].UiPanelStock1	= UiPanelStockP1Stock1;
+				PlayerArray[(int)(EPlayerEnum.p1)].UiPanelStock2	= UiPanelStockP1Stock2;
+				PlayerArray[(int)(EPlayerEnum.p1)].UiPanelStock3	= UiPanelStockP1Stock3;
+				PlayerArray[(int)(EPlayerEnum.p1)].UiPanelStockX	= UiPanelStockP1StockX;
+				PlayerArray[(int)(EPlayerEnum.p1)].UiImageStockX	= UiImageStockP1StockX;
+				PlayerArray[(int)(EPlayerEnum.p1)].UiTextStockX	= UiTextStockP1StockX;
+			}
+			if (null != Player2)
+			{
+				PlayerArray[(int)(EPlayerEnum.p2)].Player = Player2;
+				PlayerArray[(int)(EPlayerEnum.p2)].bDead = false;
+				PlayerArray[(int)(EPlayerEnum.p2)].UiPercentage		= UiP2Percentage;
+				PlayerArray[(int)(EPlayerEnum.p2)].UiPanelStock		= UiPanelStockP2;
+				PlayerArray[(int)(EPlayerEnum.p2)].UiPanelStock1	= UiPanelStockP2Stock1;
+				PlayerArray[(int)(EPlayerEnum.p2)].UiPanelStock2	= UiPanelStockP2Stock2;
+				PlayerArray[(int)(EPlayerEnum.p2)].UiPanelStock3	= UiPanelStockP2Stock3;
+				PlayerArray[(int)(EPlayerEnum.p2)].UiPanelStockX	= UiPanelStockP2StockX;
+				PlayerArray[(int)(EPlayerEnum.p2)].UiImageStockX	= UiImageStockP2StockX;
+				PlayerArray[(int)(EPlayerEnum.p2)].UiTextStockX		= UiTextStockP2StockX;
+			}
+			foreach (PlayerUI playerUI in PlayerArray)
+			{
+				if (null != playerUI.Player)
+				{
+					playerUI.Player.SetUiManager(this);
+					playerUI.Player.SetStocks(iRoundStocksCount);
+
+					playerUI.UiPercentage.text = 0.ToString("D3") + "%";
+				}
+			}
+		}
+
+		//
 		// Stock related
 		if (EInGameEndRules.stock_and_time == Rules || EInGameEndRules.stock_and_time == Rules)
 		{
 			iRoundStocksCount = RoundStocksCount;
 
-			UiPanelStockP1.SetActive(true);
-			UiPanelStockP2.SetActive(true);
-
-			if (null != Player1)
+			foreach (PlayerUI playerUI in PlayerArray)
 			{
-				UiImageStockP1StockX.GetComponent<RawImage>().material = Player1.GetComponent<PlayerGameplay>().Head.material;
-				UiImageStockP1StockX.GetComponent<RawImage>().material.shader = Shader.Find("UI/Unlit/Detail");
-
-				RawImage[] images1 = UiPanelStockP1Stock1.GetComponentsInChildren<RawImage>();
-				foreach (RawImage image in images1)
+				if (null != playerUI.Player)
 				{
-					image.material = Player1.GetComponent<PlayerGameplay>().Head.material;
-					image.material.shader = Shader.Find("UI/Unlit/Detail");
-				}
+					playerUI.UiPanelStock.SetActive(true);
 
-				RawImage[] images2 = UiPanelStockP1Stock2.GetComponentsInChildren<RawImage>();
-				foreach (RawImage image in images2)
-				{
-					image.material = Player1.GetComponent<PlayerGameplay>().Head.material;
-					image.material.shader = Shader.Find("UI/Unlit/Detail");
-				}
+					playerUI.UiImageStockX.GetComponent<RawImage>().material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
+					playerUI.UiImageStockX.GetComponent<RawImage>().material.shader = Shader.Find("UI/Unlit/Detail");
 
-				RawImage[] images3 = UiPanelStockP1Stock3.GetComponentsInChildren<RawImage>();
-				foreach (RawImage image in images3)
-				{
-					image.material = Player1.GetComponent<PlayerGameplay>().Head.material;
-					image.material.shader = Shader.Find("UI/Unlit/Detail");
-				}
-			}
-			if (null != Player2)
-			{
-				UiImageStockP2StockX.GetComponent<RawImage>().material = Player2.GetComponent<PlayerGameplay>().Head.material;
-				UiImageStockP2StockX.GetComponent<RawImage>().material.shader = Shader.Find("UI/Unlit/Detail");
+					RawImage[] images1 = playerUI.UiPanelStock1.GetComponentsInChildren<RawImage>();
+					foreach (RawImage image in images1)
+					{
+						image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
+						image.material.shader = Shader.Find("UI/Unlit/Detail");
+					}
 
-				RawImage[] images1 = UiPanelStockP2Stock1.GetComponentsInChildren<RawImage>();
-				foreach (RawImage image in images1)
-				{
-					image.material = Player2.GetComponent<PlayerGameplay>().Head.material;
-					image.material.shader = Shader.Find("UI/Unlit/Detail");
-				}
+					RawImage[] images2 = playerUI.UiPanelStock2.GetComponentsInChildren<RawImage>();
+					foreach (RawImage image in images2)
+					{
+						image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
+						image.material.shader = Shader.Find("UI/Unlit/Detail");
+					}
 
-				RawImage[] images2 = UiPanelStockP2Stock2.GetComponentsInChildren<RawImage>();
-				foreach (RawImage image in images2)
-				{
-					image.material = Player2.GetComponent<PlayerGameplay>().Head.material;
-					image.material.shader = Shader.Find("UI/Unlit/Detail");
-				}
+					RawImage[] images3 = playerUI.UiPanelStock3.GetComponentsInChildren<RawImage>();
+					foreach (RawImage image in images3)
+					{
+						image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
+						image.material.shader = Shader.Find("UI/Unlit/Detail");
+					}
+					
+					if		(iRoundStocksCount < 2)	{	playerUI.UiPanelStock1.SetActive(true);	}
+					else if	(iRoundStocksCount < 3)	{	playerUI.UiPanelStock2.SetActive(true);	}
+					else if	(iRoundStocksCount < 4)	{	playerUI.UiPanelStock3.SetActive(true);	}
+					else
+					{
+						playerUI.UiPanelStockX.SetActive(true);
 
-				RawImage[] images3 = UiPanelStockP2Stock3.GetComponentsInChildren<RawImage>();
-				foreach (RawImage image in images3)
-				{
-					image.material = Player2.GetComponent<PlayerGameplay>().Head.material;
-					image.material.shader = Shader.Find("UI/Unlit/Detail");
+						playerUI.UiTextStockX.text = ((int)iRoundStocksCount).ToString("D2");
+					}
 				}
 			}
 
-			if		(iRoundStocksCount < 2)	{	UiPanelStockP1Stock1.SetActive(true);	UiPanelStockP2Stock1.SetActive(true);	}
-			else if	(iRoundStocksCount < 3)	{	UiPanelStockP1Stock2.SetActive(true);	UiPanelStockP2Stock2.SetActive(true);	}
-			else if	(iRoundStocksCount < 4)	{	UiPanelStockP1Stock3.SetActive(true);	UiPanelStockP2Stock3.SetActive(true);	}
-			else
-			{
-				UiPanelStockP1StockX.SetActive(true);
-				UiPanelStockP2StockX.SetActive(true);
-
-				UiTextStockP1StockX.text = ((int)iRoundStocksCount).ToString("D2");
-				UiTextStockP2StockX.text = ((int)iRoundStocksCount).ToString("D2");
-			}
 		}
 		else
 		{
 			iRoundStocksCount = null;
-		}
-
-		//
-		// Player-related
-		if(null != Player1)
-		{
-			Player1.SetUiManager(this);
-			Player1.SetStocks(iRoundStocksCount);
-		}
-		if (null != Player2)
-		{
-			Player2.SetUiManager(this);
-			Player2.SetStocks(iRoundStocksCount);
 		}
 	}
 
@@ -212,7 +233,11 @@ public class UIManager : MonoBehaviour
 			{
 				//
 				// Check stocks
-				bool bFinished = bP1Dead || bP2Dead;
+				bool bFinished = false;
+				foreach(PlayerUI playerUI in PlayerArray)
+				{
+					bFinished |= playerUI.bDead;
+				}
 
 				//
 				// Check time
@@ -248,28 +273,50 @@ public class UIManager : MonoBehaviour
 	public void OnPlayerDied(PlayerGameplay player)
 	{
 		uint? stocks = player.GetRemainingStocks();
-		if (null != stocks && 0 == stocks)
+		if (null != stocks && null != PlayerArray[(int)(player.playerEnum)].Player)
 		{
-			if (PlayerEnum.p1 == player.playerEnum)
+			if (3 < stocks)
 			{
-				bP1Dead = true;
+				PlayerArray[(int)(player.playerEnum)].UiTextStockX.text = ((int)(stocks)).ToString("D2");
 			}
-			else if (PlayerEnum.p2 == player.playerEnum)
+			else if (2 < stocks) // 3+ -> 3 = only panel 3 images
 			{
-				bP2Dead = true;
+				PlayerArray[(int)(player.playerEnum)].UiPanelStockX.SetActive(false);
+				PlayerArray[(int)(player.playerEnum)].UiPanelStock3.SetActive(true);
+			}
+			else if (1 < stocks) // 3 -> 2 = only panel 3 images
+			{
+				PlayerArray[(int)(player.playerEnum)].UiPanelStock3.GetComponent<StockDisplay>().Image3.enabled = false;
+			}
+			else if (0 < stocks) // 2 -> 1, can be 3/2
+			{
+				if (PlayerArray[(int)player.playerEnum].UiPanelStock3.activeInHierarchy)
+				{
+					PlayerArray[(int)(player.playerEnum)].UiPanelStock3.GetComponent<StockDisplay>().Image2.enabled = false;
+				}
+				else 
+				{
+					PlayerArray[(int)(player.playerEnum)].UiPanelStock2.GetComponent<StockDisplay>().Image2.enabled = false;
+				}
+			}
+			else
+			{
+				PlayerArray[(int)(player.playerEnum)].bDead = true;
+				foreach(PlayerUI playerUI in PlayerArray)
+				{
+					playerUI.UiPanelStock3.SetActive(false);
+					playerUI.UiPanelStock2.SetActive(false);
+					playerUI.UiPanelStock1.SetActive(false);
+				}
 			}
 		}
 	}
 
 	public void OnPlayerDamageTaken(PlayerGameplay player)
 	{
-		if(PlayerEnum.p1 == player.playerEnum)
+		if (null != PlayerArray[(int)(player.playerEnum)].Player)
 		{
-			UiP1Percentage.text = ((int)(player.GetPercentage())).ToString("D3") + "%";
-		}
-		else if (PlayerEnum.p2 == player.playerEnum)
-		{
-			UiP2Percentage.text = ((int)(player.GetPercentage())).ToString("D3") + "%";
+			PlayerArray[(int)(player.playerEnum)].UiPercentage.text = ((int)(Mathf.Max(player.GetPercentage(), 999.0f))).ToString("D3") + "%";
 		}
 	}
 }
