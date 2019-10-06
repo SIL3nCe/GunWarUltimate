@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ammo
   - Terrain
+  - Weapon
   layers:
   - Default
   - TransparentFX
