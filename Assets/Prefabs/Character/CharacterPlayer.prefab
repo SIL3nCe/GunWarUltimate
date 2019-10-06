@@ -4892,7 +4892,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b73e1e46d6b90f54ba3ba1faa9550585, type: 2}
+  - {fileID: 2100000, guid: cfca275426dce754aaeb7d89544cd7ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5073,7 +5073,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b73e1e46d6b90f54ba3ba1faa9550585, type: 2}
+  - {fileID: 2100000, guid: cfca275426dce754aaeb7d89544cd7ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5120,14 +5120,13 @@ GameObject:
   - component: {fileID: 6993655524484201538}
   - component: {fileID: 6993655524491449266}
   - component: {fileID: 1970284472}
-  - component: {fileID: 1970284474}
   - component: {fileID: 1970284471}
   - component: {fileID: 657409927}
   - component: {fileID: 763541237}
   - component: {fileID: 763541238}
   - component: {fileID: 1571041756811314892}
   m_Layer: 0
-  m_Name: KranckTestCharacter
+  m_Name: CharacterPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5190,19 +5189,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 1
---- !u!65 &1970284474
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6993655524484161634}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.41977918, y: 1.5773133, z: 0.34753382}
-  m_Center: {x: -0.0067754537, y: 0.79942936, z: -0.034540996}
 --- !u!114 &1970284471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5256,7 +5242,7 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 8a11b94a-a7ec-4198-85c5-aa8c1c8335f6
-      m_Path: <Keyboard>/numpadEnter
+      m_Path: <Keyboard>/space
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -5280,7 +5266,7 @@ MonoBehaviour:
       m_Flags: 4
     - m_Name: negative
       m_Id: 982dcd66-25e4-4744-b0db-708bad9a0341
-      m_Path: <Keyboard>/leftArrow
+      m_Path: <Keyboard>/a
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -5288,7 +5274,7 @@ MonoBehaviour:
       m_Flags: 8
     - m_Name: positive
       m_Id: 2334533c-673d-4ed0-b705-4cc0aaaa9011
-      m_Path: <Keyboard>/rightArrow
+      m_Path: <Keyboard>/d
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -5304,7 +5290,7 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 1136d891-f21c-46ba-9fb3-ea5ba5a5eb7d
-      m_Path: <Keyboard>/numpad0
+      m_Path: <Keyboard>/v
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -5320,7 +5306,7 @@ MonoBehaviour:
     m_SingletonActionBindings:
     - m_Name: 
       m_Id: 2d3df5f3-bb8c-409c-a377-e6d7538e6cc3
-      m_Path: <Keyboard>/numpadPeriod
+      m_Path: <Keyboard>/b
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -5372,7 +5358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a9ebd22f47b59b4da800849e6e13a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerEnum: 1
+  playerEnum: 0
   Head: {fileID: 6993655524487277940}
   m_aAudioClipsScream:
   - {fileID: 8300000, guid: 54da1e2d86faa584fa32f0c5daf57dd7, type: 3}
@@ -5574,7 +5560,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b73e1e46d6b90f54ba3ba1faa9550585, type: 2}
+  - {fileID: 2100000, guid: cfca275426dce754aaeb7d89544cd7ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5748,7 +5734,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b73e1e46d6b90f54ba3ba1faa9550585, type: 2}
+  - {fileID: 2100000, guid: cfca275426dce754aaeb7d89544cd7ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5894,7 +5880,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b73e1e46d6b90f54ba3ba1faa9550585, type: 2}
+  - {fileID: 2100000, guid: cfca275426dce754aaeb7d89544cd7ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6070,7 +6056,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b73e1e46d6b90f54ba3ba1faa9550585, type: 2}
+  - {fileID: 2100000, guid: cfca275426dce754aaeb7d89544cd7ae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6244,16 +6230,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6993655524484201566}
     m_Modifications:
-    - target: {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54,
-        type: 3}
-      propertyPath: m_Name
-      value: rocketlauncherSide
-      objectReference: {fileID: 0}
-    - target: {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1147337142602055665, guid: f7ddcdc98843a3f4cb93a9270f2f7c54,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6309,6 +6285,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.00001
       objectReference: {fileID: 0}
+    - target: {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54,
+        type: 3}
+      propertyPath: m_Name
+      value: rocketlauncherSide
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7416793300630289103, guid: f7ddcdc98843a3f4cb93a9270f2f7c54,
         type: 3}
       propertyPath: m_Enabled
@@ -6340,16 +6326,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6993655524484201566}
     m_Modifications:
-    - target: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
-        type: 3}
-      propertyPath: m_Name
-      value: machinegun
-      objectReference: {fileID: 0}
-    - target: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 734068171253119136, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6405,6 +6381,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -270
       objectReference: {fileID: 0}
+    - target: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
+        type: 3}
+      propertyPath: m_Name
+      value: machinegun
+      objectReference: {fileID: 0}
+    - target: {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7606437815810149050, guid: e5133309d1776bd49a5dfad33896e0ad,
         type: 3}
       propertyPath: m_IsKinematic
@@ -6441,16 +6427,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6993655524484201566}
     m_Modifications:
-    - target: {fileID: 3250242896851250472, guid: 16d881da92b2078438cead89cd8593fc,
-        type: 3}
-      propertyPath: m_Name
-      value: sniperCamo
-      objectReference: {fileID: 0}
-    - target: {fileID: 3250242896851250472, guid: 16d881da92b2078438cead89cd8593fc,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3250242896850956552, guid: 16d881da92b2078438cead89cd8593fc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6505,6 +6481,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3250242896851250472, guid: 16d881da92b2078438cead89cd8593fc,
+        type: 3}
+      propertyPath: m_Name
+      value: sniperCamo
+      objectReference: {fileID: 0}
+    - target: {fileID: 3250242896851250472, guid: 16d881da92b2078438cead89cd8593fc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2847282717156819381, guid: 16d881da92b2078438cead89cd8593fc,
         type: 3}
