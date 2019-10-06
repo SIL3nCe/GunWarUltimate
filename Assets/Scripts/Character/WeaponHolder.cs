@@ -152,6 +152,16 @@ public class WeaponHolder : MonoBehaviour
 		}
 	}
 
+    public void OnPlayerDied()
+    {
+        if (null != CurrentWeapon)
+        {
+            CurrentWeapon.SetActive(false);
+            CurrentWeapon = null;
+            CurrentWeaponType = null;
+        }
+    }
+
     public Weapon GetCurrentWeapon()
     {
         if (null != CurrentWeapon)
