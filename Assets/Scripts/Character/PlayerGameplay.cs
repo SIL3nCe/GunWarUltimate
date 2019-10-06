@@ -13,6 +13,9 @@ public class PlayerGameplay : MonoBehaviour
 	public EPlayerEnum playerEnum;
 	public SkinnedMeshRenderer Head;
 
+    [Header("Sounds")]
+    public AudioClip[] m_aAudioClipsScream;
+
     private uint? stocks;
     private float percentage;
 
@@ -49,6 +52,13 @@ public class PlayerGameplay : MonoBehaviour
 		// Notify death
 		UiManager.OnPlayerDied(this);
 
+        //
+        // Emit die sounds
+        int iSound = Random.Range(0, m_aAudioClipsScream.Length);
+        GetComponent<AudioSource>().PlayOneShot(m_aAudioClipsScream[iSound]);
+
+        //
+        //
         if (null != stocks && stocks > 0)
         {
             //TODO set to spawn location

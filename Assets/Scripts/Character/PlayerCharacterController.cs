@@ -14,6 +14,13 @@ public class PlayerCharacterController : MonoBehaviour
     public int m_iWallJumpMaxCount = 4;
     private int m_iWallJumpRemainingCount;
 
+    [Header("Sounds")]
+    public AudioClip[] m_aAudioClipsSteps;
+    public AudioClip[] m_aAudioClipsJump;
+    public AudioClip m_audioClipLand;
+    private AudioSource m_audioSource;
+    private bool m_bCanPlayStepSound = true;
+
     //
     // private
     //
@@ -28,7 +35,7 @@ public class PlayerCharacterController : MonoBehaviour
     private float m_fDoubleJumpAttenuation = 1.0f;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //
         // Ensure rigidbody is present
@@ -38,10 +45,15 @@ public class PlayerCharacterController : MonoBehaviour
         //
         // Initialize / Reset
         ResetWallJump();
+
+        //
+        //
+        m_audioSource = GetComponent<AudioSource>();
+        Assert.IsNotNull(m_audioSource);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //
         // Compute the grounded attribute
@@ -56,6 +68,16 @@ public class PlayerCharacterController : MonoBehaviour
         if (Input.GetAxis("Horizontal") != 0.0f)
         {
             GetComponent<Animator>().SetBool("bRunning", true);
+
+            //
+            // Play the grounded sound
+            if (m_bCanPlayStepSound && m_bGrounded)
+            {
+                int iSound = Random.Range(0, m_aAudioClipsSteps.Length);
+                m_audioSource.PlayOneShot(m_aAudioClipsSteps[iSound], 0.2f);
+                m_bCanPlayStepSound = false;
+                Invoke("ResetCanPlayStepSound", 0.2f);
+            }
         }
         else
         {
@@ -80,9 +102,13 @@ public class PlayerCharacterController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                //
+                // Set the velocity for the jump
                 vTargetVelocity.y = m_fJumpFactor;
 
-                GetComponent<Animator>().SetBool("bFall", true);
+                //
+                // Play jump sound
+                PlayJumpSound();
             }
 
             //
@@ -97,6 +123,8 @@ public class PlayerCharacterController : MonoBehaviour
             // Reset wall jump
             ResetWallJump();
 
+            //
+            // TODO; Comment
             EndWallJump();
 
             //
@@ -215,6 +243,10 @@ public class PlayerCharacterController : MonoBehaviour
                         m_fDoubleJumpAttenuation = 0.6f;
 
                         //
+                        // Play jump sound
+                        PlayJumpSound();
+
+                        //
                         //
                         Invoke("EndWallJump", 0.4f);
                     }
@@ -245,7 +277,9 @@ public class PlayerCharacterController : MonoBehaviour
                         // Add another jump velocity
                         vTargetVelocity.y = m_fJumpFactor * 1.4f * m_fDoubleJumpAttenuation;
 
-                        GetComponent<Animator>().SetBool("bFall", true);
+                        //
+                        // Play jump sound
+                        PlayJumpSound();
                     }
                 }
 
@@ -277,6 +311,10 @@ public class PlayerCharacterController : MonoBehaviour
         // We cast a ray downward
         if (Physics.Raycast(transform.position + new Vector3(0.0f, 0.1f, 0.0f), Vector3.down, 0.3f))
         {
+            if (!m_bGrounded)
+            {
+                m_audioSource.PlayOneShot(m_audioClipLand);
+            }
             m_bGrounded = true;
         }
         else
@@ -288,19 +326,19 @@ public class PlayerCharacterController : MonoBehaviour
     //
     // States
     //
-    public void StartHangOn()
+    private void StartHangOn()
     {
         GetComponent<Animator>().SetBool("bHangOn", true);
         m_bHangOnWall = true;
     }
 
-    public void EndHangOn()
+    private void EndHangOn()
     {
         GetComponent<Animator>().SetBool("bHangOn", false);
         m_bHangOnWall = false;
     }
 
-    public void UpdateCharacterDirection(float fMovementDirection)
+    private void UpdateCharacterDirection(float fMovementDirection)
     {
         if (fMovementDirection > 0.0f)
         {
@@ -314,12 +352,12 @@ public class PlayerCharacterController : MonoBehaviour
         }
     }
 
-    public void ResetWallJump()
+    private void ResetWallJump()
     {
         m_iWallJumpRemainingCount = m_iWallJumpMaxCount;
     }
 
-    public bool HitAWallTest(float fPlayerHorizontalInput)
+    private bool HitAWallTest(float fPlayerHorizontalInput)
     {
         //
         // Here we do 20 raycasts to be sure to detect walls hits
@@ -338,9 +376,20 @@ public class PlayerCharacterController : MonoBehaviour
         return false;
     }
 
-    public void EndWallJump()
+    private void EndWallJump()
     {
         m_bWallJumping = false;
         m_fWallJumpDirection = 0.0f;
+    }
+
+    private void PlayJumpSound()
+    {
+        int iIndex = Random.Range(0, m_aAudioClipsJump.Length);
+        m_audioSource.PlayOneShot(m_aAudioClipsJump[iIndex]);        
+    }
+
+    private void ResetCanPlayStepSound()
+    {
+        m_bCanPlayStepSound = true;
     }
 }
