@@ -5188,7 +5188,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!65 &1970284474
 BoxCollider:
@@ -5298,7 +5298,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1feb7d8f380bf7a449258f88ca25b905, type: 3}
   - {fileID: 8300000, guid: 6ee1419ea49f3644a803d5eb87152e74, type: 3}
   - {fileID: 8300000, guid: 0d7d50caf3e685341a954ec22d113761, type: 3}
-  DeathEffect: {fileID: 110790, guid: 2805e4b61d534914880b415e2da5b2b1, type: 3}
 --- !u!82 &1571041756811314892
 AudioSource:
   m_ObjectHideFlags: 0
