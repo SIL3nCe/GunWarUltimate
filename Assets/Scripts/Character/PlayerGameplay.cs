@@ -52,16 +52,18 @@ public class PlayerGameplay : MonoBehaviour
 		// Notify death
 		UiManager.OnPlayerDied(this);
 
+        //
+        // Emit die sounds
+        int iSound = Random.Range(0, m_aAudioClipsScream.Length);
+        GetComponent<AudioSource>().PlayOneShot(m_aAudioClipsScream[iSound]);
+
+        //
+        //
         if (null != stocks && stocks > 0)
         {
             //TODO set to spawn location
             return;
         }
-
-        //
-        // Emit die sounds
-        int iSound = Random.Range(0, m_aAudioClipsScream.Length);
-        GetComponent<AudioSource>().PlayOneShot(m_aAudioClipsScream[iSound]);
 	}
 
 	public float GetPercentage()
