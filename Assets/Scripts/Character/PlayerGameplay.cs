@@ -95,7 +95,7 @@ public class PlayerGameplay : MonoBehaviour
         if (null != stocks && stocks > 0)
         {
             gameObject.SetActive(true);
-            gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
+            gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, gameObject.transform.rotation);
             if (null != rigidBody)
             {
                 rigidBody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
