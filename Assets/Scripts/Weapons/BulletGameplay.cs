@@ -45,7 +45,11 @@ public class BulletGameplay : MonoBehaviour
             PlayerGameplay player = collision.gameObject.GetComponent<PlayerGameplay>();
             if (null != player)
             {
-                player.TakeDamages(Damages);
+                // Collision orientation
+                Vector3 dir = collision.contacts[0].point - transform.position;
+                // Opposite
+                dir = -dir.normalized;
+                player.TakeDamages(Damages, dir);
                 TriggerHitEffect();
             }
         }

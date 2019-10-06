@@ -31,9 +31,9 @@ public class PlayerGameplay : MonoBehaviour
         percentage = 0.0f;
     }
 
-    public void TakeDamages(float damages)
+    public void TakeDamages(float fDamages, Vector3 orientation)
     {
-        percentage += Mathf.Min(damages, 999.0f);
+        percentage = Mathf.Min(percentage + fDamages, 999.0f);
 
         //
         // Notify death
@@ -41,6 +41,16 @@ public class PlayerGameplay : MonoBehaviour
         {
             UiManager.OnPlayerDamageTaken(this);
         }
+
+        // Ejection based on percentage
+        orientation.Normalize();
+
+        // convert damages to [-2,5] for exponential
+        // Linear ratio conversion ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
+        float fRangedVal = (percentage / 999) * 6;
+
+        float fForceFactor = Mathf.Exp(fRangedVal);
+        rigidBody.AddForce(orientation * fForceFactor, ForceMode.Impulse);
     }
 
     public void OnDie()

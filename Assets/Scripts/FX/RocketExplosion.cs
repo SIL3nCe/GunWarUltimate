@@ -16,7 +16,8 @@ public class RocketExplosion : MonoBehaviour
         PlayerGameplay player = collision.gameObject.GetComponent<PlayerGameplay>();
         if (null != player)
         {
-            player.TakeDamages(damages);
+            Vector3 dir = player.transform.position - gameObject.transform.position;
+            player.TakeDamages(damages, dir);
         }
     }
 }
