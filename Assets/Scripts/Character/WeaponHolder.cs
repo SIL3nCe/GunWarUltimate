@@ -41,14 +41,18 @@ public class WeaponHolder : MonoBehaviour
     {
 		//
 		// Weapon drop
-		if(Input.GetKeyUp(KeyCode.Return))
+		if (Input.GetKeyUp(KeyCode.Return))
 		{
 			DropWeapon();
+		}
+		else if (Input.GetKeyUp(KeyCode.KeypadEnter))
+		{
+			DebugDropWeapon();
 		}
 
 		//
 		// Weapon switch
-		if(bDirtySwitchWeapon)
+		if (bDirtySwitchWeapon)
 		{
 			if(null == CurrentWeapon)
 			{
@@ -96,7 +100,19 @@ public class WeaponHolder : MonoBehaviour
 			CurrentWeapon.SetActive(true);
 		}
 	}
-	
+
+	void DebugDropWeapon()
+	{
+		if(null == WeaponTypeToSwitchTo)
+		{
+			WeaponTypeToSwitchTo = EWeaponType.machine_gun;
+			SwitchWeapon();
+			DropWeapon();
+			WeaponTypeToSwitchTo = null;
+			bDirtySwitchWeapon = false;
+		}
+	}
+
 	void DropWeapon()
 	{
 		if(null != CurrentWeapon)
