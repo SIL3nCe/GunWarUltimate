@@ -27,9 +27,12 @@ public class PlayerGameplay : MonoBehaviour
     {
         percentage += damages;
 
-		//
-		// Notify death
-		UiManager.OnPlayerDamageTaken(this);
+        //
+        // Notify death
+        if (null != UiManager)
+        {
+            UiManager.OnPlayerDamageTaken(this);
+        }
     }
 
     public void OnDie()

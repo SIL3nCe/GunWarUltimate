@@ -6,11 +6,6 @@ public class RocketExplosion : MonoBehaviour
 {
     private float damages; // Set by weapon on shot
 
-    private void Start()
-    {
-        Invoke("DeletePrefab", 1.0f);
-    }
-
     public void SetDamages(float InDamages)
     {
         damages = InDamages;
@@ -23,10 +18,5 @@ public class RocketExplosion : MonoBehaviour
         {
             player.TakeDamages(damages);
         }
-    }
-
-    void DeletePrefab()
-    {
-        Destroy(gameObject);
     }
 }
