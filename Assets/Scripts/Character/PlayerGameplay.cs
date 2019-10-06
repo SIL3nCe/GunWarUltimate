@@ -23,8 +23,11 @@ public class PlayerGameplay : MonoBehaviour
 
 	private UIManager UiManager;
 
-	void Start()
+    private Rigidbody rigidBody;
+
+    void Start()
     {
+        rigidBody = gameObject.GetComponent<Rigidbody>();
         percentage = 0.0f;
     }
 
@@ -89,11 +92,15 @@ public class PlayerGameplay : MonoBehaviour
 
 	private void Spawn()
     {
-        gameObject.SetActive(true);
-
         if (null != stocks && stocks > 0)
-		{
-			gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
+        {
+            gameObject.SetActive(true);
+            gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
+            if (null != rigidBody)
+            {
+                rigidBody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+                rigidBody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+            }
 		}
 	}
 }
