@@ -12,6 +12,10 @@ public class WeaponHolder : MonoBehaviour
 	//
 	// Sockets
 	public GameObject		SocketMachineGun;
+	public GameObject		SocketSniper;
+	public GameObject		SocketUzi;
+	public GameObject		SocketPistolSilencer;
+	public GameObject		SocketRocketLauncher;
 
 	//
 	// Switch
