@@ -17,13 +17,15 @@ public class PlayerCharacterController : MonoBehaviour
     //
     // private
     //
-    private bool m_bHitAWall = false;
     private Vector3 m_vCurrentVelocity;
     private bool m_bGrounded = false;
     private Rigidbody m_rigidbody;
     private bool m_bCanDoubleJump = true;
     private bool m_bHangOnWall = false;
     private float m_fHangOnWallDirection = 0.0f;
+    private bool m_bWallJumping;
+    private float m_fWallJumpDirection;
+    private float m_fDoubleJumpAttenuation = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -94,11 +96,25 @@ public class PlayerCharacterController : MonoBehaviour
             //
             // Reset wall jump
             ResetWallJump();
+
+            EndWallJump();
+
+            //
+            // Reset double jump attenuation
+            m_fDoubleJumpAttenuation = 1.0f;
         }
         else
         {
             bool bHitAWall = HitAWallTest(fPlayerHorizontalInput);
             bool bWallIsHangable = false;
+
+            //
+            //
+            if (m_bWallJumping)
+            {
+                fPlayerHorizontalInput = m_fWallJumpDirection;
+            }
+
             //
             // We test if we hit a wall
             //Debug.DrawRay(transform.position, new Vector3(fPlayerHorizontalInput, 0.0f, 0.0f), Color.red);
@@ -136,10 +152,14 @@ public class PlayerCharacterController : MonoBehaviour
                 // because the hang on wall direction is already the opposite wall direction
                 if (m_fHangOnWallDirection > 0.0f && fPlayerHorizontalInput > 0.0f)
                 {
+                    m_bCanDoubleJump = true;
+                    m_fDoubleJumpAttenuation = 0.4f;
                     EndHangOn();
                 }
                 else if (m_fHangOnWallDirection < 0.0f && fPlayerHorizontalInput < 0.0f)
                 {
+                    m_bCanDoubleJump = true;
+                    m_fDoubleJumpAttenuation = 0.4f;
                     EndHangOn();
                 }
                 else
@@ -153,6 +173,8 @@ public class PlayerCharacterController : MonoBehaviour
             // If we hit a wall
             if (bHitAWall)
             {
+                EndWallJump();
+
                 //
                 // If the wall is hangable
                 if (bWallIsHangable)
@@ -181,6 +203,20 @@ public class PlayerCharacterController : MonoBehaviour
                         //
                         // We do not hang on anymore
                         EndHangOn();
+
+                        //
+                        //
+                        m_bWallJumping = true;
+                        m_fWallJumpDirection = m_fHangOnWallDirection;
+
+                        //
+                        // We unlock the double jump
+                        m_bCanDoubleJump = true;
+                        m_fDoubleJumpAttenuation = 0.6f;
+
+                        //
+                        //
+                        Invoke("EndWallJump", 0.4f);
                     }
                 }
                 else
@@ -207,7 +243,7 @@ public class PlayerCharacterController : MonoBehaviour
 
                         //
                         // Add another jump velocity
-                        vTargetVelocity.y = m_fJumpFactor * 1.4f;
+                        vTargetVelocity.y = m_fJumpFactor * 1.4f * m_fDoubleJumpAttenuation;
 
                         GetComponent<Animator>().SetBool("bFall", true);
                     }
@@ -300,5 +336,11 @@ public class PlayerCharacterController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void EndWallJump()
+    {
+        m_bWallJumping = false;
+        m_fWallJumpDirection = 0.0f;
     }
 }
