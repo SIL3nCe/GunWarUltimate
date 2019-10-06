@@ -41,6 +41,10 @@ public class UIManager : MonoBehaviour
 	public Text			UiTextStockP2StockX;
 
 	//
+	// Terrain-related
+	public PlayerSpawner Spawner;
+
+	//
 	// Public attributes
 	public EInGameEndRules Rules = EInGameEndRules.time;
 
@@ -82,6 +86,8 @@ public class UIManager : MonoBehaviour
 	}
 
 	private PlayerUI[]	PlayerArray;
+
+	private bool bFinished = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -233,10 +239,16 @@ public class UIManager : MonoBehaviour
 			{
 				//
 				// Check stocks
-				bool bFinished = false;
-				foreach(PlayerUI playerUI in PlayerArray)
+				for(int iPlayerUIIndex = 0; iPlayerUIIndex < PlayerArray.Length; ++iPlayerUIIndex)
 				{
-					bFinished |= playerUI.bDead;
+					if(PlayerArray[iPlayerUIIndex].bDead)
+					{
+						Transform newPose = Spawner.GetSpawnLocation();
+						PlayerArray[iPlayerUIIndex].Player.SetNextSpawnLocation(newPose);
+
+						PlayerArray[iPlayerUIIndex].bDead = false;
+					}
+					bFinished |= PlayerArray[iPlayerUIIndex].bDead;
 				}
 
 				//
@@ -251,7 +263,7 @@ public class UIManager : MonoBehaviour
 
 					if(fRemainingTime == 0.0f)
 					{
-						bFinished = true;
+						bFinished |= true;
 					}
 				}
 
@@ -275,6 +287,7 @@ public class UIManager : MonoBehaviour
 		uint? stocks = player.GetRemainingStocks();
 		if (null != stocks && null != PlayerArray[(int)(player.playerEnum)].Player)
 		{
+			PlayerArray[(int)(player.playerEnum)].bDead = true;
 			if (3 < stocks)
 			{
 				PlayerArray[(int)(player.playerEnum)].UiTextStockX.text = ((int)(stocks)).ToString("D2");
@@ -301,9 +314,9 @@ public class UIManager : MonoBehaviour
 			}
 			else
 			{
-				PlayerArray[(int)(player.playerEnum)].bDead = true;
 				foreach(PlayerUI playerUI in PlayerArray)
 				{
+					bFinished = true;
 					playerUI.UiPanelStock3.SetActive(false);
 					playerUI.UiPanelStock2.SetActive(false);
 					playerUI.UiPanelStock1.SetActive(false);

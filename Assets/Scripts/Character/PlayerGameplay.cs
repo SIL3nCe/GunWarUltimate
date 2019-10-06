@@ -95,6 +95,9 @@ public class PlayerGameplay : MonoBehaviour
 
 	private void Spawn()
 	{
-		gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
+		if(null != stocks && stocks > 0)
+		{
+			gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
+		}
 	}
 }
