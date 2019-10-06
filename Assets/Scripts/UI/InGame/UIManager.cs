@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
 	public GameObject	UiPanelStockP2StockX;
 	public RawImage		UiImageStockP2StockX;
 	public Text			UiTextStockP2StockX;
+	public GameObject	UiPanelVictory;
+	public Text			UiTextWinner;
 
 	//
 	// Terrain-related
@@ -257,8 +259,20 @@ public class UIManager : MonoBehaviour
 				break;
 			}
 			case EInGameState.paused:
+			{
+				break;
+			}
 			case EInGameState.finished:
 			{
+				UiPanelVictory.SetActive(true);
+				if(0 == Player1.GetRemainingStocks())
+				{
+					UiTextWinner.text = "P1";
+				}
+				else if(0 == Player2.GetRemainingStocks())
+				{
+					UiTextWinner.text = "P2";
+				}
 				break;
 			}
 		}
