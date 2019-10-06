@@ -16,6 +16,12 @@ public class BoundsWatcher : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
 	{
+        if (other.gameObject.CompareTag("BulletShell"))
+        {
+            Destroy(other.gameObject);
+            return;
+        }
+
 		PlayerGameplay pgpComponent = other.GetComponent<PlayerGameplay>();
         if (null != pgpComponent)
         {
