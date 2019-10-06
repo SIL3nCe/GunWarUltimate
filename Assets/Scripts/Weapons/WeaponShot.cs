@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class WeaponShot : MonoBehaviour
 {
@@ -32,11 +33,23 @@ public class WeaponShot : MonoBehaviour
     [Tooltip("Number of bullets it can shoot")]
     public int loaderSize;
 
+    [Header("Sounds")]
+    public AudioClip m_audioClipPick;
+    public AudioClip m_audioClipNoAmmo;
+    public AudioClip[] m_aAudioClipsShot;
+    private AudioSource m_audioSource;
+    private bool m_bCanPlayNoAmmoSound = true;
+
     // Start is called before the first frame update
     void Start()
     {
         firingDt = 0.0f;
         firingRateDt = 1.0f / firingRate;
+
+        //
+        // Retrieve Audio Source
+        m_audioSource = GetComponent<AudioSource>();
+        Assert.IsNotNull(m_audioSource);
     }
 
     void Update()
@@ -110,6 +123,24 @@ public class WeaponShot : MonoBehaviour
                 GameObject fireShell = Instantiate(bulletShellPrefab, shellLocation, shellRotation);
                 fireShell.GetComponent<Rigidbody>().velocity = -gameObject.transform.forward * 3.0f;
             }
+
+            //
+            // Emit sound
+            if (m_aAudioClipsShot.Length > 0)
+            {
+                int iSound = Random.Range(0, m_aAudioClipsShot.Length);
+                m_audioSource.PlayOneShot(m_aAudioClipsShot[iSound]);
+            }
+            
+        }
+        else
+        {
+            if (m_audioClipNoAmmo && m_bCanPlayNoAmmoSound)
+            {
+                m_audioSource.PlayOneShot(m_audioClipNoAmmo);
+                m_bCanPlayNoAmmoSound = false;
+                Invoke("ResetNoAmmoSound", 0.6f);
+            }
         }
     }
 
@@ -133,5 +164,10 @@ public class WeaponShot : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    public void ResetNoAmmoSound()
+    {
+        m_bCanPlayNoAmmoSound = true;
     }
 }
