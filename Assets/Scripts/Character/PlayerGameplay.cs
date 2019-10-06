@@ -33,7 +33,7 @@ public class PlayerGameplay : MonoBehaviour
 
     public void TakeDamages(float damages)
     {
-        percentage = Mathf.Min(damages, 999.0f);
+        percentage += Mathf.Min(damages, 999.0f);
 
         //
         // Notify death
