@@ -43,13 +43,12 @@ public class WeaponTriggerCollider : MonoBehaviour
 		//
 		// Store weapon script
 		_Weapon = gameObject.GetComponent<Weapon>();
-
 	}
 
     private void OnTriggerEnter(Collider other)
     {
 		WeaponHolder componentWeaponHolder = other.gameObject.GetComponent<WeaponHolder>();
-        if(null != componentWeaponHolder)
+        if (null != componentWeaponHolder)
         {
 			//
 			// Show correct weapon in body
@@ -64,6 +63,16 @@ public class WeaponTriggerCollider : MonoBehaviour
                 //
                 // Play the pick sound
                 AudioManager.GetInstance().PlaySoundEffect(m_pickSound, 1.0f);
+            }
+            else
+            {
+                float fSpeed = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+                if (fSpeed >= 5.0f)
+                {
+                    PlayerGameplay player = other.gameObject.GetComponent<PlayerGameplay>();
+                    Vector3 dir = player.transform.position - gameObject.transform.position;
+                    player.TakeDamages(30.0f, dir, 1.3f);
+                }
             }
 		}
 	}
