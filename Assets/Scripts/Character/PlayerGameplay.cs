@@ -16,6 +16,8 @@ public class PlayerGameplay : MonoBehaviour
     private uint? stocks;
     private float percentage;
 
+	private Transform nextSpawnLocation;
+
 	private UIManager UiManager;
 
 	void Start()
@@ -72,5 +74,17 @@ public class PlayerGameplay : MonoBehaviour
 	public void SetStocks(uint? iStocks)
 	{
 		stocks = iStocks;
+	}
+
+	public void SetNextSpawnLocation(Transform newPose)
+	{
+		nextSpawnLocation = newPose;
+
+		Invoke("Spawn", 3.0f);
+	}
+
+	private void Spawn()
+	{
+		gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
 	}
 }
