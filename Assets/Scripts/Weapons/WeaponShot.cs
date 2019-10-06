@@ -5,26 +5,29 @@ using UnityEngine;
 public class WeaponShot : MonoBehaviour
 {
     [Tooltip("Bullet spawn location")]
-    public GameObject   muzzleSocket;
-    public GameObject   bulletPrefab;
+    public GameObject muzzleSocket;
+    public GameObject bulletPrefab;
 
     [Tooltip("Shell spawn location")]
-    public GameObject   shellSocket;
-    public GameObject   bulletShellPrefab;
+    public GameObject shellSocket;
+    public GameObject bulletShellPrefab;
+
+    [Tooltip("Rocket to hide when shooting with rocket launcher")]
+    public GameObject rocketMesh;
 
     [Tooltip("Bullet/s")]
-    public int      firingRate;
-    private float   firingRateDt;
-    private float   firingDt;
+    public int firingRate;
+    private float firingRateDt;
+    private float firingDt;
 
     [Tooltip("Bullet start velocity")]
-    public float    bulletSpeed;
+    public float bulletSpeed;
 
     [Tooltip("% of damage per bullet")]
-    public float    bulletDamages;
+    public float bulletDamages;
 
     [Tooltip("Number of bullets it can shoot")]
-    public int      loaderSize;
+    public int loaderSize;
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +51,7 @@ public class WeaponShot : MonoBehaviour
     {
         if (firingDt > firingRateDt && loaderSize > 0)
         {
-            if (null != muzzleSocket)
+            if (null != muzzleSocket && null != bulletPrefab)
             {
                 // spawn bullet on socket location
                 Vector3 bulletLocation = muzzleSocket.transform.position;
@@ -61,21 +64,78 @@ public class WeaponShot : MonoBehaviour
                 {
                     bulletParams.SetDamages(bulletDamages);
                 }
+
+                firingDt = 0.0f;
+                loaderSize--;
+               
+                // hide rocket for firingRateDt time if rocket is set
+                if (null != rocketMesh)
+                {
+                    MeshRenderer mesh = rocketMesh.GetComponent<MeshRenderer>();
+                    if (null != mesh)
+                    {
+                        Material[] materialList = mesh.materials;
+                        for (int i = 0; i < materialList.Length; ++i)
+                        {
+                            Color newColor = materialList[i].color;
+                            newColor.a = 0.0f;
+                            materialList[i].color = newColor;
+                        }
+
+                        if (loaderSize > 0)
+                        {
+                            StartCoroutine(UnHideRocket(mesh, firingRateDt * 0.9f));
+                        }
+                        else
+                        {
+                            rocketMesh.SetActive(false);
+                        }
+                    }
+                }
             }
 
             // spawn shell on socket location
-            if (null != muzzleSocket)
+            if (null != shellSocket && null != bulletShellPrefab)
             {
                 Vector3 shellLocation = shellSocket.transform.position;
                 Quaternion shellRotation = shellSocket.transform.rotation;
                 GameObject fireShell = Instantiate(bulletShellPrefab, shellLocation, shellRotation);
                 fireShell.GetComponent<Rigidbody>().velocity = -gameObject.transform.forward * 3.0f;
             }
+        }
+    }
 
-            firingDt = 0.0f;
-            if (--loaderSize <= 0)
-            { // Tell the player to drop the weapon
-                //TODO
+    void UnHideRocket()
+    {
+        if (null != rocketMesh)
+        { // hide rocket for firingRateDt time
+            MeshRenderer mesh = rocketMesh.GetComponent<MeshRenderer>();
+            if (null != mesh)
+            {
+                mesh.enabled = true;
+                Invoke("", firingRateDt);
+            }
+        }
+    }
+
+    IEnumerator UnHideRocket(MeshRenderer mesh, float delayTime)
+    {
+        if (null != mesh)
+        {
+            mesh.enabled = true;
+
+            float alpha = mesh.material.color.a;
+            for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / delayTime)
+            {
+                Material[] materialList = mesh.materials;
+                for (int i = 0; i < materialList.Length; ++i)
+                {
+                    Color newColor = materialList[i].color;
+                    newColor.a = Mathf.Lerp(alpha, 1.0f, t);
+                    materialList[i].color = newColor;
+                }
+
+                yield return null;
             }
         }
     }

@@ -6,7 +6,9 @@ public enum EWeaponType
 {
 	machine_gun,
 	sniper,
-    uzi
+    uzi,
+    pistolSilencer,
+    rocketLauncher
 }
 
 public class Weapon : MonoBehaviour
