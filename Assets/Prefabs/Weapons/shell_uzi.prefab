@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8254614603280278345}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.0166, y: 0, z: 0}
+  m_LocalPosition: {x: 0.01652, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8254614603280056171}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4103646514949381269}
   m_Layer: 0
   m_Name: shell_uzi
-  m_TagString: Untagged
+  m_TagString: BulletShell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,7 +123,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.07, y: 0.041, z: 0.04}
+  m_Size: {x: 0.069, y: 0.04, z: 0.04}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4103646514949381269
 Rigidbody:
