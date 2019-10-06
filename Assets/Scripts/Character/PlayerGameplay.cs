@@ -37,9 +37,9 @@ public class PlayerGameplay : MonoBehaviour
         m_audioSource = GetComponent<AudioSource>();
     }
 
-    public void TakeDamages(float damages)
+    public void TakeDamages(float fDamages, Vector3 orientation, float fEjectionFactor)
     {
-        percentage += Mathf.Min(damages, 999.0f);
+        percentage = Mathf.Min(percentage + fDamages, 999.0f);
 
         //
         // Play damage sound
@@ -57,6 +57,17 @@ public class PlayerGameplay : MonoBehaviour
         {
             UiManager.OnPlayerDamageTaken(this);
         }
+
+        // Ejection based on percentage
+        orientation.Normalize();
+
+        // convert damages to [-2,5] for exponential
+        // Linear ratio conversion ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
+        float fRangedVal = (percentage / 999) * 6;
+
+        float fForceFactor = Mathf.Exp(fRangedVal);
+        Debug.Log("factor" + fEjectionFactor);
+        rigidBody.AddForce(orientation * fForceFactor * fEjectionFactor, ForceMode.Impulse);
     }
 
     public void OnDie()
