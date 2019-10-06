@@ -25,15 +25,31 @@ public class UIManager : MonoBehaviour
 	public Text UiTime;
 	public Text UiP1Percentage;
 	public Text UiP2Percentage;
+	public GameObject	UiPanelStockP1;
+	public GameObject	UiPanelStockP1Stock1;
+	public GameObject	UiPanelStockP1Stock2;
+	public GameObject	UiPanelStockP1Stock3;
+	public GameObject	UiPanelStockP1StockX;
+	public RawImage		UiImageStockP1StockX;
+	public Text			UiTextStockP1StockX;
+	public GameObject	UiPanelStockP2;
+	public GameObject	UiPanelStockP2Stock1;
+	public GameObject	UiPanelStockP2Stock2;
+	public GameObject	UiPanelStockP2Stock3;
+	public GameObject	UiPanelStockP2StockX;
+	public RawImage		UiImageStockP2StockX;
+	public Text			UiTextStockP2StockX;
 
 	//
 	// Public attributes
-	public EInGameEndRules eRules = EInGameEndRules.time;
+	public EInGameEndRules Rules = EInGameEndRules.time;
 
 	public uint RoundDurationMinute = 3;
 	public uint RoundDurationSeconds = 0;
 
-	public uint? RoundStocksCount = 3;
+	public uint RoundStocksCount = 3;
+
+	public uint? iRoundStocksCount = 3;
 
 	//
 	// Context-related
@@ -65,28 +81,93 @@ public class UIManager : MonoBehaviour
 
 		//
 		// Time-related
-		if(EInGameEndRules.stock_and_time == eRules || EInGameEndRules.time == eRules)
+		if(EInGameEndRules.stock_and_time == Rules || EInGameEndRules.time == Rules)
 		{
 			RoundDurationMinute = (uint)(Mathf.Min(99, RoundDurationMinute));
 			RoundDurationSeconds = (uint)(Mathf.Min(59, RoundDurationSeconds));
 			fTotalTime = RoundDurationMinute * 60.0f + RoundDurationSeconds;
 			fRemainingTime = fTotalTime;
-		}
-		else
-		{
-			UiTime.enabled = false;
+
+			UiTime.gameObject.SetActive(true);
 		}
 
 		//
 		// Stock related
-		bool bUseStocks = EInGameEndRules.stock_and_time == eRules || EInGameEndRules.stock_and_time == eRules;
-		if (bUseStocks)
+		if (EInGameEndRules.stock_and_time == Rules || EInGameEndRules.stock_and_time == Rules)
 		{
+			iRoundStocksCount = RoundStocksCount;
 
+			UiPanelStockP1.SetActive(true);
+			UiPanelStockP2.SetActive(true);
+
+			if (null != Player1)
+			{
+				UiImageStockP1StockX.GetComponent<RawImage>().material = Player1.GetComponent<PlayerGameplay>().Head.material;
+				UiImageStockP1StockX.GetComponent<RawImage>().material.shader = Shader.Find("UI/Unlit/Detail");
+
+				RawImage[] images1 = UiPanelStockP1Stock1.GetComponentsInChildren<RawImage>();
+				foreach (RawImage image in images1)
+				{
+					image.material = Player1.GetComponent<PlayerGameplay>().Head.material;
+					image.material.shader = Shader.Find("UI/Unlit/Detail");
+				}
+
+				RawImage[] images2 = UiPanelStockP1Stock2.GetComponentsInChildren<RawImage>();
+				foreach (RawImage image in images2)
+				{
+					image.material = Player1.GetComponent<PlayerGameplay>().Head.material;
+					image.material.shader = Shader.Find("UI/Unlit/Detail");
+				}
+
+				RawImage[] images3 = UiPanelStockP1Stock3.GetComponentsInChildren<RawImage>();
+				foreach (RawImage image in images3)
+				{
+					image.material = Player1.GetComponent<PlayerGameplay>().Head.material;
+					image.material.shader = Shader.Find("UI/Unlit/Detail");
+				}
+			}
+			if (null != Player2)
+			{
+				UiImageStockP2StockX.GetComponent<RawImage>().material = Player2.GetComponent<PlayerGameplay>().Head.material;
+				UiImageStockP2StockX.GetComponent<RawImage>().material.shader = Shader.Find("UI/Unlit/Detail");
+
+				RawImage[] images1 = UiPanelStockP2Stock1.GetComponentsInChildren<RawImage>();
+				foreach (RawImage image in images1)
+				{
+					image.material = Player2.GetComponent<PlayerGameplay>().Head.material;
+					image.material.shader = Shader.Find("UI/Unlit/Detail");
+				}
+
+				RawImage[] images2 = UiPanelStockP2Stock2.GetComponentsInChildren<RawImage>();
+				foreach (RawImage image in images2)
+				{
+					image.material = Player2.GetComponent<PlayerGameplay>().Head.material;
+					image.material.shader = Shader.Find("UI/Unlit/Detail");
+				}
+
+				RawImage[] images3 = UiPanelStockP2Stock3.GetComponentsInChildren<RawImage>();
+				foreach (RawImage image in images3)
+				{
+					image.material = Player2.GetComponent<PlayerGameplay>().Head.material;
+					image.material.shader = Shader.Find("UI/Unlit/Detail");
+				}
+			}
+
+			if		(iRoundStocksCount < 2)	{	UiPanelStockP1Stock1.SetActive(true);	UiPanelStockP2Stock1.SetActive(true);	}
+			else if	(iRoundStocksCount < 3)	{	UiPanelStockP1Stock2.SetActive(true);	UiPanelStockP2Stock2.SetActive(true);	}
+			else if	(iRoundStocksCount < 4)	{	UiPanelStockP1Stock3.SetActive(true);	UiPanelStockP2Stock3.SetActive(true);	}
+			else
+			{
+				UiPanelStockP1StockX.SetActive(true);
+				UiPanelStockP2StockX.SetActive(true);
+
+				UiTextStockP1StockX.text = ((int)iRoundStocksCount).ToString("D2");
+				UiTextStockP2StockX.text = ((int)iRoundStocksCount).ToString("D2");
+			}
 		}
 		else
 		{
-			RoundStocksCount = null;
+			iRoundStocksCount = null;
 		}
 
 		//
@@ -94,12 +175,12 @@ public class UIManager : MonoBehaviour
 		if(null != Player1)
 		{
 			Player1.SetUiManager(this);
-			Player1.SetStocks(RoundStocksCount);
+			Player1.SetStocks(iRoundStocksCount);
 		}
 		if (null != Player2)
 		{
 			Player2.SetUiManager(this);
-			Player2.SetStocks(RoundStocksCount);
+			Player2.SetStocks(iRoundStocksCount);
 		}
 	}
 
@@ -135,7 +216,7 @@ public class UIManager : MonoBehaviour
 
 				//
 				// Check time
-				if(EInGameEndRules.time == eRules|| EInGameEndRules.stock_and_time == eRules)
+				if(EInGameEndRules.time == Rules|| EInGameEndRules.stock_and_time == Rules)
 				{
 					fRemainingTime = Mathf.Max(fRemainingTime - Time.deltaTime, 0.0f);
 

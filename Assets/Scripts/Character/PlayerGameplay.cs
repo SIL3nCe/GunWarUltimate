@@ -11,6 +11,7 @@ public enum PlayerEnum
 public class PlayerGameplay : MonoBehaviour
 {
 	public PlayerEnum playerEnum;
+	public SkinnedMeshRenderer Head;
 
     private uint? stocks;
     private float percentage;
