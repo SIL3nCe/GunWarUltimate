@@ -325,10 +325,9 @@ MonoBehaviour:
   MuzzleFlash: {fileID: 0}
   rocketMesh: {fileID: 0}
   firingRate: 5
-  bulletSpeed: 7
+  bulletSpeed: 15
   bulletDamages: 15
   loaderSize: 15
-  m_audioClipPick: {fileID: 0}
   m_audioClipNoAmmo: {fileID: 8300000, guid: 9c33c4f341b7d43438690a05c73f8811, type: 3}
   m_aAudioClipsShot:
   - {fileID: 8300000, guid: 5aa8461bd93f92e4cbd9b2ea1c6d9367, type: 3}

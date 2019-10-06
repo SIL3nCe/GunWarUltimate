@@ -104,7 +104,7 @@ MonoBehaviour:
   MuzzleFlash: {fileID: 0}
   rocketMesh: {fileID: 1147337142602539989}
   firingRate: 1
-  bulletSpeed: 5
+  bulletSpeed: 10
   bulletDamages: 100
   loaderSize: 3
   m_audioClipNoAmmo: {fileID: 8300000, guid: ee573cdf49e4be44492530671ba84181, type: 3}
