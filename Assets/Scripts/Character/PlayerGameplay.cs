@@ -13,8 +13,15 @@ public class PlayerGameplay : MonoBehaviour
 	public EPlayerEnum playerEnum;
 	public SkinnedMeshRenderer Head;
 
+    [Tooltip("Effect to trigger on respawn location")]
+    public GameObject RespawnEffect;
+
     [Header("Sounds")]
     public AudioClip[] m_aAudioClipsScream;
+    public AudioClip[] m_aAudioClipsDamage;
+    public AudioClip m_aAudioClipImplose;
+    private AudioSource m_audioSource;
+    private bool m_bCanPlayDamageSound = true;
 
     private uint? stocks;
     private float percentage;
@@ -29,11 +36,23 @@ public class PlayerGameplay : MonoBehaviour
     {
         rigidBody = gameObject.GetComponent<Rigidbody>();
         percentage = 0.0f;
+
+        m_audioSource = GetComponent<AudioSource>();
     }
 
-    public void TakeDamages(float damages)
+    public void TakeDamages(float fDamages, Vector3 orientation, float fEjectionFactor)
     {
-        percentage += Mathf.Min(damages, 999.0f);
+        percentage = Mathf.Min(percentage + fDamages, 999.0f);
+
+        //
+        // Play damage sound
+        if (m_bCanPlayDamageSound)
+        {
+            int iSound = Random.Range(0, m_aAudioClipsDamage.Length);
+            m_audioSource.PlayOneShot(m_aAudioClipsDamage[iSound], 0.2f);
+            m_bCanPlayDamageSound = false;
+            Invoke("ResetCanPlayDamageSound", 0.4f);
+        }
 
         //
         // Notify death
@@ -41,6 +60,17 @@ public class PlayerGameplay : MonoBehaviour
         {
             UiManager.OnPlayerDamageTaken(this);
         }
+
+        // Ejection based on percentage
+        orientation.Normalize();
+
+        // convert damages to [-2,5] for exponential
+        // Linear ratio conversion ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
+        float fRangedVal = (percentage / 999) * 6;
+
+        float fForceFactor = Mathf.Exp(fRangedVal);
+
+        rigidBody.AddForce(orientation * fForceFactor * fEjectionFactor, ForceMode.Impulse);
     }
 
     public void OnDie()
@@ -53,15 +83,20 @@ public class PlayerGameplay : MonoBehaviour
 
         //
         // Notify death
-        UiManager.OnPlayerDied(this);
+        if (null != UiManager)
+        {
+            UiManager.OnPlayerDied(this);
+        }
 
         //
         // Emit die sounds
         int iSound = Random.Range(0, m_aAudioClipsScream.Length);
-        GetComponent<AudioSource>().PlayOneShot(m_aAudioClipsScream[iSound]);
+        AudioManager.GetInstance().PlaySoundEffect(m_aAudioClipsScream[iSound], 0.6f);
+        AudioManager.GetInstance().PlaySoundEffect(m_aAudioClipImplose, 1.0f);
 
         gameObject.SetActive(false);
-	}
+
+    }
 
 	public float GetPercentage()
 	{
@@ -87,7 +122,12 @@ public class PlayerGameplay : MonoBehaviour
 	{
 		nextSpawnLocation = newPose;
 
-		Invoke("Spawn", 3.0f);
+        if (null != RespawnEffect)
+        {
+            Instantiate(RespawnEffect, newPose);
+        }
+
+        Invoke("Spawn", 3.0f);
 	}
 
 	private void Spawn()
@@ -103,4 +143,10 @@ public class PlayerGameplay : MonoBehaviour
             }
 		}
 	}
+
+    private void ResetCanPlayDamageSound()
+    {
+        m_bCanPlayDamageSound = true;
+    }
 }
+

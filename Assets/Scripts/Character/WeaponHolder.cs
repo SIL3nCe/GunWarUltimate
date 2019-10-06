@@ -29,6 +29,9 @@ public class WeaponHolder : MonoBehaviour
 	// Drop-related
 	public float			DropForce = 15.0f;
 
+    [Header("Sounds")]
+    public AudioClip m_audioClipThrowWeapon;
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -60,17 +63,6 @@ public class WeaponHolder : MonoBehaviour
     void Update()
     {
 		//
-		// Weapon drop
-		if (Input.GetKeyUp(KeyCode.Return))
-		{
-			DropWeapon();
-		}
-		else if (Input.GetKeyUp(KeyCode.KeypadEnter))
-		{
-			DebugDropWeapon();
-		}
-
-		//
 		// Weapon switch
 		if (bDirtySwitchWeapon)
 		{
@@ -94,7 +86,7 @@ public class WeaponHolder : MonoBehaviour
 
 	void SwitchWeapon()
 	{
-		if(null != CurrentWeapon)
+		if (null != CurrentWeapon)
 		{
 			CurrentWeapon.SetActive(false);
 		}
@@ -103,10 +95,20 @@ public class WeaponHolder : MonoBehaviour
 		WeaponTypeToSwitchTo = null;
 		CurrentWeapon = AvailableWeapons[(int)CurrentWeaponType];
 
-		if(null != CurrentWeapon)
+		if (null != CurrentWeapon)
 		{
 			CurrentWeapon.SetActive(true);
-			CurrentWeapon.GetComponent<WeaponShot>().loaderSize = NextAmmoCount;
+            WeaponShot weapon = CurrentWeapon.GetComponent<WeaponShot>();
+
+            if (null != weapon)
+            {
+                weapon.loaderSize = NextAmmoCount;
+
+                if (NextAmmoCount > 0)
+                { // Reset rocket laucher alpha
+                    weapon.ResetRocketAlpha();
+                } 
+            }
 		}
 	}
 
@@ -122,7 +124,7 @@ public class WeaponHolder : MonoBehaviour
 		}
 	}
 
-	void DropWeapon()
+	public void DropWeapon()
 	{
 		if(null != CurrentWeapon)
 		{
@@ -143,6 +145,22 @@ public class WeaponHolder : MonoBehaviour
 			body.velocity = gameObject.transform.forward * DropForce;
 			newWeapon.GetComponent<Weapon>().Drop();
 			newWeapon.GetComponent<BoxCollider>().enabled = true;
+
+            //
+            //
+            AudioManager.GetInstance().PlaySoundEffect(m_audioClipThrowWeapon, 0.8f);
 		}
 	}
+
+    public Weapon GetCurrentWeapon()
+    {
+        if (null != CurrentWeapon)
+        {
+            return CurrentWeapon.GetComponent<Weapon>();
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 
 public class PlayerCharacterController : MonoBehaviour
 {
+    public int m_iPlayerIndex;
     [Header("Movements")]
     public float m_fPlayerSpeed;
     public float m_fMovementsSmoothTime = 0.01f;
@@ -18,8 +20,11 @@ public class PlayerCharacterController : MonoBehaviour
     public AudioClip[] m_aAudioClipsSteps;
     public AudioClip[] m_aAudioClipsJump;
     public AudioClip m_audioClipLand;
+    public AudioClip m_audioClipHang;
+    public AudioClip m_audioClipNoWeapon;
     private AudioSource m_audioSource;
     private bool m_bCanPlayStepSound = true;
+    private bool m_bCanPlayNoWeaponSound = true;
 
     //
     // private
@@ -34,9 +39,45 @@ public class PlayerCharacterController : MonoBehaviour
     private float m_fWallJumpDirection;
     private float m_fDoubleJumpAttenuation = 1.0f;
 
+    public InputAction m_inputActionJump;
+    public InputAction m_inputActionMove;
+    public InputAction m_inputActionShoot;
+    public InputAction m_inputActionThrow;
+
+    //
+    // Inputs
+    //private PlayerInputActions m_playerInputActions;
+
+    public void Awake()
+    {
+
+    }
+
+    private void OnEnable()
+    {
+        //
+        //
+        //m_playerInputActions.Enable();
+        m_inputActionJump.Enable();
+        m_inputActionMove.Enable();
+        m_inputActionShoot.Enable();
+        m_inputActionThrow.Enable();
+    }
+
+    private void OnDisable()
+    {
+        //
+        //
+        //m_playerInputActions.Disable();
+        m_inputActionJump.Disable();
+        m_inputActionMove.Disable();
+        m_inputActionShoot.Disable();
+        m_inputActionThrow.Disable();
+    }
+
     // Start is called before the first frame update
     private void Start()
-    {
+    { 
         //
         // Ensure rigidbody is present
         m_rigidbody = GetComponent<Rigidbody>();
@@ -61,11 +102,11 @@ public class PlayerCharacterController : MonoBehaviour
 
         //
         //
-        UpdateCharacterDirection(Input.GetAxis("Horizontal"));
+        UpdateCharacterDirection(m_inputActionMove.ReadValue<float>());
 
         //
         //
-        if (Input.GetAxis("Horizontal") != 0.0f)
+        if (m_inputActionMove.ReadValue<float>() != 0.0f )
         {
             GetComponent<Animator>().SetBool("bRunning", true);
 
@@ -85,14 +126,45 @@ public class PlayerCharacterController : MonoBehaviour
         }
 
         GetComponent<Animator>().SetBool("bFall", false);
+
+        //
+        //
+        if (m_inputActionShoot.ReadValue<float>() > 0.0f)
+        {
+            if (null != GetComponent<WeaponHolder>().GetCurrentWeapon())
+            {
+                GetComponent<WeaponHolder>().GetCurrentWeapon().GetComponent<WeaponShot>().Shoot();
+            }
+            else
+            {
+                if (m_bCanPlayNoWeaponSound)
+                {
+                    m_audioSource.PlayOneShot(m_audioClipNoWeapon, 0.2f);
+                    m_bCanPlayNoWeaponSound = false;
+                    Invoke("ResetCanPayNoWeaponSound", 0.6f);
+                }
+            }
+        }
+
+        //
+        //
+        if (m_inputActionThrow.triggered)
+        {
+            GetComponent<WeaponHolder>().DropWeapon();
+        }
     }
 
     private void FixedUpdate()
     {
         //
         //
-        float fPlayerHorizontalInput = Input.GetAxis("Horizontal");
-        Vector3 vTargetVelocity = new Vector3(m_fPlayerSpeed * fPlayerHorizontalInput, m_rigidbody.velocity.y);
+        //float fPlayerHorizontalInput = Input.GetAxis("Horizontal");
+        //Vector3 vTargetVelocity = new Vector3(m_fPlayerSpeed * fPlayerHorizontalInput, m_rigidbody.velocity.y);
+
+        Vector3 vTargetVelocity = Vector3.zero;
+        float fPlayerHorizontalInput = m_inputActionMove.ReadValue<float>();
+        vTargetVelocity.x = m_inputActionMove.ReadValue<float>() * m_fPlayerSpeed;
+        vTargetVelocity.y = m_rigidbody.velocity.y;
         
         //
         // Jump
@@ -100,7 +172,14 @@ public class PlayerCharacterController : MonoBehaviour
         // Only if we are grounded
         if (m_bGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (m_inputActionMove.ReadValue<float>() == 0.0f)
+            {
+                vTargetVelocity.x = 0.0f;
+                m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, m_rigidbody.velocity.z);
+            }
+
+            //if (Input.GetKeyDown(KeyCode.Space))
+            if (m_inputActionJump.triggered)
             {
                 //
                 // Set the velocity for the jump
@@ -133,6 +212,7 @@ public class PlayerCharacterController : MonoBehaviour
         }
         else
         {
+
             bool bHitAWall = HitAWallTest(fPlayerHorizontalInput);
             bool bWallIsHangable = false;
 
@@ -217,7 +297,7 @@ public class PlayerCharacterController : MonoBehaviour
 
                     //
                     // If the wall is hangable we can jump
-                    if (Input.GetKeyDown(KeyCode.Space) && m_iWallJumpRemainingCount > 0)
+                    if (m_inputActionJump.triggered && m_iWallJumpRemainingCount > 0)
                     {
                         //
                         // This is a wall jump, we jump in Y and in X
@@ -263,7 +343,8 @@ public class PlayerCharacterController : MonoBehaviour
                 //
                 // We do not hit a wall, we can double jump
                 // If we press space
-                if (Input.GetKeyDown(KeyCode.Space))
+                //if (Input.GetKeyDown(KeyCode.Space))
+                if (m_inputActionJump.triggered)
                 {
                     //
                     // If we can double jump
@@ -313,7 +394,7 @@ public class PlayerCharacterController : MonoBehaviour
         {
             if (!m_bGrounded)
             {
-                m_audioSource.PlayOneShot(m_audioClipLand);
+                m_audioSource.PlayOneShot(m_audioClipLand, 0.2f);
             }
             m_bGrounded = true;
         }
@@ -330,6 +411,10 @@ public class PlayerCharacterController : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("bHangOn", true);
         m_bHangOnWall = true;
+
+        //
+        // Play sound
+        m_audioSource.PlayOneShot(m_audioClipHang, 0.3f);
     }
 
     private void EndHangOn()
@@ -364,6 +449,8 @@ public class PlayerCharacterController : MonoBehaviour
         float fDirection = fPlayerHorizontalInput > 0.0f ? 1.0f : -1.0f;
         int iNbRays = 20;
 
+        //
+        // Cast all the rays and display the debugged ray
         for (int iRay = 0; iRay < iNbRays; ++iRay)
         {
             Debug.DrawLine(transform.position + new Vector3(0.0f, iRay * 0.1f, 0.0f), transform.position + new Vector3(0.0f, iRay * 0.1f, 0.0f) + new Vector3(fPlayerHorizontalInput, 0.0f, 0.0f));
@@ -385,11 +472,16 @@ public class PlayerCharacterController : MonoBehaviour
     private void PlayJumpSound()
     {
         int iIndex = Random.Range(0, m_aAudioClipsJump.Length);
-        m_audioSource.PlayOneShot(m_aAudioClipsJump[iIndex]);        
+        m_audioSource.PlayOneShot(m_aAudioClipsJump[iIndex], 0.3f);        
     }
 
     private void ResetCanPlayStepSound()
     {
         m_bCanPlayStepSound = true;
+    }
+    
+    private void ResetCanPayNoWeaponSound()
+    {
+        m_bCanPlayNoWeaponSound = true;
     }
 }
