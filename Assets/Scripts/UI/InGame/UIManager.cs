@@ -267,12 +267,37 @@ public class UIManager : MonoBehaviour
 				UiPanelVictory.SetActive(true);
 				if(0 == Player1.GetRemainingStocks())
 				{
-					UiTextWinner.text = "P1";
+					UiTextWinner.text = "P2";
 				}
 				else if(0 == Player2.GetRemainingStocks())
 				{
-					UiTextWinner.text = "P2";
+					UiTextWinner.text = "P1";
 				}
+                else
+                {
+                        if(Player1.GetRemainingStocks() == Player2.GetRemainingStocks())
+                        {
+                            if(Player1.GetPercentage() > Player2.GetPercentage())
+                            {
+                                UiTextWinner.text = "P2";
+                            }
+                            else
+                            {
+                                UiTextWinner.text = "P1";
+                            }
+                        }
+                        else
+                        {
+                            if(Player1.GetRemainingStocks() > Player2.GetRemainingStocks())
+                            {
+                                UiTextWinner.text = "P1";
+                            }
+                            else
+                            {
+                                UiTextWinner.text = "P2";
+                            }
+                        }
+                }
 				break;
 			}
 		}
