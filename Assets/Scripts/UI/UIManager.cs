@@ -288,6 +288,7 @@ public class UIManager : MonoBehaviour
 		if (null != stocks && null != PlayerArray[(int)(player.playerEnum)].Player)
 		{
 			PlayerArray[(int)(player.playerEnum)].bDead = true;
+			PlayerArray[(int)(player.playerEnum)].UiPercentage.text =  0.ToString("D3") + "%";
 			if (3 < stocks)
 			{
 				PlayerArray[(int)(player.playerEnum)].UiTextStockX.text = ((int)(stocks)).ToString("D2");
@@ -332,7 +333,7 @@ public class UIManager : MonoBehaviour
 	{
 		if (null != PlayerArray[(int)(player.playerEnum)].Player)
 		{
-			PlayerArray[(int)(player.playerEnum)].UiPercentage.text = ((int)(Mathf.Max(player.GetPercentage(), 999.0f))).ToString("D3") + "%";
+			PlayerArray[(int)(player.playerEnum)].UiPercentage.text = ((int)player.GetPercentage()).ToString("D3") + "%";
 		}
 	}
 }

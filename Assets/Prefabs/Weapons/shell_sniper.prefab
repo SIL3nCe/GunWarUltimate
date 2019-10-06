@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4966353551269194171}
   m_Layer: 0
   m_Name: shell_sniper
-  m_TagString: Untagged
+  m_TagString: BulletShell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,7 +44,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.15, y: 0.067, z: 0.067}
+  m_Size: {x: 0.15, y: 0.0658, z: 0.066}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4966353551269194171
 Rigidbody:
@@ -88,7 +88,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5975187071392946571}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.0317, y: 0, z: 0}
+  m_LocalPosition: {x: 0.0316, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5975187071393170857}

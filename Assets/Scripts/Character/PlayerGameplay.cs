@@ -26,8 +26,11 @@ public class PlayerGameplay : MonoBehaviour
 
 	private UIManager UiManager;
 
-	void Start()
+    private Rigidbody rigidBody;
+
+    void Start()
     {
+        rigidBody = gameObject.GetComponent<Rigidbody>();
         percentage = 0.0f;
 
         m_audioSource = GetComponent<AudioSource>();
@@ -35,7 +38,7 @@ public class PlayerGameplay : MonoBehaviour
 
     public void TakeDamages(float damages)
     {
-        percentage += damages;
+        percentage += Mathf.Min(damages, 999.0f);
 
         //
         // Play damage sound
@@ -57,28 +60,22 @@ public class PlayerGameplay : MonoBehaviour
 
     public void OnDie()
     {
-		if(null != stocks)
+		if (null != stocks)
 		{
 			--stocks;
 		}
         percentage = 0.0f;
 
-		//
-		// Notify death
-		UiManager.OnPlayerDied(this);
+        //
+        // Notify death
+        UiManager.OnPlayerDied(this);
 
         //
         // Emit die sounds
         int iSound = Random.Range(0, m_aAudioClipsScream.Length);
         m_audioSource.PlayOneShot(m_aAudioClipsScream[iSound], 0.2f);
 
-        //
-        //
-        if (null != stocks && stocks > 0)
-        {
-            //TODO set to spawn location
-            return;
-        }
+        gameObject.SetActive(false);
 	}
 
 	public float GetPercentage()
@@ -109,10 +106,16 @@ public class PlayerGameplay : MonoBehaviour
 	}
 
 	private void Spawn()
-	{
-		if(null != stocks && stocks > 0)
-		{
-			gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, nextSpawnLocation.rotation);
+    {
+        if (null != stocks && stocks > 0)
+        {
+            gameObject.SetActive(true);
+            gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, gameObject.transform.rotation);
+            if (null != rigidBody)
+            {
+                rigidBody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+                rigidBody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+            }
 		}
 	}
 

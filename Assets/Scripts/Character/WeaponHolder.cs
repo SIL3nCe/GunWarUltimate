@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class WeaponHolder : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class WeaponHolder : MonoBehaviour
 	public GameObject		SocketUzi;
 	public GameObject		SocketPistolSilencer;
 	public GameObject		SocketRocketLauncher;
+	private GameObject[]	AvailableWeapons;
 
 	//
 	// Switch
@@ -35,6 +37,23 @@ public class WeaponHolder : MonoBehaviour
 
 		WeaponTypeToSwitchTo = null;
 		bDirtySwitchWeapon = false;
+
+		int iWeaponTypeCount = System.Enum.GetValues(typeof(EWeaponType)).Length;
+		AvailableWeapons = new GameObject[iWeaponTypeCount];
+		AvailableWeapons[(int)EWeaponType.machine_gun]		= SocketMachineGun;
+		AvailableWeapons[(int)EWeaponType.pistolSilencer]	= SocketPistolSilencer;
+		AvailableWeapons[(int)EWeaponType.rocketLauncher]	= SocketRocketLauncher;
+		AvailableWeapons[(int)EWeaponType.sniper]			= SocketSniper;
+		AvailableWeapons[(int)EWeaponType.uzi]				= SocketUzi;
+
+		foreach(GameObject weapon in AvailableWeapons)
+		{
+			Assert.IsNotNull(weapon); // if null, a weapon is missing above
+			if(null != weapon)
+			{
+				weapon.GetComponent<Weapon>().PickUp();
+			}
+		}
 	}
 
     // Update is called once per frame
@@ -82,20 +101,7 @@ public class WeaponHolder : MonoBehaviour
 
 		CurrentWeaponType = WeaponTypeToSwitchTo;
 		WeaponTypeToSwitchTo = null;
-
-		switch (CurrentWeaponType)
-		{
-			case EWeaponType.machine_gun:
-			{
-				CurrentWeapon = SocketMachineGun;
-				break;
-			}
-			default:
-			{
-				CurrentWeapon = null;
-				break;
-			}
-		}
+		CurrentWeapon = AvailableWeapons[(int)CurrentWeaponType];
 
 		if(null != CurrentWeapon)
 		{

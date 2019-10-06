@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
 
 	//
 	// Dropped-related
-	private bool		bDropped = false;
+	private bool		bEquipped = false;
 	public float		ThresholdBlink = 7.0f;
 	public float		ThresholdBlinking = 0.25f;
 	public float		ThresholdDisappear = 10.0f;
@@ -31,7 +31,7 @@ public class Weapon : MonoBehaviour
 
 	private void Update()
 	{
-		if(bDropped)
+		if(!bEquipped)
 		{
 			float fDelta = Time.deltaTime;
 			fDroppedAccumulatedDuration += fDelta;
@@ -68,6 +68,11 @@ public class Weapon : MonoBehaviour
 
 	public void Drop()
 	{
-		bDropped = true;
+		bEquipped = false;
+	}
+
+	public void PickUp()
+	{
+		bEquipped = true;
 	}
 }
