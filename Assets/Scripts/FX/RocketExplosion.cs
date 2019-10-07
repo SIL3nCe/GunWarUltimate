@@ -16,12 +16,22 @@ public class RocketExplosion : MonoBehaviour
         ejectionFactor = InEjection;
     }
 
-    void OnTriggerEnter(Collider collision)
+    void Start()
+    {
+        Invoke("DisableCollisions", 0.1f);
+    }
+
+    void DisableCollisions()
+    {
+        gameObject.GetComponent<SphereCollider>().enabled = false;
+    }
+
+    void OnCollisionEnter(Collision collision)
     {
         PlayerGameplay player = collision.gameObject.GetComponent<PlayerGameplay>();
         if (null != player)
         {
-            Vector3 dir = player.transform.position - gameObject.transform.position;
+            Vector3 dir = collision.contacts[0].point - transform.position;
             player.TakeDamages(damages, dir, ejectionFactor);
         }
     }
