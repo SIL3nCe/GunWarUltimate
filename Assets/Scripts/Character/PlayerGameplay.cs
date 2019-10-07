@@ -66,9 +66,14 @@ public class PlayerGameplay : MonoBehaviour
 
         // convert damages to [-2,5] for exponential
         // Linear ratio conversion ((old_value - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
-        float fRangedVal = (percentage / 999) * 6;
+        float fRangedVal = (percentage / 999) * 7;
 
         float fForceFactor = Mathf.Exp(fRangedVal);
+
+        //Debug.Log("percentage " + percentage);
+        //Debug.Log("fRangedVal " + fRangedVal);
+        //Debug.Log("fForceFactor " + fForceFactor);
+        //Debug.Log("fEjectionFactor " + fEjectionFactor);
 
         rigidBody.AddForce(orientation * fForceFactor * fEjectionFactor, ForceMode.Impulse);
     }
