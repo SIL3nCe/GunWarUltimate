@@ -44,6 +44,8 @@ public class PlayerCharacterController : MonoBehaviour
     public InputAction m_inputActionShoot;
     public InputAction m_inputActionThrow;
 
+    private bool m_bJumpedTriggered = false;
+
     //
     // Inputs
     //private PlayerInputActions m_playerInputActions;
@@ -129,7 +131,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         //
         //
-        if (m_inputActionShoot.ReadValue<float>() > 0.0f)
+        if (m_inputActionShoot.ReadValue<float>() != 0.0f)  //< We use ReadValue here to trigger the action while the key is pressed
         {
             if (null != GetComponent<WeaponHolder>().GetCurrentWeapon())
             {
@@ -151,6 +153,11 @@ public class PlayerCharacterController : MonoBehaviour
         if (m_inputActionThrow.triggered)
         {
             GetComponent<WeaponHolder>().DropWeapon();
+        }
+
+        if (m_inputActionJump.triggered)
+        {
+            m_bJumpedTriggered = true;
         }
     }
 
@@ -178,9 +185,10 @@ public class PlayerCharacterController : MonoBehaviour
                 m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, m_rigidbody.velocity.z);
             }
 
-            //if (Input.GetKeyDown(KeyCode.Space))
-            if (m_inputActionJump.triggered)
+            //if (m_inputActionJump.triggered)
+            if (m_bJumpedTriggered)
             {
+                m_bJumpedTriggered = false; //< Remove jump flag
                 //
                 // Set the velocity for the jump
                 vTargetVelocity.y = m_fJumpFactor;
@@ -297,8 +305,9 @@ public class PlayerCharacterController : MonoBehaviour
 
                     //
                     // If the wall is hangable we can jump
-                    if (m_inputActionJump.triggered && m_iWallJumpRemainingCount > 0)
+                    if (m_bJumpedTriggered && m_iWallJumpRemainingCount > 0)
                     {
+                        m_bJumpedTriggered = false; //< Remove jump flag
                         //
                         // This is a wall jump, we jump in Y and in X
                         vTargetVelocity.y = m_fJumpFactor * 1.3f;
@@ -344,8 +353,9 @@ public class PlayerCharacterController : MonoBehaviour
                 // We do not hit a wall, we can double jump
                 // If we press space
                 //if (Input.GetKeyDown(KeyCode.Space))
-                if (m_inputActionJump.triggered)
+                if (m_bJumpedTriggered)
                 {
+                    m_bJumpedTriggered = false; //< Remove jump flag
                     //
                     // If we can double jump
                     if (m_bCanDoubleJump)
