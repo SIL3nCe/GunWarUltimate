@@ -32,22 +32,22 @@ public class WeaponTriggerCollider : MonoBehaviour
     {
 		//
 		// Create TriggerCollider in function of Collider
-		BoxCollider colliderRigid = gameObject.GetComponent<BoxCollider>();
-		if(null != colliderRigid && colliderRigid.enabled)
-		{
-			BoxCollider colliderTrigger = gameObject.AddComponent<BoxCollider>() as BoxCollider;
-			CopyComponent<BoxCollider>(colliderRigid, colliderTrigger, gameObject);
-			colliderTrigger.isTrigger = true;
-		}
+		//BoxCollider colliderRigid = gameObject.GetComponent<BoxCollider>();
+		//if(null != colliderRigid && colliderRigid.enabled)
+		//{
+		//	BoxCollider colliderTrigger = gameObject.AddComponent<BoxCollider>() as BoxCollider;
+		//	CopyComponent<BoxCollider>(colliderRigid, colliderTrigger, gameObject);
+		//	colliderTrigger.isTrigger = true;
+		//}
 
 		//
 		// Store weapon script
 		_Weapon = gameObject.GetComponent<Weapon>();
 	}
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-		WeaponHolder componentWeaponHolder = other.gameObject.GetComponent<WeaponHolder>();
+		WeaponHolder componentWeaponHolder = collision.gameObject.GetComponent<WeaponHolder>();
         if (null != componentWeaponHolder)
         {
 			//
@@ -69,8 +69,8 @@ public class WeaponTriggerCollider : MonoBehaviour
                 float fSpeed = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
                 if (fSpeed >= 5.0f)
                 {
-                    PlayerGameplay player = other.gameObject.GetComponent<PlayerGameplay>();
-                    Vector3 dir = player.transform.position - gameObject.transform.position;
+                    PlayerGameplay player = collision.gameObject.GetComponent<PlayerGameplay>();
+                    Vector3 dir = collision.contacts[0].point - transform.position;
                     player.TakeDamages(30.0f, dir, 1.3f);
                 }
             }
