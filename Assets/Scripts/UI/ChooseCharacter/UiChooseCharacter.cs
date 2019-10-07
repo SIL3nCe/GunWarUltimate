@@ -119,7 +119,7 @@ public class UiChooseCharacter : MonoBehaviour
 
 		//
 		// Selection
-		if (Input.GetKeyUp(KeyCode.KeypadEnter))	{	SelectCharacter(ref aSelectors[1]);			}
+		if (Input.GetKeyUp(KeyCode.Keypad0))	{	SelectCharacter(ref aSelectors[1]);			}
 		if (Input.GetKeyUp(KeyCode.Space))			{	SelectCharacter(ref aSelectors[0]);			}
 
 		//
