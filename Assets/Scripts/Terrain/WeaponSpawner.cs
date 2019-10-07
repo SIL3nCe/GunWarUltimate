@@ -30,8 +30,8 @@ public class WeaponSpawner : MonoBehaviour
 
 	public void SpawnRandomWeapon()
 	{
-		GameObject spawnLocation = spawnLocations[(int)(Random.value * (spawnLocations.Length - 1))];
-		GameObject weaponPrefab = weaponPrefabs[(int)(Random.value * (weaponPrefabs.Length - 1))];
+		GameObject spawnLocation = spawnLocations[Random.Range(0, spawnLocations.Length)];
+		GameObject weaponPrefab = weaponPrefabs[Random.Range(0, weaponPrefabs.Length)];
 
 		SpawnWeapon(spawnLocation, weaponPrefab);
 	}
