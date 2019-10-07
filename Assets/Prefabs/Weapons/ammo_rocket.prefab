@@ -157,4 +157,4 @@ MonoBehaviour:
   HitEffect: {fileID: 6010640819943686238, guid: 1dcf35a0806e9e842a17bd0115ba8c7a,
     type: 3}
   LifeTime: 6
-  EjectionFactor: 1.6
+  EjectionFactor: 2

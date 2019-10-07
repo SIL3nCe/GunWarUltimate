@@ -75,7 +75,7 @@ public class PlayerGameplay : MonoBehaviour
         //Debug.Log("fForceFactor " + fForceFactor);
         //Debug.Log("fEjectionFactor " + fEjectionFactor);
 
-        rigidBody.AddForce(orientation * fForceFactor * fEjectionFactor, ForceMode.Impulse);
+        rigidBody.AddForce(orientation * fForceFactor * (fEjectionFactor * 2.0f), ForceMode.Impulse);
     }
 
     public void OnDie()
