@@ -145,7 +145,8 @@ public class UiChooseCharacter : MonoBehaviour
 			selector.highlightRef.SetActive(true);
 			selector.highlightRef.GetComponent<Image>().color = selector.color;
 			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[(int)selector.iSelectionIndex].character.transform.position, CharacterArray[(int)selector.iSelectionIndex].character.transform.rotation);
-		}
+            selector.highlightRef.transform.position = new Vector3(selector.highlightRef.transform.position.x, selector.highlightRef.transform.position.y, 10.0f);
+        }
 		else if(selector.iSelectionIndex == CharacterArray.Length - 1)
 		{
 			selector.iSelectionIndex = -1;
@@ -159,7 +160,8 @@ public class UiChooseCharacter : MonoBehaviour
 			selector.highlightRef.SetActive(true);
 			selector.highlightRef.GetComponent<Image>().color = selector.color;
 			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[(int)selector.iSelectionIndex].character.transform.position, CharacterArray[(int)selector.iSelectionIndex].character.transform.rotation);
-		}
+            selector.highlightRef.transform.position = new Vector3(selector.highlightRef.transform.position.x, selector.highlightRef.transform.position.y, 10.0f);
+        }
 
 		UpdateCharacterPreview(selector);
 	}
@@ -173,7 +175,8 @@ public class UiChooseCharacter : MonoBehaviour
 			selector.highlightRef.SetActive(true);
 			selector.highlightRef.GetComponent<Image>().color = selector.color;
 			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[(int)selector.iSelectionIndex].character.transform.position, CharacterArray[(int)selector.iSelectionIndex].character.transform.rotation);
-		}
+            selector.highlightRef.transform.position = new Vector3(selector.highlightRef.transform.position.x, selector.highlightRef.transform.position.y, 10.0f);
+        }
 		else if (selector.iSelectionIndex == 0)
 		{
 			selector.iSelectionIndex = -1;
@@ -187,7 +190,8 @@ public class UiChooseCharacter : MonoBehaviour
 			selector.highlightRef.SetActive(true);
 			selector.highlightRef.GetComponent<Image>().color = selector.color;
 			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[(int)selector.iSelectionIndex].character.transform.position, CharacterArray[(int)selector.iSelectionIndex].character.transform.rotation);
-		}
+            selector.highlightRef.transform.position = new Vector3(selector.highlightRef.transform.position.x, selector.highlightRef.transform.position.y, 10.0f);
+        }
 
 		UpdateCharacterPreview(selector);
 	}
