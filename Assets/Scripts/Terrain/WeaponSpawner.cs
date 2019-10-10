@@ -4,22 +4,34 @@ using UnityEngine;
 
 public class WeaponSpawner : MonoBehaviour
 {
-    public GameObject[]	spawnLocations;
-    public GameObject[]	weaponPrefabs;
+    //
+    // Spwan locations
+    [Header("Spawn Locations")]
+    public WeaponSpawnLocation[] m_aWeaponSpawnLocations;
 
-	public int MaxWeaponCount = 10;
+    //
+    // Weapons
+    [Header("Weapons prefabs")]
+    public GameObject[] m_aWeaponPrefabs;
 
-	public float ThresholdNewWeapon = 5.0f;
+    //
+    //
+    [Header("Spawn Parameters")]
+    public int m_iMaxWeaponCount;
+    public float m_fThresholdNewWeapon;
 
-	private float fDurationNewWeapon = 0.0f;
-	private int iCurrentWeaponCount = 0;
+    //
+    //
+    private float fDurationNewWeapon = 0.0f;
+    private int iCurrentWeaponCount = 0;
 
-	void Update()
+    void Update()
 	{
 		fDurationNewWeapon += Time.deltaTime;
-		if(fDurationNewWeapon >= ThresholdNewWeapon)
+
+		if(fDurationNewWeapon >= m_fThresholdNewWeapon)
 		{
-			if(iCurrentWeaponCount < MaxWeaponCount)
+			if(iCurrentWeaponCount < m_iMaxWeaponCount)
 			{
 				SpawnRandomWeapon();
 
@@ -30,8 +42,8 @@ public class WeaponSpawner : MonoBehaviour
 
 	public void SpawnRandomWeapon()
 	{
-		GameObject spawnLocation = spawnLocations[Random.Range(0, spawnLocations.Length)];
-		GameObject weaponPrefab = weaponPrefabs[Random.Range(0, weaponPrefabs.Length)];
+		GameObject spawnLocation = m_aWeaponSpawnLocations[Random.Range(0, m_aWeaponSpawnLocations.Length)].transform.gameObject;
+		GameObject weaponPrefab = m_aWeaponPrefabs[Random.Range(0, m_aWeaponPrefabs.Length)];
 
 		SpawnWeapon(spawnLocation, weaponPrefab);
 	}
@@ -48,4 +60,20 @@ public class WeaponSpawner : MonoBehaviour
 	{
 		--iCurrentWeaponCount;
 	}
+
+    public void OnDrawGizmos()
+    {
+        //
+        //
+        Gizmos.color = Color.red;
+        foreach (var oWeaponSpawnerLocation in m_aWeaponSpawnLocations)
+        {
+            Gizmos.DrawLine(transform.position, oWeaponSpawnerLocation.transform.position);
+        }
+
+        //
+        //
+        Gizmos.color = Color.white;
+        Gizmos.DrawIcon(transform.position, "GunSpawner");
+    }
 }

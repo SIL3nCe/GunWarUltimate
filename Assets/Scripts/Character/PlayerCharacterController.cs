@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-    public int m_iPlayerIndex;
+    //
+    // Movements
     [Header("Movements")]
     public float m_fPlayerSpeed;
     public float m_fMovementsSmoothTime = 0.01f;
@@ -46,6 +47,7 @@ public class PlayerCharacterController : MonoBehaviour
     private float m_fWallJumpDirection;
     private float m_fDoubleJumpAttenuation = 1.0f;
 
+    [Header("Inputs")]
     public InputAction m_inputActionJump;
     public InputAction m_inputActionWaft;
     public InputAction m_inputActionMove;
@@ -54,10 +56,6 @@ public class PlayerCharacterController : MonoBehaviour
 
     private bool m_bJumpedTriggered = false;
     private bool m_bWaftTriggered = false;
-
-    //
-    // Inputs
-    //private PlayerInputActions m_playerInputActions;
 
     //public void Awake()
     //{
@@ -68,7 +66,6 @@ public class PlayerCharacterController : MonoBehaviour
     {
         //
         //
-        //m_playerInputActions.Enable();
         m_inputActionJump.Enable();
         m_inputActionWaft.Enable();
         m_inputActionMove.Enable();
@@ -80,7 +77,6 @@ public class PlayerCharacterController : MonoBehaviour
     {
         //
         //
-        //m_playerInputActions.Disable();
         m_inputActionJump.Disable();
         m_inputActionWaft.Disable();
         m_inputActionMove.Disable();
