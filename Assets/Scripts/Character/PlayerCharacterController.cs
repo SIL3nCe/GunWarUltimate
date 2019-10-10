@@ -481,13 +481,11 @@ public class PlayerCharacterController : MonoBehaviour
                 rocketScript.SetEjectionFactor(2.0f);
             }
         }
-        Debug.Log("WAFT BEGIN");
     }
 
     public void OnWaftDropped()
-    { // Event from Waft animation to triggerjumping
+    { // Event from Waft animation to trigger jumping
         m_bWaftTriggered = true;
-        Debug.Log("WAFT TRIGGER");
     }
 
     public void OnWaftEnded()
@@ -496,7 +494,6 @@ public class PlayerCharacterController : MonoBehaviour
         m_bWaftTriggered = false;
         m_bIsWafting = false;
         m_fWaftTimer = 0.0f;
-        Debug.Log("WAFT ENDED");
     }
 
     private void UpdateCharacterDirection(float fMovementDirection)
