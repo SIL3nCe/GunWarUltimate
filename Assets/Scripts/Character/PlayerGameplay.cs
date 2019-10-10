@@ -104,9 +104,17 @@ public class PlayerGameplay : MonoBehaviour
         int iSound = Random.Range(0, m_aAudioClipsScream.Length);
         AudioManager.GetInstance().PlaySoundEffect(m_aAudioClipsScream[iSound], 0.6f);
         AudioManager.GetInstance().PlaySoundEffect(m_aAudioClipImplose, 1.0f);
-
-        gameObject.SetActive(false);
-
+        
+        //
+        // Hide Character during death
+        // !! SetActive on entire prefab will block Animator and let skeleton in mid-anim positions
+        // Find a better to achieve this if possible
+        foreach (var component in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            component.enabled = false;
+        }
+        // Disable inputs
+        GetComponent<PlayerCharacterController>().OnDisable();
     }
 
 	public float GetPercentage()
@@ -145,7 +153,17 @@ public class PlayerGameplay : MonoBehaviour
     {
         if (null != stocks && stocks > 0)
         {
-            gameObject.SetActive(true);
+            //
+            // Unhide Character during death
+            // !! SetActive on entire prefab will block Animator and let skeleton in mid-anim positions
+            // Find a better to achieve this if possible
+            foreach (var component in GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                component.enabled = true;
+            }
+            // Enable inputs
+            GetComponent<PlayerCharacterController>().OnEnable();
+
             gameObject.transform.SetPositionAndRotation(nextSpawnLocation.position, gameObject.transform.rotation);
             if (null != rigidBody)
             {

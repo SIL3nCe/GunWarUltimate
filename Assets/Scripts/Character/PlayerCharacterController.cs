@@ -16,6 +16,13 @@ public class PlayerCharacterController : MonoBehaviour
     public int m_iWallJumpMaxCount = 4;
     private int m_iWallJumpRemainingCount;
 
+    [Header("Waft")]
+    [Tooltip("Prefab to instantiate during waft animation for FX + ejection")]
+    public GameObject m_WaftPrefab;
+    public float m_fWaftCooldown = 5.0f;
+    private float m_fWaftTimer = 0.0f;
+    private bool m_bIsWafting = false; // TODO Need a FSM
+
     [Header("Sounds")]
     public AudioClip[] m_aAudioClipsSteps;
     public AudioClip[] m_aAudioClipsJump;
@@ -40,38 +47,42 @@ public class PlayerCharacterController : MonoBehaviour
     private float m_fDoubleJumpAttenuation = 1.0f;
 
     public InputAction m_inputActionJump;
+    public InputAction m_inputActionWaft;
     public InputAction m_inputActionMove;
     public InputAction m_inputActionShoot;
     public InputAction m_inputActionThrow;
 
     private bool m_bJumpedTriggered = false;
+    private bool m_bWaftTriggered = false;
 
     //
     // Inputs
     //private PlayerInputActions m_playerInputActions;
 
-    public void Awake()
-    {
+    //public void Awake()
+    //{
+    //
+    //}
 
-    }
-
-    private void OnEnable()
+    public void OnEnable()
     {
         //
         //
         //m_playerInputActions.Enable();
         m_inputActionJump.Enable();
+        m_inputActionWaft.Enable();
         m_inputActionMove.Enable();
         m_inputActionShoot.Enable();
         m_inputActionThrow.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         //
         //
         //m_playerInputActions.Disable();
         m_inputActionJump.Disable();
+        m_inputActionWaft.Disable();
         m_inputActionMove.Disable();
         m_inputActionShoot.Disable();
         m_inputActionThrow.Disable();
@@ -93,11 +104,18 @@ public class PlayerCharacterController : MonoBehaviour
         //
         m_audioSource = GetComponent<AudioSource>();
         Assert.IsNotNull(m_audioSource);
+
+        //
+        m_fWaftTimer = m_fWaftCooldown;
     }
 
     // Update is called once per frame
     private void Update()
     {
+        //
+        // Timers
+        m_fWaftTimer += Time.deltaTime;
+
         //
         // Compute the grounded attribute
         ComputeGrounded();
@@ -159,6 +177,10 @@ public class PlayerCharacterController : MonoBehaviour
         {
             m_bJumpedTriggered = true;
         }
+        if (m_inputActionWaft.triggered && m_fWaftTimer >= m_fWaftCooldown && !m_bIsWafting)
+        {
+            StartWaft();
+        }
     }
 
     private void FixedUpdate()
@@ -173,11 +195,17 @@ public class PlayerCharacterController : MonoBehaviour
         vTargetVelocity.x = m_inputActionMove.ReadValue<float>() * m_fPlayerSpeed;
         vTargetVelocity.y = m_rigidbody.velocity.y;
         
+        if (m_bWaftTriggered)
+        {
+            m_bWaftTriggered = false;
+            m_bCanDoubleJump = false;
+            vTargetVelocity.y = m_fJumpFactor * 2.5f;
+        }
         //
         // Jump
         // If we press the jump key we jump
         // Only if we are grounded
-        if (m_bGrounded)
+        else if (m_bGrounded)
         {
             if (m_inputActionMove.ReadValue<float>() == 0.0f)
             {
@@ -213,6 +241,11 @@ public class PlayerCharacterController : MonoBehaviour
             //
             // TODO; Comment
             EndWallJump();
+            
+            //if (!m_bIsWafting)
+            //{
+            //    OnWaftEnded();
+            //}
 
             //
             // Reset double jump attenuation
@@ -419,6 +452,7 @@ public class PlayerCharacterController : MonoBehaviour
     //
     private void StartHangOn()
     {
+        OnWaftEnded();
         GetComponent<Animator>().SetBool("bHangOn", true);
         m_bHangOnWall = true;
 
@@ -431,6 +465,42 @@ public class PlayerCharacterController : MonoBehaviour
     {
         GetComponent<Animator>().SetBool("bHangOn", false);
         m_bHangOnWall = false;
+    }
+
+    private void StartWaft()
+    {
+        GetComponent<Animator>().SetBool("bWaft", true);
+
+        m_bIsWafting = true;
+
+        if (null != m_WaftPrefab)
+        {
+            Vector3 playerLocation = gameObject.transform.position;
+            //GameObject waftFX = Instantiate(m_WaftPrefab, playerLocation, Quaternion.identity);
+            GameObject waftFX = Instantiate(m_WaftPrefab, gameObject.transform);
+            RocketExplosion rocketScript = waftFX.GetComponent<RocketExplosion>();
+            if (null != rocketScript)
+            {
+                rocketScript.SetDamages(30.0f);
+                rocketScript.SetEjectionFactor(2.0f);
+            }
+        }
+        Debug.Log("WAFT BEGIN");
+    }
+
+    public void OnWaftDropped()
+    { // Event from Waft animation to triggerjumping
+        m_bWaftTriggered = true;
+        Debug.Log("WAFT TRIGGER");
+    }
+
+    public void OnWaftEnded()
+    { // Event from Waft animation
+        GetComponent<Animator>().SetBool("bWaft", false);
+        m_bWaftTriggered = false;
+        m_bIsWafting = false;
+        m_fWaftTimer = 0.0f;
+        Debug.Log("WAFT ENDED");
     }
 
     private void UpdateCharacterDirection(float fMovementDirection)
