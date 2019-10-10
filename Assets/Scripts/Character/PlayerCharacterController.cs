@@ -40,6 +40,7 @@ public class PlayerCharacterController : MonoBehaviour
     private float m_fWallJumpDirection;
     private float m_fDoubleJumpAttenuation = 1.0f;
 
+    [Header("Inputs")]
     public InputAction m_inputActionJump;
     public InputAction m_inputActionMove;
     public InputAction m_inputActionShoot;
@@ -47,20 +48,15 @@ public class PlayerCharacterController : MonoBehaviour
 
     private bool m_bJumpedTriggered = false;
 
-    //
-    // Inputs
-    //private PlayerInputActions m_playerInputActions;
-
     public void Awake()
     {
-
+        // ...
     }
 
     private void OnEnable()
     {
         //
         //
-        //m_playerInputActions.Enable();
         m_inputActionJump.Enable();
         m_inputActionMove.Enable();
         m_inputActionShoot.Enable();
@@ -71,7 +67,6 @@ public class PlayerCharacterController : MonoBehaviour
     {
         //
         //
-        //m_playerInputActions.Disable();
         m_inputActionJump.Disable();
         m_inputActionMove.Disable();
         m_inputActionShoot.Disable();
