@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterRotator : MonoBehaviour
+public class CharacterPreviewRotator : MonoBehaviour
 {
     private Transform transformInit;
-    private const int iSpeed = 20;
+    private const int iSpeed = 32;
 
     private void Start()
     {
