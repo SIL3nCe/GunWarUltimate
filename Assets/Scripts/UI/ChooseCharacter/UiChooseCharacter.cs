@@ -99,7 +99,7 @@ public class UiChooseCharacter : MonoBehaviour
 
 		Assert.IsNotNull(Player1);
 		Assert.IsNotNull(Player2);
-	}
+    }
 
 	// Update is called once per frame
 	void Update()
@@ -120,7 +120,7 @@ public class UiChooseCharacter : MonoBehaviour
 		//
 		// Selection
 		if (Input.GetKeyUp(KeyCode.Keypad0))	{	SelectCharacter(ref aSelectors[1]);			}
-		if (Input.GetKeyUp(KeyCode.Space))			{	SelectCharacter(ref aSelectors[0]);			}
+		if (Input.GetKeyUp(KeyCode.Space))		{	SelectCharacter(ref aSelectors[0]);			}
 
 		//
 		// Start condition
@@ -144,22 +144,16 @@ public class UiChooseCharacter : MonoBehaviour
 			selector.iSelectionIndex = 0;
 			selector.highlightRef.SetActive(true);
 			selector.highlightRef.GetComponent<Image>().color = selector.color;
-			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[(int)selector.iSelectionIndex].character.transform.position, CharacterArray[(int)selector.iSelectionIndex].character.transform.rotation);
+			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[selector.iSelectionIndex].character.transform.position, CharacterArray[selector.iSelectionIndex].character.transform.rotation);
             selector.highlightRef.transform.position = new Vector3(selector.highlightRef.transform.position.x, selector.highlightRef.transform.position.y, 10.0f);
         }
-		else if(selector.iSelectionIndex == CharacterArray.Length - 1)
-		{
-			selector.iSelectionIndex = -1;
-			selector.highlightRef.SetActive(false);
-			selector.preview.SetActive(false);
-		}
 		else
 		{
 			selector.preview.SetActive(true);
-			++selector.iSelectionIndex;
+			selector.iSelectionIndex = (selector.iSelectionIndex + 1) % CharacterArray.Length;
 			selector.highlightRef.SetActive(true);
 			selector.highlightRef.GetComponent<Image>().color = selector.color;
-			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[(int)selector.iSelectionIndex].character.transform.position, CharacterArray[(int)selector.iSelectionIndex].character.transform.rotation);
+			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[selector.iSelectionIndex].character.transform.position, CharacterArray[selector.iSelectionIndex].character.transform.rotation);
             selector.highlightRef.transform.position = new Vector3(selector.highlightRef.transform.position.x, selector.highlightRef.transform.position.y, 10.0f);
         }
 
@@ -174,22 +168,16 @@ public class UiChooseCharacter : MonoBehaviour
 			selector.iSelectionIndex = CharacterArray.Length - 1;
 			selector.highlightRef.SetActive(true);
 			selector.highlightRef.GetComponent<Image>().color = selector.color;
-			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[(int)selector.iSelectionIndex].character.transform.position, CharacterArray[(int)selector.iSelectionIndex].character.transform.rotation);
+			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[selector.iSelectionIndex].character.transform.position, CharacterArray[selector.iSelectionIndex].character.transform.rotation);
             selector.highlightRef.transform.position = new Vector3(selector.highlightRef.transform.position.x, selector.highlightRef.transform.position.y, 10.0f);
         }
-		else if (selector.iSelectionIndex == 0)
-		{
-			selector.iSelectionIndex = -1;
-			selector.highlightRef.SetActive(false);
-			selector.preview.SetActive(false);
-		}
 		else
 		{
 			selector.preview.SetActive(true);
-			selector.iSelectionIndex = selector.iSelectionIndex - 1;
+			selector.iSelectionIndex = ((selector.iSelectionIndex - 1) + CharacterArray.Length) % CharacterArray.Length;
 			selector.highlightRef.SetActive(true);
 			selector.highlightRef.GetComponent<Image>().color = selector.color;
-			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[(int)selector.iSelectionIndex].character.transform.position, CharacterArray[(int)selector.iSelectionIndex].character.transform.rotation);
+			selector.highlightRef.transform.SetPositionAndRotation(CharacterArray[selector.iSelectionIndex].character.transform.position, CharacterArray[selector.iSelectionIndex].character.transform.rotation);
             selector.highlightRef.transform.position = new Vector3(selector.highlightRef.transform.position.x, selector.highlightRef.transform.position.y, 10.0f);
         }
 
