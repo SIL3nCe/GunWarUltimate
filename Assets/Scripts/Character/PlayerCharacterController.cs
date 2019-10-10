@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerCharacterController : MonoBehaviour
 {
-    public int m_iPlayerIndex;
+    //
+    // Movements
     [Header("Movements")]
     public float m_fPlayerSpeed;
     public float m_fMovementsSmoothTime = 0.01f;
