@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7606437815810149050}
   - component: {fileID: 8001547797489734962}
   - component: {fileID: 6412189252006731721}
-  - component: {fileID: 3629499233128275777}
   - component: {fileID: -1708506135322282795}
   m_Layer: 9
   m_Name: machinegun
@@ -82,6 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponType: 0
+  m_pickSound: {fileID: 8300000, guid: 830f2ce28861caa4baecab9f37b97090, type: 3}
   ThresholdBlink: 7
   ThresholdBlinking: 0.25
   ThresholdDisappear: 10
@@ -97,42 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3065504f1b311b04185ce733878782d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponDatas: {fileID: 11400000, guid: 00589ab55741c4f429e74c43f8ae8359, type: 2}
   muzzleSocket: {fileID: 5402972679378992619}
-  bulletPrefab: {fileID: 5007208187286607476, guid: 302289d5d06e1eb4ca51ca77ab11cb97,
-    type: 3}
   shellSocket: {fileID: 2380855208491267136}
-  bulletShellPrefab: {fileID: 5342551422268578448, guid: 7c7bc8dd2f256bb458a5095574ec4b5c,
-    type: 3}
-  MuzzleFlash: {fileID: 3693660425838998991, guid: 026355ff225244841baae4cead319f80,
-    type: 3}
   rocketMesh: {fileID: 0}
-  firingRate: 30
-  bulletSpeed: 30
-  bulletDamages: 20
-  loaderSize: 30
-  m_audioClipNoAmmo: {fileID: 8300000, guid: 52e8f3851fb4fd5479671d1b0faf54c2, type: 3}
-  m_aAudioClipsShot:
-  - {fileID: 8300000, guid: 5bd23423ed0c57947a70e65682f92e09, type: 3}
-  - {fileID: 8300000, guid: 934d21bd00355b04e812c85f8dc7da60, type: 3}
-  - {fileID: 8300000, guid: 5ff71db0a9ec3ee4cac7a6ff7b92d6a1, type: 3}
-  - {fileID: 8300000, guid: 1289c99612355224eb49b2604863e991, type: 3}
-  - {fileID: 8300000, guid: f486621a373789342a3b80498ffab42f, type: 3}
-  - {fileID: 8300000, guid: 9cac9cb21ced674409ffc0e6227fed37, type: 3}
-  - {fileID: 8300000, guid: fa6d7925cb522ef408f01ab71f43e867, type: 3}
-  - {fileID: 8300000, guid: 739e6d5325ddd9b4984eaec4d9664032, type: 3}
---- !u!114 &3629499233128275777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734068171252819072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c2db7cfa629314e8864153b97e0b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pickSound: {fileID: 8300000, guid: 830f2ce28861caa4baecab9f37b97090, type: 3}
+  RemainingAmmos: 0
 --- !u!82 &-1708506135322282795
 AudioSource:
   m_ObjectHideFlags: 0

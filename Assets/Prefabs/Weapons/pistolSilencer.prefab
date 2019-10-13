@@ -231,7 +231,6 @@ GameObject:
   - component: {fileID: 5394960787288056139}
   - component: {fileID: 1799852171001734369}
   - component: {fileID: 6493803979242806385}
-  - component: {fileID: 4055955734150280754}
   - component: {fileID: 4432705609103802308}
   m_Layer: 9
   m_Name: pistolSilencer
@@ -301,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponType: 3
+  m_pickSound: {fileID: 8300000, guid: 096b2d8645e92a14faa7216daad5f347, type: 3}
   ThresholdBlink: 7
   ThresholdBlinking: 0.25
   ThresholdDisappear: 10
@@ -316,37 +316,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3065504f1b311b04185ce733878782d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponDatas: {fileID: 11400000, guid: 8bf7504d77fa42441adc564aaca9f9d1, type: 2}
   muzzleSocket: {fileID: 5056790240512870731}
-  bulletPrefab: {fileID: 1181200858189174436, guid: ff7bc6a27dbc9694d881ca2d6205607d,
-    type: 3}
   shellSocket: {fileID: 199178524093040709}
-  bulletShellPrefab: {fileID: 1240541736691338086, guid: cb1ac01318c1a1940b40051a9a161a5c,
-    type: 3}
-  MuzzleFlash: {fileID: 0}
   rocketMesh: {fileID: 0}
-  firingRate: 5
-  bulletSpeed: 20
-  bulletDamages: 15
-  loaderSize: 15
-  m_audioClipNoAmmo: {fileID: 8300000, guid: 9c33c4f341b7d43438690a05c73f8811, type: 3}
-  m_aAudioClipsShot:
-  - {fileID: 8300000, guid: 5aa8461bd93f92e4cbd9b2ea1c6d9367, type: 3}
-  - {fileID: 8300000, guid: b2c972e8a8bfaef4ab261c3bf2596d16, type: 3}
-  - {fileID: 8300000, guid: 2b7ca6990cb670a408680f6937819cdc, type: 3}
-  - {fileID: 8300000, guid: 3d2cccbfceb1f4c4aa4e19339143b746, type: 3}
---- !u!114 &4055955734150280754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8899948716667727965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c2db7cfa629314e8864153b97e0b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pickSound: {fileID: 8300000, guid: 096b2d8645e92a14faa7216daad5f347, type: 3}
+  RemainingAmmos: 0
 --- !u!82 &4432705609103802308
 AudioSource:
   m_ObjectHideFlags: 0

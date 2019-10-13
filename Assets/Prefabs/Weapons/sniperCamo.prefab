@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 1883688955770335191}
   - component: {fileID: 367189919791276852}
   - component: {fileID: 4081857899223864893}
-  - component: {fileID: 297629626355168038}
   - component: {fileID: 7913571133444381192}
   m_Layer: 9
   m_Name: sniperCamo
@@ -400,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponType: 1
+  m_pickSound: {fileID: 8300000, guid: dfcf2a8e476a15f49b546e376556eb79, type: 3}
   ThresholdBlink: 7
   ThresholdBlinking: 0.25
   ThresholdDisappear: 10
@@ -415,38 +415,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3065504f1b311b04185ce733878782d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponDatas: {fileID: 11400000, guid: d2641e058b29af4418727b993c360c9e, type: 2}
   muzzleSocket: {fileID: 4330026606221583134}
-  bulletPrefab: {fileID: 5082543936071890134, guid: 933729bd988089c49be15f3de0c551dd,
-    type: 3}
   shellSocket: {fileID: 6067932105342133059}
-  bulletShellPrefab: {fileID: 5975187071392946569, guid: 1a7e605276d61504ea06c3a00ab7b2e9,
-    type: 3}
-  MuzzleFlash: {fileID: 3693660425838998991, guid: 026355ff225244841baae4cead319f80,
-    type: 3}
   rocketMesh: {fileID: 0}
-  firingRate: 2
-  bulletSpeed: 40
-  bulletDamages: 30
-  loaderSize: 10
-  m_audioClipNoAmmo: {fileID: 8300000, guid: 79d5056d7ca633a478c6c199a3acfac9, type: 3}
-  m_aAudioClipsShot:
-  - {fileID: 8300000, guid: 40ae00fb59cf4c64c99996c9e5c293c6, type: 3}
-  - {fileID: 8300000, guid: ba40a9a9de910ba47b480946b72224aa, type: 3}
-  - {fileID: 8300000, guid: 57af372d36f8fcd478a72935a6dbd4dc, type: 3}
-  - {fileID: 8300000, guid: 8021b9e94c2a08642be14f9010a2518d, type: 3}
---- !u!114 &297629626355168038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3250242896851250472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c2db7cfa629314e8864153b97e0b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pickSound: {fileID: 8300000, guid: dfcf2a8e476a15f49b546e376556eb79, type: 3}
+  RemainingAmmos: 0
 --- !u!82 &7913571133444381192
 AudioSource:
   m_ObjectHideFlags: 0

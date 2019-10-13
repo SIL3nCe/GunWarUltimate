@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4feb3fa06ff8fd24ab58094e964bbee5, type: 3}
+  m_Name: Sniper
+  m_EditorClassIdentifier: 
+  LoaderSize: 6
+  FiringRate: 3
+  BulletShellPrefab: {fileID: 5342551422268578448, guid: 7c7bc8dd2f256bb458a5095574ec4b5c,
+    type: 3}
+  MuzzleFlash: {fileID: 3693660425838998991, guid: 026355ff225244841baae4cead319f80,
+    type: 3}
+  BulletPrefab: {fileID: 5082543936071890134, guid: 933729bd988089c49be15f3de0c551dd,
+    type: 3}
+  HitEffect: {fileID: 194062, guid: 407e117d1a12c604f8f040e4db45becf, type: 3}
+  BulletDamages: 30
+  BulletSpeed: 40
+  LifeTime: 2
+  EjectionFactor: 3
+  AudioClipNoAmmo: {fileID: 8300000, guid: 79d5056d7ca633a478c6c199a3acfac9, type: 3}
+  AudioClipsShot:
+  - {fileID: 8300000, guid: 40ae00fb59cf4c64c99996c9e5c293c6, type: 3}
+  - {fileID: 8300000, guid: ba40a9a9de910ba47b480946b72224aa, type: 3}
+  - {fileID: 8300000, guid: 57af372d36f8fcd478a72935a6dbd4dc, type: 3}
+  - {fileID: 8300000, guid: 8021b9e94c2a08642be14f9010a2518d, type: 3}

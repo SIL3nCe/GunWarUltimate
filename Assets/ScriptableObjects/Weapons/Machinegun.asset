@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4feb3fa06ff8fd24ab58094e964bbee5, type: 3}
+  m_Name: Machinegun
+  m_EditorClassIdentifier: 
+  LoaderSize: 30
+  FiringRate: 30
+  BulletShellPrefab: {fileID: 5342551422268578448, guid: 7c7bc8dd2f256bb458a5095574ec4b5c,
+    type: 3}
+  MuzzleFlash: {fileID: 3693660425838998991, guid: 026355ff225244841baae4cead319f80,
+    type: 3}
+  BulletPrefab: {fileID: 5007208187286607476, guid: 302289d5d06e1eb4ca51ca77ab11cb97,
+    type: 3}
+  HitEffect: {fileID: 194062, guid: 407e117d1a12c604f8f040e4db45becf, type: 3}
+  BulletDamages: 20
+  BulletSpeed: 30
+  LifeTime: 3
+  EjectionFactor: 1.2
+  AudioClipNoAmmo: {fileID: 8300000, guid: 52e8f3851fb4fd5479671d1b0faf54c2, type: 3}
+  AudioClipsShot:
+  - {fileID: 8300000, guid: 5bd23423ed0c57947a70e65682f92e09, type: 3}
+  - {fileID: 8300000, guid: 934d21bd00355b04e812c85f8dc7da60, type: 3}
+  - {fileID: 8300000, guid: 5ff71db0a9ec3ee4cac7a6ff7b92d6a1, type: 3}
+  - {fileID: 8300000, guid: 1289c99612355224eb49b2604863e991, type: 3}
+  - {fileID: 8300000, guid: f486621a373789342a3b80498ffab42f, type: 3}
+  - {fileID: 8300000, guid: 9cac9cb21ced674409ffc0e6227fed37, type: 3}
+  - {fileID: 8300000, guid: fa6d7925cb522ef408f01ab71f43e867, type: 3}
+  - {fileID: 8300000, guid: 739e6d5325ddd9b4984eaec4d9664032, type: 3}

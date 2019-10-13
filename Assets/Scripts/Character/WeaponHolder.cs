@@ -102,7 +102,7 @@ public class WeaponHolder : MonoBehaviour
 
             if (null != weapon)
             {
-                weapon.loaderSize = NextAmmoCount;
+                weapon.RemainingAmmos = NextAmmoCount;
 
                 if (NextAmmoCount > 0)
                 { // Reset rocket laucher alpha

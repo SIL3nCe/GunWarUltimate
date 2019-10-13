@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class BulletGameplay : MonoBehaviour
 {
-    [Tooltip("Prefab to Instantiate on hit")]
-    public GameObject HitEffect;
+    private GameObject HitEffect;
 
-    [Tooltip("Time before bullet desappear if no hit")]
-    public float LifeTime;
+    private float LifeTime;
 
-    [Tooltip("Factor applied to damage impulse on player hit")]
-    public float EjectionFactor;
+    private float EjectionFactor;
 
     private float Damages; // Set by weapon on shot
     private bool IsRocket;
     
     void Start()
     {
-        IsRocket = null != HitEffect && HitEffect.name.Contains("Rocket");
-
         Invoke("OnBulletLifeTimeSpend", LifeTime);
     }
 
-    public void SetDamages(float InDamages)
+    public void Initialize(float fDamages, float fLifeTime, float fEjectionFactor, GameObject InHitEffect)
     {
-        Damages = InDamages;
+        Damages = fDamages;
+        LifeTime = fLifeTime;
+        EjectionFactor = fEjectionFactor;
+        HitEffect = InHitEffect;
+
+        IsRocket = null != HitEffect && HitEffect.name.Contains("Rocket");
     }
 
     void OnBulletLifeTimeSpend()

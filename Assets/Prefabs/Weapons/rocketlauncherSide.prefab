@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2290195324726762207}
   - component: {fileID: 418284972863428857}
   - component: {fileID: 1169713531932027810}
-  - component: {fileID: 5260953327557977860}
   - component: {fileID: 845672616221134930}
   m_Layer: 9
   m_Name: rocketlauncherSide
@@ -81,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponType: 4
+  m_pickSound: {fileID: 8300000, guid: f49c4a4136039934d8afb6ffc557f58d, type: 3}
   ThresholdBlink: 7
   ThresholdBlinking: 0.25
   ThresholdDisappear: 10
@@ -96,33 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3065504f1b311b04185ce733878782d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponDatas: {fileID: 11400000, guid: 0d45f22451acb5142b646e36499301b4, type: 2}
   muzzleSocket: {fileID: 3460327736262599668}
-  bulletPrefab: {fileID: 6367612086866347690, guid: 55ed38312e760a0419e5c086c365f672,
-    type: 3}
   shellSocket: {fileID: 0}
-  bulletShellPrefab: {fileID: 0}
-  MuzzleFlash: {fileID: 0}
   rocketMesh: {fileID: 1147337142602539989}
-  firingRate: 1
-  bulletSpeed: 12
-  bulletDamages: 100
-  loaderSize: 3
-  m_audioClipNoAmmo: {fileID: 8300000, guid: ee573cdf49e4be44492530671ba84181, type: 3}
-  m_aAudioClipsShot:
-  - {fileID: 8300000, guid: 9e7dd004e772e924ea55a191b0c6a7aa, type: 3}
---- !u!114 &5260953327557977860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1147337142602539985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c2db7cfa629314e8864153b97e0b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pickSound: {fileID: 8300000, guid: f49c4a4136039934d8afb6ffc557f58d, type: 3}
+  RemainingAmmos: 0
 --- !u!82 &845672616221134930
 AudioSource:
   m_ObjectHideFlags: 0

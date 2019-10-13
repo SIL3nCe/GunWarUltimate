@@ -5,37 +5,23 @@ using UnityEngine.Assertions;
 
 public class WeaponShot : MonoBehaviour
 {
+    [SerializeField]
+    private WeaponDataset WeaponDatas;
+
     [Tooltip("Bullet spawn location")]
     public GameObject muzzleSocket;
-    public GameObject bulletPrefab;
-
     [Tooltip("Shell spawn location")]
     public GameObject shellSocket;
-    public GameObject bulletShellPrefab;
-
-    [Tooltip("Muzzle Flash prefab to enable on shot")]
-    public GameObject MuzzleFlash;
-
     [Tooltip("Rocket to hide when shooting with rocket launcher")]
     public GameObject rocketMesh;
 
-    [Tooltip("Bullet/s")]
-    public int firingRate;
     private float firingRateDt;
     private float firingDt;
 
-    [Tooltip("Bullet start velocity")]
-    public float bulletSpeed;
+    [HideInInspector]
+    public int RemainingAmmos;
 
-    [Tooltip("% of damage per bullet")]
-    public float bulletDamages;
-
-    [Tooltip("Number of bullets it can shoot")]
-    public int loaderSize;
-
-    [Header("Sounds")]
-    public AudioClip m_audioClipNoAmmo;
-    public AudioClip[] m_aAudioClipsShot;
+    // Sounds
     private AudioSource m_audioSource;
     private bool m_bCanPlayNoAmmoSound = true;
     private bool m_bCanPlayWeaponSound = true;
@@ -44,7 +30,9 @@ public class WeaponShot : MonoBehaviour
     void Start()
     {
         firingDt = 0.0f;
-        firingRateDt = 1.0f / firingRate;
+        firingRateDt = 1.0f / WeaponDatas.FiringRate;
+
+        RemainingAmmos = WeaponDatas.LoaderSize;
 
         //
         // Retrieve Audio Source
@@ -56,38 +44,40 @@ public class WeaponShot : MonoBehaviour
     {
         firingDt += Time.deltaTime;
 
-        //Debug only
-        //if (Input.GetKey(KeyCode.C))
-        //{
-        //    Shoot();
-        //}
+        if (Debug.isDebugBuild)
+        {
+            if (Input.GetKey(KeyCode.C))
+            {
+                Shoot();
+            }
+        }
     }
 
     public void Shoot()
     {
-        if (firingDt > firingRateDt && loaderSize > 0)
+        if (firingDt > firingRateDt && RemainingAmmos > 0)
         {
-            if (null != muzzleSocket && null != bulletPrefab)
+            if (null != muzzleSocket && null != WeaponDatas.BulletPrefab)
             {
                 // spawn bullet on socket location
                 Vector3 bulletLocation = muzzleSocket.transform.position;
                 Quaternion bulletRotation = muzzleSocket.transform.rotation;
-                GameObject shotBullet = Instantiate(bulletPrefab, bulletLocation, bulletRotation);
-                shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * bulletSpeed;
+                GameObject shotBullet = Instantiate(WeaponDatas.BulletPrefab, bulletLocation, bulletRotation);
+                shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * WeaponDatas.BulletSpeed;
 
-                if (null != MuzzleFlash)
+                if (null != WeaponDatas.MuzzleFlash)
                 {
-                    Destroy(Instantiate(MuzzleFlash, bulletLocation, bulletRotation), 0.05f);
+                    Destroy(Instantiate(WeaponDatas.MuzzleFlash, bulletLocation, bulletRotation), 0.05f);
                 }
 
                 BulletGameplay bulletParams = shotBullet.GetComponent<BulletGameplay>();
                 if (null != bulletParams)
                 {
-                    bulletParams.SetDamages(bulletDamages);
+                    bulletParams.Initialize(WeaponDatas.BulletDamages, WeaponDatas.LifeTime, WeaponDatas.EjectionFactor, WeaponDatas.HitEffect);
                 }
 
                 firingDt = 0.0f;
-                loaderSize--;
+                RemainingAmmos--;
                
                 // hide rocket for firingRateDt time if rocket is set
                 if (null != rocketMesh)
@@ -103,7 +93,7 @@ public class WeaponShot : MonoBehaviour
                             materialList[i].color = newColor;
                         }
 
-                        if (loaderSize > 0)
+                        if (RemainingAmmos > 0)
                         {
                             StartCoroutine(UnHideRocket(mesh, firingRateDt * 0.9f));
                         }
@@ -116,30 +106,29 @@ public class WeaponShot : MonoBehaviour
             }
 
             // spawn shell on socket location
-            if (null != shellSocket && null != bulletShellPrefab)
+            if (null != shellSocket && null != WeaponDatas.BulletShellPrefab)
             {
                 Vector3 shellLocation = shellSocket.transform.position;
                 Quaternion shellRotation = shellSocket.transform.rotation;
-                GameObject fireShell = Instantiate(bulletShellPrefab, shellLocation, shellRotation);
-                fireShell.GetComponent<Rigidbody>().velocity = -gameObject.transform.forward * 3.0f;
+                GameObject fireShell = Instantiate(WeaponDatas.BulletShellPrefab, shellLocation, shellRotation);
+                fireShell.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * -3.0f;
             }
 
             //
             // Emit sound
-            if (m_aAudioClipsShot.Length > 0 && m_bCanPlayWeaponSound)
+            if (WeaponDatas.AudioClipsShot.Length > 0 && m_bCanPlayWeaponSound)
             {
-                int iSound = Random.Range(0, m_aAudioClipsShot.Length);
-                m_audioSource.PlayOneShot(m_aAudioClipsShot[iSound]);
+                int iSound = Random.Range(0, WeaponDatas.AudioClipsShot.Length);
+                m_audioSource.PlayOneShot(WeaponDatas.AudioClipsShot[iSound]);
                 m_bCanPlayWeaponSound = false;
                 Invoke("ResetCanPlayWeaponSound", 0.05f);
             }
-            
         }
         else
         {
-            if (m_audioClipNoAmmo && m_bCanPlayNoAmmoSound)
+            if (WeaponDatas.AudioClipNoAmmo && m_bCanPlayNoAmmoSound)
             {
-                m_audioSource.PlayOneShot(m_audioClipNoAmmo);
+                m_audioSource.PlayOneShot(WeaponDatas.AudioClipNoAmmo);
                 m_bCanPlayNoAmmoSound = false;
                 Invoke("ResetNoAmmoSound", 0.6f);
             }

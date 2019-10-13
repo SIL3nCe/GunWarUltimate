@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4feb3fa06ff8fd24ab58094e964bbee5, type: 3}
+  m_Name: RocketLauncher
+  m_EditorClassIdentifier: 
+  LoaderSize: 3
+  FiringRate: 3
+  BulletShellPrefab: {fileID: 0}
+  MuzzleFlash: {fileID: 0}
+  BulletPrefab: {fileID: 6367612086866347690, guid: 55ed38312e760a0419e5c086c365f672,
+    type: 3}
+  HitEffect: {fileID: 6010640819943686238, guid: 1dcf35a0806e9e842a17bd0115ba8c7a,
+    type: 3}
+  BulletDamages: 100
+  BulletSpeed: 12
+  LifeTime: 6
+  EjectionFactor: 2
+  AudioClipNoAmmo: {fileID: 8300000, guid: ee573cdf49e4be44492530671ba84181, type: 3}
+  AudioClipsShot:
+  - {fileID: 8300000, guid: 9e7dd004e772e924ea55a191b0c6a7aa, type: 3}

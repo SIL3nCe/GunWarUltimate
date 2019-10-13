@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4feb3fa06ff8fd24ab58094e964bbee5, type: 3}
+  m_Name: PistolSilencer
+  m_EditorClassIdentifier: 
+  LoaderSize: 15
+  FiringRate: 5
+  BulletShellPrefab: {fileID: 5342551422268578448, guid: 7c7bc8dd2f256bb458a5095574ec4b5c,
+    type: 3}
+  MuzzleFlash: {fileID: 0}
+  BulletPrefab: {fileID: 1181200858189174436, guid: ff7bc6a27dbc9694d881ca2d6205607d,
+    type: 3}
+  HitEffect: {fileID: 194062, guid: 407e117d1a12c604f8f040e4db45becf, type: 3}
+  BulletDamages: 15
+  BulletSpeed: 20
+  LifeTime: 2
+  EjectionFactor: 1.5
+  AudioClipNoAmmo: {fileID: 8300000, guid: d6e09c34d54f0e544a0de2293aca7f12, type: 3}
+  AudioClipsShot:
+  - {fileID: 8300000, guid: 5aa8461bd93f92e4cbd9b2ea1c6d9367, type: 3}
+  - {fileID: 8300000, guid: b2c972e8a8bfaef4ab261c3bf2596d16, type: 3}
+  - {fileID: 8300000, guid: 2b7ca6990cb670a408680f6937819cdc, type: 3}
+  - {fileID: 8300000, guid: 3d2cccbfceb1f4c4aa4e19339143b746, type: 3}

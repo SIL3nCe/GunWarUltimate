@@ -356,7 +356,6 @@ GameObject:
   - component: {fileID: 8061356472319123172}
   - component: {fileID: 8447281605009864224}
   - component: {fileID: 3619524683245014867}
-  - component: {fileID: 8359842012912443547}
   - component: {fileID: 2955477500132171537}
   m_Layer: 9
   m_Name: uziGoldLong
@@ -427,6 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponType: 2
+  m_pickSound: {fileID: 8300000, guid: 5af5b552404461b429758acd35e38550, type: 3}
   ThresholdBlink: 7
   ThresholdBlinking: 0.25
   ThresholdDisappear: 10
@@ -442,43 +442,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3065504f1b311b04185ce733878782d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponDatas: {fileID: 11400000, guid: 761c137f5a535eb43adb070113e6959e, type: 2}
   muzzleSocket: {fileID: 6585771504965720665}
-  bulletPrefab: {fileID: 7859456382967039342, guid: 4bb0a8b2f893a5f4ba0ddf4ae4a1f57e,
-    type: 3}
   shellSocket: {fileID: 3984934407094421109}
-  bulletShellPrefab: {fileID: 8254614603280278347, guid: f9f9185beec535e4bac30cc6fdbf8925,
-    type: 3}
-  MuzzleFlash: {fileID: 3693660425838998991, guid: 026355ff225244841baae4cead319f80,
-    type: 3}
   rocketMesh: {fileID: 0}
-  firingRate: 60
-  bulletSpeed: 20
-  bulletDamages: 7
-  loaderSize: 50
-  m_audioClipNoAmmo: {fileID: 8300000, guid: 923749c2b73c20d47be5e0f479fb9e63, type: 3}
-  m_aAudioClipsShot:
-  - {fileID: 8300000, guid: c04a26e2e69905c408790a8db9cc6ea3, type: 3}
-  - {fileID: 8300000, guid: 090940039be017f49a0e8e4bacd89b08, type: 3}
-  - {fileID: 8300000, guid: fd017f075100f16408aec589c1fbc29a, type: 3}
-  - {fileID: 8300000, guid: f23264a6901793f49a11b6e12ef6b6cf, type: 3}
-  - {fileID: 8300000, guid: 3d450ea750d6d874589b60469c3243fc, type: 3}
-  - {fileID: 8300000, guid: 1707d85071eca89419dd87d999909e90, type: 3}
-  - {fileID: 8300000, guid: 37a982e3c0ae30c4787d19add6ce2468, type: 3}
-  - {fileID: 8300000, guid: 6909ed4fb51246b47be0629926bf9acb, type: 3}
-  - {fileID: 8300000, guid: a734ede9686b53544bd971ad31986f53, type: 3}
---- !u!114 &8359842012912443547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5730352917348248382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98c2db7cfa629314e8864153b97e0b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pickSound: {fileID: 8300000, guid: 5af5b552404461b429758acd35e38550, type: 3}
+  RemainingAmmos: 0
 --- !u!82 &2955477500132171537
 AudioSource:
   m_ObjectHideFlags: 0
