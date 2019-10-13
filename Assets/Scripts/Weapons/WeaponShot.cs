@@ -32,8 +32,6 @@ public class WeaponShot : MonoBehaviour
         firingDt = 0.0f;
         firingRateDt = 1.0f / WeaponDatas.FiringRate;
 
-        RemainingAmmos = WeaponDatas.LoaderSize;
-
         //
         // Retrieve Audio Source
         m_audioSource = GetComponent<AudioSource>();
@@ -78,7 +76,7 @@ public class WeaponShot : MonoBehaviour
 
                 firingDt = 0.0f;
                 RemainingAmmos--;
-               
+
                 // hide rocket for firingRateDt time if rocket is set
                 if (null != rocketMesh)
                 {
@@ -183,5 +181,11 @@ public class WeaponShot : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void InitializeLoader()
+    {
+        // Set RemainingAmmos to LoaderSize, only used at spawn
+        RemainingAmmos = WeaponDatas.LoaderSize;
     }
 }

@@ -53,7 +53,13 @@ public class WeaponSpawner : MonoBehaviour
 		GameObject newWeapon = Instantiate<GameObject>(weaponPrefab, spawnLocation.transform.position, spawnLocation.transform.localRotation);
 		newWeapon.GetComponent<Rigidbody>().velocity = spawnLocation.transform.right * spawnLocation.GetComponent<WeaponSpawnLocation>().initialVelocity;
 
-		++iCurrentWeaponCount;
+        WeaponShot weapon = newWeapon.GetComponent<WeaponShot>();
+        if (weapon)
+        {
+            weapon.InitializeLoader();
+        }
+
+        ++iCurrentWeaponCount;
 	}
 
 	public void OnWeaponDisappeared()
