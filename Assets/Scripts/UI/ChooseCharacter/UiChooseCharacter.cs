@@ -60,8 +60,6 @@ public class UiChooseCharacter : MonoBehaviour
 	}
 	private Selector[] aSelectors;
 
-	private bool bGameLaunched = false;
-
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -111,7 +109,7 @@ public class UiChooseCharacter : MonoBehaviour
 			if (Input.GetKeyUp(KeyCode.Q))				{	MoveSelectionPrevious(ref aSelectors[0]);	}
 			if (Input.GetKeyUp(KeyCode.D))				{	MoveSelectionNext(ref aSelectors[0]);		}
 		}
-		if(!aSelectors[1].bSelected)
+		if (!aSelectors[1].bSelected)
 		{
 			if (Input.GetKeyUp(KeyCode.LeftArrow))		{	MoveSelectionPrevious(ref aSelectors[1]);	}
 			if (Input.GetKeyUp(KeyCode.RightArrow))		{	MoveSelectionNext(ref aSelectors[1]);		}
@@ -125,13 +123,12 @@ public class UiChooseCharacter : MonoBehaviour
 		//
 		// Start condition
 		bool bStart = true;
-		foreach(Selector s in aSelectors)
+		foreach (Selector s in aSelectors)
 		{
 			bStart &= s.bSelected;
 		}
-		if(bStart)
+		if (bStart)
 		{
-			bGameLaunched = true;
 			Invoke("LaunchGame", 3.0f);
 		}
 	}
@@ -186,7 +183,7 @@ public class UiChooseCharacter : MonoBehaviour
 
 	private void UpdateCharacterPreview(Selector selector)
 	{
-		if(null != selector.name)
+		if (null != selector.name)
 		{
 			if(-1 == selector.iSelectionIndex)
 			{
