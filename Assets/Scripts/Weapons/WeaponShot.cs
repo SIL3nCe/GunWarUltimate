@@ -164,11 +164,11 @@ public class WeaponShot : MonoBehaviour
         m_bCanPlayWeaponSound = true;
     }
 
-    public void ResetRocketAlpha()
+    public void SetRocketVisibility(bool bHide)
     {
         if (null != rocketMesh)
         {
-            rocketMesh.SetActive(true);
+            rocketMesh.SetActive(!bHide);
             MeshRenderer mesh = rocketMesh.GetComponent<MeshRenderer>();
             if (null != mesh)
             {
@@ -176,7 +176,7 @@ public class WeaponShot : MonoBehaviour
                 for (int i = 0; i < materialList.Length; ++i)
                 {
                     Color newColor = materialList[i].color;
-                    newColor.a = 1.0f;
+                    newColor.a = bHide ? 0.0f : 1.0f;
                     materialList[i].color = newColor;
                 }
             }

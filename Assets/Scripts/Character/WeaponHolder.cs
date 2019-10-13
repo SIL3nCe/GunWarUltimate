@@ -103,11 +103,7 @@ public class WeaponHolder : MonoBehaviour
             if (null != weapon)
             {
                 weapon.RemainingAmmos = NextAmmoCount;
-
-                if (NextAmmoCount > 0)
-                { // Reset rocket laucher alpha
-                    weapon.ResetRocketAlpha();
-                } 
+                weapon.SetRocketVisibility(NextAmmoCount == 0);
             }
 		}
 	}
