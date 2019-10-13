@@ -2340,7 +2340,7 @@ GameObject:
   - component: {fileID: 945900314}
   - component: {fileID: 945900315}
   m_Layer: 0
-  m_Name: weapon_spawner (2)
+  m_Name: weapon_spawner_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2386,12 +2386,11 @@ MonoBehaviour:
   - {fileID: 1541054431}
   - {fileID: 599304952}
   m_aWeaponPrefabs:
-  - {fileID: 945900313}
+  - {fileID: 3250242896851250472, guid: 16d881da92b2078438cead89cd8593fc, type: 3}
   - {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad, type: 3}
   - {fileID: 8899948716667727965, guid: 59eb7fcde796c594ea55d74d49eba7d7, type: 3}
   - {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54, type: 3}
   - {fileID: 5730352917348248382, guid: 33f5f0f673df53745a89921425d6278f, type: 3}
-  - {fileID: 3250242896851250472, guid: 16d881da92b2078438cead89cd8593fc, type: 3}
   m_iMaxWeaponCount: 10
   m_fThresholdNewWeapon: 5
 --- !u!1001 &947387162
@@ -4464,7 +4463,7 @@ GameObject:
   - component: {fileID: 1700549042}
   - component: {fileID: 1700549043}
   m_Layer: 0
-  m_Name: weapon_spawner (1)
+  m_Name: weapon_spawner_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
