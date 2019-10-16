@@ -26,12 +26,12 @@ public class RocketExplosion : MonoBehaviour
         gameObject.GetComponent<SphereCollider>().enabled = false;
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        PlayerGameplay player = collision.gameObject.GetComponent<PlayerGameplay>();
+        PlayerGameplay player = other.gameObject.GetComponent<PlayerGameplay>();
         if (null != player)
         {
-            Vector3 dir = collision.contacts[0].point - transform.position;
+            Vector3 dir = player.transform.position - transform.position;
             player.TakeDamages(damages, dir, ejectionFactor);
         }
     }

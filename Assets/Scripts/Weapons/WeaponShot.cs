@@ -61,7 +61,7 @@ public class WeaponShot : MonoBehaviour
                 Vector3 bulletLocation = muzzleSocket.transform.position;
                 Quaternion bulletRotation = muzzleSocket.transform.rotation;
                 GameObject shotBullet = Instantiate(WeaponDatas.BulletPrefab, bulletLocation, bulletRotation);
-                shotBullet.GetComponent<Rigidbody>().velocity = gameObject.transform.right * WeaponDatas.BulletSpeed;
+                shotBullet.GetComponent<Rigidbody>().velocity = muzzleSocket.transform.right * WeaponDatas.BulletSpeed;
 
                 if (null != WeaponDatas.MuzzleFlash)
                 {

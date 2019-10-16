@@ -140,7 +140,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &4446983271487947733
 MonoBehaviour:
@@ -154,7 +154,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3491c1ce5d9fc7140a733f9619e1ce13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitEffect: {fileID: 6010640819943686238, guid: 1dcf35a0806e9e842a17bd0115ba8c7a,
-    type: 3}
-  LifeTime: 6
-  EjectionFactor: 2
