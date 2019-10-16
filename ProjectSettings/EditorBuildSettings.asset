@@ -8,4 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/super_awesome_level.unity
     guid: 3afdf67daf5577847a6a34acd49f1071
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 73dfa1a358d0cb94c97327ea9c0807a0,
+      type: 2}
