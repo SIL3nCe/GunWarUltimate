@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 19998858}
   - component: {fileID: 8595296813083784723}
   - component: {fileID: 8461312060107803573}
-  - component: {fileID: 5901352297870060728}
+  - component: {fileID: 5126769402003504526}
   m_Layer: 0
   m_Name: WaftEffect
   m_TagString: Untagged
@@ -4771,7 +4771,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &5901352297870060728
+--- !u!114 &5126769402003504526
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4780,6 +4780,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 182542}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a091e42815bb1764ca4c9127065804f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c50f76091ca3274baf6c113d09635b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damages: 50
+  ejectionFactor: 2
