@@ -39,15 +39,20 @@ public class UIManager : MonoBehaviour
 	public GameObject	UiPanelStockP2StockX;
 	public RawImage		UiImageStockP2StockX;
 	public Text			UiTextStockP2StockX;
+
+    [Header("Victory")]
 	public GameObject	UiPanelVictory;
 	public Text			UiTextWinner;
+    public UiChooseCharacter ChampSelectionObject;
 
 	//
 	// Terrain-related
+    [Header("Terrain")]
 	public PlayerSpawner Spawner;
 
 	//
 	// Public attributes
+    [Header("Rules")]
 	public EInGameEndRules Rules = EInGameEndRules.time;
 
 	public uint RoundDurationMinute = 3;
@@ -91,7 +96,7 @@ public class UIManager : MonoBehaviour
 	private bool bFinished = false;
 
 	// Start is called before the first frame update
-	void Start()
+	void OnEnable()
     {
 		//
 		// Context
@@ -208,7 +213,11 @@ public class UIManager : MonoBehaviour
 		{
 			iRoundStocksCount = null;
 		}
-	}
+
+        //
+        // Reset UI
+        UiPanelVictory.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -227,7 +236,16 @@ public class UIManager : MonoBehaviour
 			}
 		}
 
-		switch(eInGameState)
+        if (Debug.isDebugBuild)
+        {
+            if (Input.GetKey(KeyCode.R))
+            { // Go on victory screen
+                eInGameState = EInGameState.finished;
+                fRemainingTime = 0.0f;
+            }
+        }
+
+        switch (eInGameState)
 		{
 			case EInGameState.countdown:
 			{
@@ -255,7 +273,8 @@ public class UIManager : MonoBehaviour
 				if(bFinished)
 				{
 					eInGameState = EInGameState.finished;
-				}
+                    fRemainingTime = 0.0f;
+                }
 				break;
 			}
 			case EInGameState.paused:
@@ -264,20 +283,22 @@ public class UIManager : MonoBehaviour
 			}
 			case EInGameState.finished:
 			{
-				UiPanelVictory.SetActive(true);
-				if(0 == Player1.GetRemainingStocks())
-				{
-					UiTextWinner.text = "P2";
-				}
-				else if(0 == Player2.GetRemainingStocks())
-				{
-					UiTextWinner.text = "P1";
-				}
-                else
+                if (fRemainingTime == 0.0f)
                 {
-                        if(Player1.GetRemainingStocks() == Player2.GetRemainingStocks())
+                    UiPanelVictory.SetActive(true);
+                    if (0 == Player1.GetRemainingStocks())
+                    {
+                        UiTextWinner.text = "P2";
+                    }
+                    else if (0 == Player2.GetRemainingStocks())
+                    {
+                        UiTextWinner.text = "P1";
+                    }
+                    else
+                    {
+                        if (Player1.GetRemainingStocks() == Player2.GetRemainingStocks())
                         {
-                            if(Player1.GetPercentage() > Player2.GetPercentage())
+                            if (Player1.GetPercentage() > Player2.GetPercentage())
                             {
                                 UiTextWinner.text = "P2";
                             }
@@ -288,7 +309,7 @@ public class UIManager : MonoBehaviour
                         }
                         else
                         {
-                            if(Player1.GetRemainingStocks() > Player2.GetRemainingStocks())
+                            if (Player1.GetRemainingStocks() > Player2.GetRemainingStocks())
                             {
                                 UiTextWinner.text = "P1";
                             }
@@ -297,8 +318,17 @@ public class UIManager : MonoBehaviour
                                 UiTextWinner.text = "P2";
                             }
                         }
+                    }
                 }
-				break;
+
+                fRemainingTime += Time.deltaTime;
+
+                if (fRemainingTime >= 2.0f && (Input.GetKeyUp(KeyCode.Keypad0) || Input.GetKeyUp(KeyCode.Space)))
+                { // Return to champ select screen
+                    if (null != ChampSelectionObject)
+                        ChampSelectionObject.GameEndedReset();
+                }
+                break;
 			}
 		}
 	}

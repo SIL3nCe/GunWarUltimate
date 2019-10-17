@@ -247,4 +247,16 @@ public class UiChooseCharacter : MonoBehaviour
 			}
 		}
 	}
+
+    public void GameEndedReset()
+    {
+        ChooseCharacterCamera.enabled = true;
+        GameCamera.enabled = false;
+        GameScene.SetActive(false);
+        gameObject.SetActive(true);
+
+        // Remove selection validation
+        SelectCharacter(ref aSelectors[1]);
+        SelectCharacter(ref aSelectors[0]);
+    }
 }

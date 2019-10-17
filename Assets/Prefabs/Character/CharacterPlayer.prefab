@@ -5201,7 +5201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302b1de20e4880041971274df428c377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_iPlayerIndex: 0
   m_fPlayerSpeed: 6
   m_fMovementsSmoothTime: 0.01
   m_fJumpFactor: 6
