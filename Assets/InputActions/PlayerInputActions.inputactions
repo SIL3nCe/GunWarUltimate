@@ -2,13 +2,21 @@
     "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "Movements",
-            "id": "06f8930f-820e-451b-be1c-74d66bb91fda",
+            "name": "Gameplay",
+            "id": "a5aea792-e9b0-4741-9107-7c2fbd3f2009",
             "actions": [
                 {
                     "name": "Move",
+                    "type": "Value",
+                    "id": "3923164a-1bd0-43a9-a15f-700a7c8307a2",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Shoot",
                     "type": "Button",
-                    "id": "2f9dfd78-7b64-4230-b0a4-5339863c722f",
+                    "id": "fa708f60-a472-4ab6-8c0b-06ab7363765b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -16,7 +24,7 @@
                 {
                     "name": "Jump",
                     "type": "Button",
-                    "id": "7faf5ea6-9f7f-448a-b302-f8b21332fea6",
+                    "id": "ebe824df-86af-48aa-960b-a31d33999746",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
@@ -25,69 +33,111 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "eba120a7-6270-4856-af99-4cf69c1f6d3a",
+                    "id": "bcb1e489-105e-4bfc-b6dc-8e2c32e88f49",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "c5b6c8e4-0217-4063-94b6-45995c5e176e",
-                    "path": "<Gamepad>/buttonSouth",
+                    "name": "WASD",
+                    "id": "2e9e4d6c-c053-4f80-b62e-69a40e419c3d",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
+                    "action": "Move",
+                    "isComposite": true,
                     "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Weapon",
-            "id": "eca330fe-f153-4ea6-84a4-9b5f956c3fe0",
-            "actions": [
-                {
-                    "name": "Shoot",
-                    "type": "Button",
-                    "id": "6970a9df-1fda-4127-b80d-f1ab69840daa",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
                 },
                 {
-                    "name": "Throw",
-                    "type": "Button",
-                    "id": "1546cf7e-bad4-4624-9702-afc563927e30",
-                    "expectedControlType": "",
+                    "name": "up",
+                    "id": "f95cb55e-6fcc-4c7f-9afe-018a47c758c1",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
                     "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
+                    "groups": "Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "f8ec4414-e51f-4dc6-a349-c1738ff811a2",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "7e7e2381-0f92-4004-ad58-dc5268663ef1",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "10b6d562-9906-420c-a288-9d472149399e",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
                 {
                     "name": "",
-                    "id": "e7927c26-2b41-4814-bfbc-ad1a82067702",
+                    "id": "ffbb33ae-2250-4498-a717-b6e601862de1",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b7b3e5bb-b0a3-463c-9f19-f1c6de644e64",
-                    "path": "<Gamepad>/buttonWest",
+                    "id": "9715d933-5923-4d5a-a092-b8c6b0e524b5",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Throw",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cce511c5-fb7d-42ea-a95e-e004eeb8425f",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df27afd7-a640-41b4-acef-e5fe9dc30503",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -96,11 +146,27 @@
     ],
     "controlSchemes": [
         {
-            "name": "New control scheme",
-            "bindingGroup": "New control scheme",
+            "name": "Gamepad",
+            "bindingGroup": "Gamepad",
             "devices": [
                 {
                     "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Keyboard&Mouse",
+            "bindingGroup": "Keyboard&Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }
