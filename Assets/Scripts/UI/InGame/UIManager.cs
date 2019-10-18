@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Assertions;
 
 public enum EInGameEndRules
 {
@@ -148,14 +149,41 @@ public class UIManager : MonoBehaviour
 				PlayerArray[(int)(EPlayerEnum.p2)].UiImageStockX	= UiImageStockP2StockX;
 				PlayerArray[(int)(EPlayerEnum.p2)].UiTextStockX		= UiTextStockP2StockX;
 			}
+
+			ArrayList aSpawnLocations = new ArrayList();
 			foreach (PlayerUI playerUI in PlayerArray)
 			{
 				if (null != playerUI.Player)
 				{
+					//
+					// Update properties
 					playerUI.Player.SetUiManager(this);
 					playerUI.Player.SetStocks(iRoundStocksCount);
 
+					//
+					// Update % text
 					playerUI.UiPercentage.text = 0.ToString("D3") + "%";
+
+					//
+					// Set CountdownSpawn
+					Transform newPose = Spawner.GetSpawnLocation();
+					int iMaxLoopCount = 5;
+					int iLoopIndex = 0;
+					while (aSpawnLocations.Contains(newPose))
+					{
+						if(iLoopIndex > iMaxLoopCount)
+						{
+							// Must at least have PlayerCount spawner locations
+							Assert.IsFalse(true); 
+						}
+						++iLoopIndex;
+						newPose = Spawner.GetSpawnLocation();
+					}
+					playerUI.Player.SetInitialSpawnLocation(newPose);
+
+					//
+					// Hide character
+					playerUI.Player.HideMeshes();
 				}
 			}
 		}
@@ -178,21 +206,24 @@ public class UIManager : MonoBehaviour
 					RawImage[] images1 = playerUI.UiPanelStock1.GetComponentsInChildren<RawImage>();
 					foreach (RawImage image in images1)
 					{
-						image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
+                        image.enabled = true;
+                        image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
 						image.material.shader = Shader.Find("UI/Unlit/Detail");
 					}
 
 					RawImage[] images2 = playerUI.UiPanelStock2.GetComponentsInChildren<RawImage>();
 					foreach (RawImage image in images2)
-					{
-						image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
+                    {
+                        image.enabled = true;
+                        image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
 						image.material.shader = Shader.Find("UI/Unlit/Detail");
 					}
 
 					RawImage[] images3 = playerUI.UiPanelStock3.GetComponentsInChildren<RawImage>();
 					foreach (RawImage image in images3)
-					{
-						image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
+                    {
+                        image.enabled = true;
+                        image.material = playerUI.Player.GetComponent<PlayerGameplay>().Head.material;
 						image.material.shader = Shader.Find("UI/Unlit/Detail");
 					}
 					
@@ -207,18 +238,25 @@ public class UIManager : MonoBehaviour
 					}
 				}
 			}
-
 		}
 		else
 		{
 			iRoundStocksCount = null;
 		}
-
-        //
-        // Reset UI
-        UiPanelVictory.SetActive(false);
     }
 
+    void OnDisable()
+    {
+        //
+        // Reset victory UI
+        UiPanelVictory.SetActive(false);
+
+        //
+        // Reset gamestate
+        eInGameState = EInGameState.countdown;
+        bFinished = false;
+    }
+    
     // Update is called once per frame
     void Update()
     {

@@ -104,15 +104,13 @@ public class PlayerGameplay : MonoBehaviour
         int iSound = Random.Range(0, m_aAudioClipsScream.Length);
         AudioManager.GetInstance().PlaySoundEffect(m_aAudioClipsScream[iSound], 0.6f);
         AudioManager.GetInstance().PlaySoundEffect(m_aAudioClipImplose, 1.0f);
-        
-        //
-        // Hide Character during death
-        // !! SetActive on entire prefab will block Animator and let skeleton in mid-anim positions
-        // Find a better to achieve this if possible
-        foreach (var component in GetComponentsInChildren<SkinnedMeshRenderer>())
-        {
-            component.enabled = false;
-        }
+
+		//
+		// Hide Character during death
+		// !! SetActive on entire prefab will block Animator and let skeleton in mid-anim positions
+		// Find a better to achieve this if possible
+		HideMeshes();
+
         // Disable inputs
         GetComponent<PlayerCharacterController>().OnDisable();
     }
@@ -137,30 +135,41 @@ public class PlayerGameplay : MonoBehaviour
 		stocks = iStocks;
 	}
 
+	public void SetInitialSpawnLocation(Transform newPose)
+	{
+		nextSpawnLocation = newPose;
+
+		// TODO : Wait for custom spawn effect ?
+		//if (null != RespawnEffect)
+		//{
+		//	Instantiate(RespawnEffect, newPose);
+		//}
+
+		Invoke("Spawn", 3.0f);
+	}
+
 	public void SetNextSpawnLocation(Transform newPose)
 	{
 		nextSpawnLocation = newPose;
 
-        if (null != RespawnEffect)
-        {
-            Instantiate(RespawnEffect, newPose);
-        }
+		if (null != RespawnEffect)
+		{
+			Instantiate(RespawnEffect, newPose);
+		}
 
-        Invoke("Spawn", 3.0f);
+		Invoke("Spawn", 3.0f);
 	}
 
 	private void Spawn()
     {
         if (null != stocks && stocks > 0)
         {
-            //
-            // Unhide Character during death
-            // !! SetActive on entire prefab will block Animator and let skeleton in mid-anim positions
-            // Find a better to achieve this if possible
-            foreach (var component in GetComponentsInChildren<SkinnedMeshRenderer>())
-            {
-                component.enabled = true;
-            }
+			//
+			// Unhide Character during death
+			// !! SetActive on entire prefab will block Animator and let skeleton in mid-anim positions
+			// Find a better to achieve this if possible
+			ShowMeshes();
+
             // Enable inputs
             GetComponent<PlayerCharacterController>().OnEnable();
 
@@ -173,7 +182,23 @@ public class PlayerGameplay : MonoBehaviour
 		}
 	}
 
-    private void ResetCanPlayDamageSound()
+	public void HideMeshes()
+	{
+		foreach (var component in GetComponentsInChildren<SkinnedMeshRenderer>())
+		{
+			component.enabled = false;
+		}
+	}
+
+	public void ShowMeshes()
+	{
+		foreach (var component in GetComponentsInChildren<SkinnedMeshRenderer>())
+		{
+			component.enabled = true;
+		}
+	}
+
+	private void ResetCanPlayDamageSound()
     {
         m_bCanPlayDamageSound = true;
     }
