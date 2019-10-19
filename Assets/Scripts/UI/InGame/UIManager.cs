@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
 	//
 	// Terrain-related
     [Header("Terrain")]
-	public PlayerSpawner Spawner;
+	public SpawnerManager spawnerManager;
 
 	//
 	// Public attributes
@@ -74,8 +74,12 @@ public class UIManager : MonoBehaviour
 
 	//
 	// Player-related
+	[Header("Players")]
 	public PlayerGameplay	Player1;
 	public PlayerGameplay	Player2;
+
+	[Header("Reset")]
+	public GameObject ObjectToDeleteOnResetContainer;
 
 	struct PlayerUI
 	{
@@ -95,12 +99,13 @@ public class UIManager : MonoBehaviour
 	private PlayerUI[]	PlayerArray;
 
 	private bool bFinished = false;
-
+	
 	// Start is called before the first frame update
 	void OnEnable()
     {
 		//
 		// Context
+		spawnerManager.Initialize();
 		eInGameState = EInGameState.countdown;
 
 		//
@@ -166,7 +171,7 @@ public class UIManager : MonoBehaviour
 
 					//
 					// Set CountdownSpawn
-					Transform newPose = Spawner.GetSpawnLocation();
+					Transform newPose = spawnerManager.GetSpawnLocation(SpawnerManager.ESpawner.player);
 					int iMaxLoopCount = 5;
 					int iLoopIndex = 0;
 					while (aSpawnLocations.Contains(newPose))
@@ -177,7 +182,7 @@ public class UIManager : MonoBehaviour
 							Assert.IsFalse(true); 
 						}
 						++iLoopIndex;
-						newPose = Spawner.GetSpawnLocation();
+						newPose = spawnerManager.GetSpawnLocation(SpawnerManager.ESpawner.player);
 					}
 					playerUI.Player.SetInitialSpawnLocation(newPose);
 
@@ -255,7 +260,15 @@ public class UIManager : MonoBehaviour
         // Reset gamestate
         eInGameState = EInGameState.countdown;
         bFinished = false;
-    }
+
+		//
+		// Destroy objects
+		int iChildCount = ObjectToDeleteOnResetContainer.transform.childCount;
+		for (int i = iChildCount - 1; i > 0; i--)
+		{
+			GameObject.Destroy(ObjectToDeleteOnResetContainer.transform.GetChild(i).gameObject);
+		}
+	}
     
     // Update is called once per frame
     void Update()
@@ -271,6 +284,10 @@ public class UIManager : MonoBehaviour
 			else
 			{
 				eInGameState = EInGameState.paused;
+
+				//
+				// Disable spawning
+				spawnerManager.DisableSpawning();
 			}
 		}
 
@@ -288,6 +305,11 @@ public class UIManager : MonoBehaviour
 			case EInGameState.countdown:
 			{
 				eInGameState = EInGameState.playing;
+
+				//
+				// Enable spawning
+				spawnerManager.EnableSpawning();
+
 				break;
 			}
 			case EInGameState.playing:
@@ -312,7 +334,11 @@ public class UIManager : MonoBehaviour
 				{
 					eInGameState = EInGameState.finished;
                     fRemainingTime = 0.0f;
-                }
+
+					//
+					// Disable spawning
+					spawnerManager.DisableSpawning();
+				}
 				break;
 			}
 			case EInGameState.paused:
@@ -418,7 +444,7 @@ public class UIManager : MonoBehaviour
 
             if (!bFinished)
             {
-                Transform newPose = Spawner.GetSpawnLocation();
+                Transform newPose = spawnerManager.GetSpawnLocation(SpawnerManager.ESpawner.player);
                 PlayerArray[arrayId].Player.SetNextSpawnLocation(newPose);
             }
 		}

@@ -62,8 +62,9 @@ public class WeaponShot : MonoBehaviour
                 Quaternion bulletRotation = muzzleSocket.transform.rotation;
                 GameObject shotBullet = Instantiate(WeaponDatas.BulletPrefab, bulletLocation, bulletRotation);
                 shotBullet.GetComponent<Rigidbody>().velocity = muzzleSocket.transform.right * WeaponDatas.BulletSpeed;
+				shotBullet.transform.SetParent(transform, true);
 
-                if (null != WeaponDatas.MuzzleFlash)
+				if (null != WeaponDatas.MuzzleFlash)
                 {
                     Destroy(Instantiate(WeaponDatas.MuzzleFlash, bulletLocation, bulletRotation), 0.05f);
                 }
@@ -110,6 +111,7 @@ public class WeaponShot : MonoBehaviour
                 Quaternion shellRotation = shellSocket.transform.rotation;
                 GameObject fireShell = Instantiate(WeaponDatas.BulletShellPrefab, shellLocation, shellRotation);
                 fireShell.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * -3.0f;
+				fireShell.transform.SetParent(transform, true);
             }
 
             //

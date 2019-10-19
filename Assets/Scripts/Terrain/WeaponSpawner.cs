@@ -20,9 +20,14 @@ public class WeaponSpawner : MonoBehaviour
     public int m_iMaxWeaponCount;
     public float m_fThresholdNewWeapon;
 
-    //
-    //
-    private float fDurationNewWeapon = 0.0f;
+	//
+	//
+	[Header("Reset Parameters")]
+	public GameObject NewWeaponParent;
+
+	//
+	//
+	private float fDurationNewWeapon = 0.0f;
     private int iCurrentWeaponCount = 0;
 
     void Update()
@@ -40,18 +45,26 @@ public class WeaponSpawner : MonoBehaviour
 		}
 	}
 
-	public void SpawnRandomWeapon()
+	public Transform GetSpawnLocation()
 	{
 		GameObject spawnLocation = m_aWeaponSpawnLocations[Random.Range(0, m_aWeaponSpawnLocations.Length)].transform.gameObject;
-		GameObject weaponPrefab = m_aWeaponPrefabs[Random.Range(0, m_aWeaponPrefabs.Length)];
-
-		SpawnWeapon(spawnLocation, weaponPrefab);
+		return spawnLocation.transform;
 	}
 
-	public void SpawnWeapon(GameObject spawnLocation, GameObject weaponPrefab)
+	public void SpawnRandomWeapon()
 	{
-		GameObject newWeapon = Instantiate<GameObject>(weaponPrefab, spawnLocation.transform.position, spawnLocation.transform.localRotation);
-		newWeapon.GetComponent<Rigidbody>().velocity = spawnLocation.transform.right * spawnLocation.GetComponent<WeaponSpawnLocation>().initialVelocity;
+		Transform newTransform = GetSpawnLocation();
+		float fInitialVelocity = newTransform.gameObject.GetComponent<WeaponSpawnLocation>().initialVelocity;
+		GameObject weaponPrefab = m_aWeaponPrefabs[Random.Range(0, m_aWeaponPrefabs.Length)];
+
+		SpawnWeapon(newTransform, fInitialVelocity, weaponPrefab);
+	}
+
+	public void SpawnWeapon(Transform spawnLocation, float fInitialVelocity, GameObject weaponPrefab)
+	{
+		GameObject newWeapon = Instantiate<GameObject>(weaponPrefab, spawnLocation.position, spawnLocation.localRotation);
+		newWeapon.transform.SetParent(NewWeaponParent.transform, true);	
+		newWeapon.GetComponent<Rigidbody>().velocity = spawnLocation.right * fInitialVelocity;
 
         WeaponShot weapon = newWeapon.GetComponent<WeaponShot>();
         if (weapon)
