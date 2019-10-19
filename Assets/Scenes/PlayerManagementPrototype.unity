@@ -1090,9 +1090,11 @@ MonoBehaviour:
   m_collisionsOptions:
     m_fGroundCheckOffset: 1
     m_fGroundCheckRadius: 0.2
-    m_fWallCheckHorizontalOffset: 0.6
+    m_fWallCheckHorizontalOffset: 0.5
     m_fWallCheckVerticalOffset: 0
-    m_fWallCheckRadius: 0.2
+    m_fWallCheckRadius: 0.05
+    m_iCheckSpheresCount: 6
+    m_fOffsetBetweenCheckSpheres: 0.15
     m_ignoredLayersMask:
       serializedVersion: 2
       m_Bits: 256

@@ -22,6 +22,10 @@ public class PlayerControllerCollisionsOptions
     public float m_fWallCheckVerticalOffset = 0.0f;
     [Tooltip("The radius of the sphere that is used to check for walls")]
     public float m_fWallCheckRadius = 0.2f;
+    [Tooltip("The number of spheres that will be used to check for wall collisions")]
+    public int m_iCheckSpheresCount = 1;
+    [Tooltip("The vertical offset between the spheres used to check for the walls")]
+    public float m_fOffsetBetweenCheckSpheres = 0.2f;
 
     [Header("Layers")]
     [Tooltip("The layers to ignore for the raycast to determine if the player hits the ground or a wall")]
@@ -267,8 +271,13 @@ public class PlayerController : MonoBehaviour
         //
         // Draw wall check sphere
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius);
-        Gizmos.DrawWireSphere(transform.position + new Vector3(-m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+        for (int iSphere = 0; iSphere < m_collisionsOptions.m_iCheckSpheresCount; iSphere++)
+        {
+            Gizmos.DrawWireSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset + (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+            Gizmos.DrawWireSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset - (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+        }
+        /*Gizmos.DrawWireSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+        Gizmos.DrawWireSphere(transform.position + new Vector3(-m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius);*/
     }
 
 
