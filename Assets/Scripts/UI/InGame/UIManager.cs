@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public enum EInGameEndRules
 {
@@ -77,9 +78,6 @@ public class UIManager : MonoBehaviour
 	[Header("Players")]
 	public PlayerGameplay	Player1;
 	public PlayerGameplay	Player2;
-
-	[Header("Reset")]
-	public GameObject ObjectToDeleteOnResetContainer;
 
 	struct PlayerUI
 	{
@@ -249,26 +247,6 @@ public class UIManager : MonoBehaviour
 			iRoundStocksCount = null;
 		}
     }
-
-    void OnDisable()
-    {
-        //
-        // Reset victory UI
-        UiPanelVictory.SetActive(false);
-
-        //
-        // Reset gamestate
-        eInGameState = EInGameState.countdown;
-        bFinished = false;
-
-		//
-		// Destroy objects
-		int iChildCount = ObjectToDeleteOnResetContainer.transform.childCount;
-		for (int i = iChildCount - 1; i > 0; i--)
-		{
-			GameObject.Destroy(ObjectToDeleteOnResetContainer.transform.GetChild(i).gameObject);
-		}
-	}
     
     // Update is called once per frame
     void Update()
@@ -388,9 +366,8 @@ public class UIManager : MonoBehaviour
                 fRemainingTime += Time.deltaTime;
 
                 if (fRemainingTime >= 2.0f && (Input.GetKeyUp(KeyCode.Keypad0) || Input.GetKeyUp(KeyCode.Space)))
-                { // Return to champ select screen
-                    if (null != ChampSelectionObject)
-                        ChampSelectionObject.GameEndedReset();
+                { // Return to champ select
+                    SceneManager.LoadScene("ChampSelect", LoadSceneMode.Single);
                 }
                 break;
 			}

@@ -34,6 +34,21 @@ public class PlayerGameplay : MonoBehaviour
 
     void Start()
     {
+        Material material = null;
+        if (playerEnum.Equals(EPlayerEnum.p1) && PlayerStaticData.P1Material != null)
+            material = PlayerStaticData.P1Material;
+        else if (PlayerStaticData.P2Material != null)
+            material = PlayerStaticData.P2Material;
+
+        if (material != null)
+        {
+            SkinnedMeshRenderer[] meshes = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+            for (int iMeshIndex = 0; iMeshIndex < meshes.Length; ++iMeshIndex)
+            {
+                meshes[iMeshIndex].material = material;
+            }
+        }
+
         rigidBody = gameObject.GetComponent<Rigidbody>();
         percentage = 0.0f;
 
@@ -108,7 +123,7 @@ public class PlayerGameplay : MonoBehaviour
 		//
 		// Hide Character during death
 		// !! SetActive on entire prefab will block Animator and let skeleton in mid-anim positions
-		// Find a better to achieve this if possible
+		// Find a better way to achieve this if possible
 		HideMeshes();
 
         // Disable inputs
@@ -167,7 +182,7 @@ public class PlayerGameplay : MonoBehaviour
 			//
 			// Unhide Character during death
 			// !! SetActive on entire prefab will block Animator and let skeleton in mid-anim positions
-			// Find a better to achieve this if possible
+			// Find a better way to achieve this if possible
 			ShowMeshes();
 
             // Enable inputs
@@ -203,4 +218,3 @@ public class PlayerGameplay : MonoBehaviour
         m_bCanPlayDamageSound = true;
     }
 }
-
