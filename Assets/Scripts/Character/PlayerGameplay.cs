@@ -150,19 +150,6 @@ public class PlayerGameplay : MonoBehaviour
 		stocks = iStocks;
 	}
 
-	public void SetInitialSpawnLocation(Transform newPose)
-	{
-		nextSpawnLocation = newPose;
-
-		// TODO : Wait for custom spawn effect ?
-		//if (null != RespawnEffect)
-		//{
-		//	Instantiate(RespawnEffect, newPose);
-		//}
-
-		Invoke("Spawn", 3.0f);
-	}
-
 	public void SetNextSpawnLocation(Transform newPose)
 	{
 		nextSpawnLocation = newPose;

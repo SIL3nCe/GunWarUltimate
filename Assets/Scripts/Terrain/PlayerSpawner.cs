@@ -8,7 +8,7 @@ public class PlayerSpawner : MonoBehaviour
 
 	public Transform GetSpawnLocation()
 	{
-		int iIndex = (int)(Random.value * (SpawnerLocation.Length-1));
+		int iIndex = Random.Range(0, SpawnerLocation.Length);
 		return SpawnerLocation[iIndex].transform;
 	}
 }

@@ -182,7 +182,7 @@ public class UIManager : MonoBehaviour
 						++iLoopIndex;
 						newPose = spawnerManager.GetSpawnLocation(SpawnerManager.ESpawner.player);
 					}
-					playerUI.Player.SetInitialSpawnLocation(newPose);
+					playerUI.Player.SetNextSpawnLocation(newPose);
 
 					//
 					// Hide character
