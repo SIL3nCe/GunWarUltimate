@@ -49,21 +49,22 @@ public class Weapon : MonoBehaviour
 				{
 					foreach(MeshRenderer meshRenderer in rendererArray)
 					{
-						meshRenderer.enabled = false;
+                        if (meshRenderer != null)
+						    meshRenderer.enabled = false;
 					}
 				}
 				else
 				{
 					foreach (MeshRenderer meshRenderer in rendererArray)
-					{
-						meshRenderer.enabled = true;
+                    {
+                        if (meshRenderer != null)
+                            meshRenderer.enabled = true;
 					}
 				}
 			}
 			else
 			{
 				Destroy(gameObject);
-				fDroppedAccumulatedDuration = 0.0f;
 			}
 		}
 	}

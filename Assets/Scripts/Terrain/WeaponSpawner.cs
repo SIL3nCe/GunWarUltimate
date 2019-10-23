@@ -22,11 +22,6 @@ public class WeaponSpawner : MonoBehaviour
 
 	//
 	//
-	[Header("Reset Parameters")]
-	public GameObject NewWeaponParent;
-
-	//
-	//
 	private float fDurationNewWeapon = 0.0f;
     private int iCurrentWeaponCount = 0;
 
@@ -63,7 +58,6 @@ public class WeaponSpawner : MonoBehaviour
 	public void SpawnWeapon(Transform spawnLocation, float fInitialVelocity, GameObject weaponPrefab)
 	{
 		GameObject newWeapon = Instantiate<GameObject>(weaponPrefab, spawnLocation.position, spawnLocation.localRotation);
-		newWeapon.transform.SetParent(NewWeaponParent.transform, true);	
 		newWeapon.GetComponent<Rigidbody>().velocity = spawnLocation.right * fInitialVelocity;
 
         WeaponShot weapon = newWeapon.GetComponent<WeaponShot>();
