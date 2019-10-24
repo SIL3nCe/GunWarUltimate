@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
     private int m_iWallHangDirection = 0;   //< The wall hang direction (+1 when hanging right (+1 in X), -1 when hanging left (-1 in X))
     private Vector3 m_vTargetVelocity = Vector3.zero;
     private Vector3 m_vCurrentVelocity = Vector3.zero;
+    private float m_fWallJumpDirection = 0f;
+    private bool m_bWallJumping = false;
 
     //
     // Components
@@ -98,7 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         //
         // We reset the target velocity
-        m_vTargetVelocity = Vector3.zero;
+        //m_vTargetVelocity = Vector3.zero;
         m_vTargetVelocity.y = m_rigidbody.velocity.y;
 
         //
@@ -178,6 +180,11 @@ public class PlayerController : MonoBehaviour
             m_vTargetVelocity.x = m_vMoveInput.x * m_fPlayerSpeed;
         }
 
+        if (m_bWallJumping)
+        {
+            m_vTargetVelocity.x = 0f;
+        }
+
         m_rigidbody.velocity = Vector3.SmoothDamp(m_rigidbody.velocity, m_vTargetVelocity, ref m_vCurrentVelocity, 0.01f);
     }
 
@@ -217,8 +224,27 @@ public class PlayerController : MonoBehaviour
         else
         {
             //
+            // If we are wall hanging, we can wall jump
+            if (m_bWallHanging)
+            {
+                //
+                // The wall jump is just a normal jump but in the reverse direction of the wall hang
+                //
+                // We null the velocity in Y
+                m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x, 0.0f);
+                //
+                // We add force in the direction of the jump (up + reverse direction of the wallhang
+                m_rigidbody.AddForce(new Vector3(-1 * m_iWallHangDirection * 50.0f, Mathf.Sqrt(m_fDoubleJumpHeight * -2f * Physics.gravity.y), 0.0f), ForceMode.VelocityChange);
+
+                m_fWallJumpDirection = (m_iWallHangDirection > 0) ? -1f : 1f;
+                m_bWallJumping = true;
+
+                Invoke("EndWallJump", 0.4f);
+            
+            }
+            else if (m_bCanDoubleJump)
+            //
             // If we are not grounded we can still double jump if we don't already double jumped
-            if (m_bCanDoubleJump)
             {
                 //
                 // If we are not grounded we do the same thing as above. 
@@ -238,32 +264,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //
-        // Move the player
-        //m_rigidbody.MovePosition(transform.position + new Vector3(m_vMoveInput.x, 0.0f, 0.0f) * m_fPlayerSpeed * Time.deltaTime);
-
-        /*if (m_bGrounded)
-        {
-            if (m_vMoveInput.x != 0.0f)
-            {
-                m_rigidbody.AddForce(new Vector3(m_vMoveInput.x, 0.0f, 0.0f) * m_fPlayerSpeed * 10.0f, ForceMode.Force);
-            }
-            else
-            {
-                m_rigidbody.velocity = new Vector3(m_rigidbody.velocity.x / 1.6f, m_rigidbody.velocity.y);
-            }
-        }
-        else
-        {
-            m_rigidbody.AddForce(new Vector3(m_vMoveInput.x, 0.0f, 0.0f) * m_fPlayerSpeed * 5.0f, ForceMode.Force);
-        }
-
-        //
-        // If we are wallhanging, we reduce the fall speed of the player
-        if (m_bWallHanging)
-        {
-            m_rigidbody.velocity = new Vector3(m_rigidbody.velocity.x, m_rigidbody.velocity.y / 2.0f, m_rigidbody.velocity.z);
-        }*/
+        // ...
     }
 
     public void OnDrawGizmos()
@@ -287,10 +288,16 @@ public class PlayerController : MonoBehaviour
 
     private bool IsSlidingOnWall(float fDirection, out float fWorkingDirection)
     {
+        //
+        // We iterate over all the spheres
         for (int iSphere = 0; iSphere < m_collisionsOptions.m_iCheckSpheresCount; iSphere++)
         {
+            //
+            // If the sphere cast is okay
             if (Physics.CheckSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset * fDirection, m_collisionsOptions.m_fWallCheckVerticalOffset + (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius, m_collisionsOptions.m_ignoredLayersMask))
             {
+                //
+                // We store the direction that is working for the cast to use it later
                 fWorkingDirection = fDirection;
                 return true;
             }
@@ -322,5 +329,11 @@ public class PlayerController : MonoBehaviour
     public int GetWallHangDirection()
     {
         return m_iWallHangDirection;
+    }
+
+    public void EndWallJump()
+    {
+        m_bWallJumping = false;
+        m_fWallJumpDirection = 0f;
     }
 }
