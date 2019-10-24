@@ -128,10 +128,8 @@ public class PlayerController : MonoBehaviour
             // in the wall direction. In fact, when we are going toward a wall, we start wallhanging on it, until we are not touching it.
             // BUT, if we are touching a wall, while going in its direction, we start wall hanging, we will be wallhanging while we are in contact
             // with it, so we check collision with the wall, in the direction we go AND in the direction we actually wallhang if we wallhang.
-            /*if (Physics.CheckSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset * m_vMoveInput.x, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius, m_collisionsOptions.m_ignoredLayersMask)
-                || Physics.CheckSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset * m_iWallHangDirection, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius, m_collisionsOptions.m_ignoredLayersMask))*/
-            int iDirection = 0;
-            if (IsSlidingOnWall(m_vMoveInput.x, out iDirection) || IsSlidingOnWall(m_iWallHangDirection, out iDirection))
+            float fDirection = 0f;
+            if (IsSlidingOnWall(m_vMoveInput.x, out fDirection) || IsSlidingOnWall(m_iWallHangDirection, out fDirection))
             {
                 //
                 // If we are here it means we are touching a wall  in the direction we are going
@@ -142,11 +140,16 @@ public class PlayerController : MonoBehaviour
 
                 //
                 // We also set the wall hang direction to the direction the player is actually going (wa clamp to +1/-1)
-                m_iWallHangDirection = m_vMoveInput.x > 0f ? 1 : -1;
+                //m_iWallHangDirection = m_vMoveInput.x > 0f ? 1 : -1;
+                m_iWallHangDirection = fDirection > 0f ? 1 : -1;
 
                 //
                 // We have to null the movements in the x direction to avoid stick on the wall
-                m_vMoveInput.x = 0f;
+                if (m_vMoveInput.x > 0f && m_iWallHangDirection > 0
+                    || m_vMoveInput.x < 0f && m_iWallHangDirection < 0)
+                {
+                    m_vMoveInput.x = 0f;
+                }
             }
             else
             {
@@ -282,18 +285,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private bool IsSlidingOnWall(float fDirection, out int iWorkingDirection)
+    private bool IsSlidingOnWall(float fDirection, out float fWorkingDirection)
     {
         for (int iSphere = 0; iSphere < m_collisionsOptions.m_iCheckSpheresCount; iSphere++)
         {
             if (Physics.CheckSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset * fDirection, m_collisionsOptions.m_fWallCheckVerticalOffset + (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius, m_collisionsOptions.m_ignoredLayersMask))
             {
-                iWorkingDirection = -1;
+                fWorkingDirection = fDirection;
                 return true;
             }
         }
 
-        iWorkingDirection = 1;
+        fWorkingDirection = 1.0f;
         return false;
     }
 
