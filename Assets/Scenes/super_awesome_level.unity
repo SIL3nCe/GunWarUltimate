@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -861,7 +861,7 @@ MonoBehaviour:
   - {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad, type: 3}
   - {fileID: 8899948716667727965, guid: 59eb7fcde796c594ea55d74d49eba7d7, type: 3}
   - {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54, type: 3}
-  m_fThresholdNewWeapon: 2
+  m_fThresholdNewWeapon: 8
   m_fInitialVelocity: 10
 --- !u!1001 &354709725
 PrefabInstance:
@@ -2427,7 +2427,7 @@ MonoBehaviour:
   - {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad, type: 3}
   - {fileID: 8899948716667727965, guid: 59eb7fcde796c594ea55d74d49eba7d7, type: 3}
   - {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54, type: 3}
-  m_fThresholdNewWeapon: 2
+  m_fThresholdNewWeapon: 5
   m_fInitialVelocity: 5
 --- !u!1 &907426373
 GameObject:
@@ -2478,7 +2478,7 @@ MonoBehaviour:
   - {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad, type: 3}
   - {fileID: 8899948716667727965, guid: 59eb7fcde796c594ea55d74d49eba7d7, type: 3}
   - {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54, type: 3}
-  m_fThresholdNewWeapon: 2
+  m_fThresholdNewWeapon: 10
   m_fInitialVelocity: 10
 --- !u!1001 &947387162
 PrefabInstance:
@@ -3260,7 +3260,7 @@ MonoBehaviour:
   - {fileID: 734068171252819072, guid: e5133309d1776bd49a5dfad33896e0ad, type: 3}
   - {fileID: 8899948716667727965, guid: 59eb7fcde796c594ea55d74d49eba7d7, type: 3}
   - {fileID: 1147337142602539985, guid: f7ddcdc98843a3f4cb93a9270f2f7c54, type: 3}
-  m_fThresholdNewWeapon: 2
+  m_fThresholdNewWeapon: 3
   m_fInitialVelocity: 0
 --- !u!1001 &1146898819
 PrefabInstance:
