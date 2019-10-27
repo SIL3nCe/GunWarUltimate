@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 657409927}
   - component: {fileID: 1571041756811314892}
   - component: {fileID: 2290576810917180094}
+  - component: {fileID: 896105738820935526}
   m_Layer: 8
   m_Name: CharacterPlayerRunner
   m_TagString: Untagged
@@ -597,6 +598,29 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Action Jump
       m_Flags: 0
+--- !u!114 &896105738820935526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6993655524484161634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23699ae10b4438041a18f9a0420dbf51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_aAudioClipsScream:
+  - {fileID: 8300000, guid: 54da1e2d86faa584fa32f0c5daf57dd7, type: 3}
+  - {fileID: 8300000, guid: 3ee910f1776e4964588a9e948a87f76f, type: 3}
+  - {fileID: 8300000, guid: 40a50eb733c99a948ab1e91b3421de51, type: 3}
+  - {fileID: 8300000, guid: 57dff3e6dc6cc434fa30b0c451e6daf4, type: 3}
+  - {fileID: 8300000, guid: 89d2ecd3ad40de946bd4acc47e814a8e, type: 3}
+  - {fileID: 8300000, guid: 1feb7d8f380bf7a449258f88ca25b905, type: 3}
+  - {fileID: 8300000, guid: 6ee1419ea49f3644a803d5eb87152e74, type: 3}
+  - {fileID: 8300000, guid: 0d7d50caf3e685341a954ec22d113761, type: 3}
+  m_aAudioClipImplose: {fileID: 8300000, guid: 6e3b3cc7d9c12ae4ebe21a44b808ac8a, type: 3}
+  material: {fileID: 0}
 --- !u!1 &6993655524484161636
 GameObject:
   m_ObjectHideFlags: 0

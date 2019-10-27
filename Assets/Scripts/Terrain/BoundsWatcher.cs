@@ -23,36 +23,51 @@ public class BoundsWatcher : MonoBehaviour
         }
 
 		PlayerGameplay pgpComponent = other.GetComponent<PlayerGameplay>();
+
         if (null != pgpComponent)
         {
             pgpComponent.OnDie();
 
-            if (null != DeathEffect)
+            TriggerDeathEffect(pgpComponent.transform.position);
+        }
+        else
+        { 
+            PlayerGameplayRunner pgpComponentRunner = other.GetComponent<PlayerGameplayRunner>();
+            if (null != pgpComponentRunner)
             {
-                Vector3 playerLocation = pgpComponent.transform.position;
-                GameObject effect = Instantiate(DeathEffect, playerLocation, Quaternion.identity);
+                pgpComponentRunner.OnDie();
 
-                if (null != boundsCollider)
+                TriggerDeathEffect(pgpComponentRunner.transform.position);
+            }
+        }
+    }
+
+    private void TriggerDeathEffect(Vector3 playerLocation)
+    {
+        if (null != DeathEffect)
+        {
+            GameObject effect = Instantiate(DeathEffect, playerLocation, Quaternion.identity);
+
+            if (null != boundsCollider)
+            {
+                Vector3 max = boundsCollider.bounds.max;
+                Vector3 min = boundsCollider.bounds.min;
+                Vector3 rotation = new Vector3(0.0f, 90.0f, 0.0f);
+
+                if (playerLocation.x >= max.x)
                 {
-                    Vector3 max = boundsCollider.bounds.max;
-                    Vector3 min = boundsCollider.bounds.min;
-                    Vector3 rotation = new Vector3(0.0f, 90.0f, 0.0f);
-
-                    if (playerLocation.x >= max.x)
-                    {
-                        rotation.y = -90.0f;
-                    }
-                    else if (playerLocation.y >= max.y)
-                    {
-                        rotation.x = 90.0f;
-                    }
-                    else if (playerLocation.y <= min.y)
-                    {
-                        rotation.x = -90.0f;
-                    }
-                           
-                    effect.transform.Rotate(rotation);
+                    rotation.y = -90.0f;
                 }
+                else if (playerLocation.y >= max.y)
+                {
+                    rotation.x = 90.0f;
+                }
+                else if (playerLocation.y <= min.y)
+                {
+                    rotation.x = -90.0f;
+                }
+
+                effect.transform.Rotate(rotation);
             }
         }
     }
