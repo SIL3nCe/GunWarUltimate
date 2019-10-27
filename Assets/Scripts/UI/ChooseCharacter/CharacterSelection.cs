@@ -10,6 +10,7 @@ public class CharacterSelection : MonoBehaviour
 {
     [Header("Characters")]
     public BoxCollider2D[] CharacterBoxes;
+    public Material[] CharacterMaterials;
 
     [Header("Cursors")]
     public RawImage[] CursorList;
@@ -27,6 +28,7 @@ public class CharacterSelection : MonoBehaviour
     {
         Assert.IsTrue(CursorList.Length == 8);
         Assert.IsTrue(CharacterBoxes.Length == 8);
+        Assert.IsTrue(CharacterMaterials.Length == 8);
 
         fScreenWidth = Screen.width;
         fScreenHeight = Screen.height;
@@ -54,7 +56,7 @@ public class CharacterSelection : MonoBehaviour
         {
             if (CharacterBoxes[i].bounds.Contains(CursorList[0].transform.position))
             {
-                RunnerScript.OnPlayerValidated(i); // TODO replace i with player id
+                RunnerScript.OnPlayerValidated(CharacterMaterials[i], i); // TODO replace i with player id
             }
         }
 

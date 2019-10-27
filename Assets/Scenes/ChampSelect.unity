@@ -2080,6 +2080,15 @@ MonoBehaviour:
   - {fileID: 808482563}
   - {fileID: 774915506}
   - {fileID: 1978140117}
+  CharacterMaterials:
+  - {fileID: 2100000, guid: bfb09abfb11d6274cbfa04f256a1489f, type: 2}
+  - {fileID: 2100000, guid: f972cac09446cf14abe36b7956dd8ecd, type: 2}
+  - {fileID: 2100000, guid: a05761db429055747ae1f76dbf3d3bd3, type: 2}
+  - {fileID: 2100000, guid: 08b9ecffcf5f4b6499d6cc58c458be44, type: 2}
+  - {fileID: 2100000, guid: 98ab11d55dad85f46beccb982a12ad32, type: 2}
+  - {fileID: 2100000, guid: 91a9b449e94e14443907225cf98cce11, type: 2}
+  - {fileID: 2100000, guid: 12760fd83dced894b8e38a5cf0c2b4db, type: 2}
+  - {fileID: 2100000, guid: 2e466c3ac7e12f54b8e64d2ede8f28f4, type: 2}
   CursorList:
   - {fileID: 1443076056}
   - {fileID: 1974234613}

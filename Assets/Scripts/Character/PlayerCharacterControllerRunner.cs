@@ -30,10 +30,7 @@ public class PlayerCharacterControllerRunner : MonoBehaviour
 
     private bool m_bJumpedTriggered = false;
 
-    //public void Awake()
-    //{
-    //
-    //}
+    public Material material;
 
     public void OnEnable()
     {
@@ -61,6 +58,15 @@ public class PlayerCharacterControllerRunner : MonoBehaviour
         //
         m_audioSource = GetComponent<AudioSource>();
         Assert.IsNotNull(m_audioSource);
+
+        if (material != null)
+        {
+            SkinnedMeshRenderer[] meshes = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+            for (int iMeshIndex = 0; iMeshIndex < meshes.Length; ++iMeshIndex)
+            {
+                meshes[iMeshIndex].material = material;
+            }
+        }
     }
 
     // Update is called once per frame

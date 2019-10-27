@@ -14,9 +14,14 @@ public class RunnerGameplay : MonoBehaviour
         
     }
     
-    public void OnPlayerValidated(int playerId)
+    public void OnPlayerValidated(Material mat, int playerId)
     {
-        Instantiate(CharacPrefab, new Vector3(0.0f, -2.0f, 0.5f), Quaternion.identity);
+        GameObject prefab = Instantiate(CharacPrefab, new Vector3(0.0f, -2.0f, 0.5f), Quaternion.identity);
+        PlayerCharacterControllerRunner charac = prefab.GetComponent<PlayerCharacterControllerRunner>();
+        if (charac != null)
+        {
+            charac.material = mat;
+        }
     }
 
     public void OnPlayerCanceled(int playerId)
