@@ -22,6 +22,10 @@ public class PlayerControllerCollisionsOptions
     public float m_fWallCheckVerticalOffset = 0.0f;
     [Tooltip("The radius of the sphere that is used to check for walls")]
     public float m_fWallCheckRadius = 0.2f;
+    [Tooltip("The number of spheres that will be used to check for wall collisions")]
+    public int m_iCheckSpheresCount = 1;
+    [Tooltip("The vertical offset between the spheres used to check for the walls")]
+    public float m_fOffsetBetweenCheckSpheres = 0.2f;
 
     [Header("Layers")]
     [Tooltip("The layers to ignore for the raycast to determine if the player hits the ground or a wall")]
@@ -60,6 +64,12 @@ public class PlayerController : MonoBehaviour
     //
     // Gameplay
     private bool m_bGrounded = false;
+    private bool m_bWallHanging = false;
+    private int m_iWallHangDirection = 0;   //< The wall hang direction (+1 when hanging right (+1 in X), -1 when hanging left (-1 in X))
+    private Vector3 m_vTargetVelocity = Vector3.zero;
+    private Vector3 m_vCurrentVelocity = Vector3.zero;
+    private float m_fWallJumpDirection = 0f;
+    private bool m_bWallJumping = false;
 
     //
     // Components
@@ -89,6 +99,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //
+        // We reset the target velocity
+        //m_vTargetVelocity = Vector3.zero;
+        m_vTargetVelocity.y = m_rigidbody.velocity.y;
+
+        //
         // Raycast to know if we are grounded
         if (Physics.CheckSphere(transform.position + new Vector3(0.0f, -m_collisionsOptions.m_fGroundCheckOffset, 0.0f), m_collisionsOptions.m_fGroundCheckRadius, m_collisionsOptions.m_ignoredLayersMask))
         {
@@ -104,17 +119,73 @@ public class PlayerController : MonoBehaviour
         }
 
         //
-        // We check if we are colliding with a wall
-        // The check depends on the move input, because we only check in the direction the player is actually moving.
-        // In fact the player can only start hanging on a wall when going in the direction of that wall
-        if (Physics.CheckSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset * m_vMoveInput.x, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius, m_collisionsOptions.m_ignoredLayersMask))
+        // We check if we are colliding with a wall. We only do this while not grounded. This is important
+        // because it means that in certain conditions we could wall hang while on the ground and so have the benefit of wall jumps
+        // while on the ground and we do not want this
+        if (!m_bGrounded)
         {
-            Debug.Log("Wall cast ! ");
+            // The check depends on the move input, because we only check in the direction the player is actually moving.
+            // In fact the player can only start hanging on a wall when going in the direction of that wall
+            // We also do the same check in the wall hang direction. This is important because we can hang on the wall, even if we are not going
+            // in the wall direction. In fact, when we are going toward a wall, we start wallhanging on it, until we are not touching it.
+            // BUT, if we are touching a wall, while going in its direction, we start wall hanging, we will be wallhanging while we are in contact
+            // with it, so we check collision with the wall, in the direction we go AND in the direction we actually wallhang if we wallhang.
+            float fDirection = 0f;
+            if (IsSlidingOnWall(m_vMoveInput.x, out fDirection) || IsSlidingOnWall(m_iWallHangDirection, out fDirection))
+            {
+                //
+                // If we are here it means we are touching a wall  in the direction we are going
+                // We now need to test for wall hang.
+                    //
+                // Now we can start wall hanging
+                m_bWallHanging = true;
+
+                //
+                // We also set the wall hang direction to the direction the player is actually going (wa clamp to +1/-1)
+                //m_iWallHangDirection = m_vMoveInput.x > 0f ? 1 : -1;
+                m_iWallHangDirection = fDirection > 0f ? 1 : -1;
+
+                //
+                // We have to null the movements in the x direction to avoid stick on the wall
+                if (m_vMoveInput.x > 0f && m_iWallHangDirection > 0
+                    || m_vMoveInput.x < 0f && m_iWallHangDirection < 0)
+                {
+                    m_vMoveInput.x = 0f;
+                }
+            }
+            else
+            {
+                //
+                // We do not touch a wall, we are not wall hanging anymore
+                m_bWallHanging = false;
+                m_iWallHangDirection = 0;   //< We also reset the wall hang direction
+            }
         }
         else
         {
-            //Debug.Log("")
+            //
+            // We are grounded, we can't wall hang
+            m_bWallHanging = false;
+            m_iWallHangDirection = 0;   //< We also reset the wall hang direction
         }
+
+        //
+        //
+        if (m_vMoveInput.x == 0.0f) 
+        {
+            m_vTargetVelocity.x = 0.0f;
+        }
+        else
+        {
+            m_vTargetVelocity.x = m_vMoveInput.x * m_fPlayerSpeed;
+        }
+
+        if (m_bWallJumping)
+        {
+            m_vTargetVelocity.x = 0f;
+        }
+
+        m_rigidbody.velocity = Vector3.SmoothDamp(m_rigidbody.velocity, m_vTargetVelocity, ref m_vCurrentVelocity, 0.01f);
     }
 
     public void OnMove(InputValue inputValue)
@@ -153,8 +224,27 @@ public class PlayerController : MonoBehaviour
         else
         {
             //
+            // If we are wall hanging, we can wall jump
+            if (m_bWallHanging)
+            {
+                //
+                // The wall jump is just a normal jump but in the reverse direction of the wall hang
+                //
+                // We null the velocity in Y
+                m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x, 0.0f);
+                //
+                // We add force in the direction of the jump (up + reverse direction of the wallhang
+                m_rigidbody.AddForce(new Vector3(-1 * m_iWallHangDirection * 50.0f, Mathf.Sqrt(m_fDoubleJumpHeight * -2f * Physics.gravity.y), 0.0f), ForceMode.VelocityChange);
+
+                m_fWallJumpDirection = (m_iWallHangDirection > 0) ? -1f : 1f;
+                m_bWallJumping = true;
+
+                Invoke("EndWallJump", 0.4f);
+            
+            }
+            else if (m_bCanDoubleJump)
+            //
             // If we are not grounded we can still double jump if we don't already double jumped
-            if (m_bCanDoubleJump)
             {
                 //
                 // If we are not grounded we do the same thing as above. 
@@ -174,9 +264,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //
-        // Move the player
-        m_rigidbody.MovePosition(transform.position + new Vector3(m_vMoveInput.x, 0.0f, 0.0f) * m_fPlayerSpeed * Time.deltaTime);
+        // ...
     }
 
     public void OnDrawGizmos()
@@ -189,8 +277,63 @@ public class PlayerController : MonoBehaviour
         //
         // Draw wall check sphere
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius);
-        Gizmos.DrawWireSphere(transform.position + new Vector3(-m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset, 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+        for (int iSphere = 0; iSphere < m_collisionsOptions.m_iCheckSpheresCount; iSphere++)
+        {
+            Gizmos.DrawWireSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset + (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+            Gizmos.DrawWireSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset - (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+            Gizmos.DrawWireSphere(transform.position - new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset + (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+            Gizmos.DrawWireSphere(transform.position - new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset, m_collisionsOptions.m_fWallCheckVerticalOffset - (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius);
+        }
     }
 
+    private bool IsSlidingOnWall(float fDirection, out float fWorkingDirection)
+    {
+        //
+        // We iterate over all the spheres
+        for (int iSphere = 0; iSphere < m_collisionsOptions.m_iCheckSpheresCount; iSphere++)
+        {
+            //
+            // If the sphere cast is okay
+            if (Physics.CheckSphere(transform.position + new Vector3(m_collisionsOptions.m_fWallCheckHorizontalOffset * fDirection, m_collisionsOptions.m_fWallCheckVerticalOffset + (m_collisionsOptions.m_fOffsetBetweenCheckSpheres * iSphere), 0.0f), m_collisionsOptions.m_fWallCheckRadius, m_collisionsOptions.m_ignoredLayersMask))
+            {
+                //
+                // We store the direction that is working for the cast to use it later
+                fWorkingDirection = fDirection;
+                return true;
+            }
+        }
+
+        fWorkingDirection = 1.0f;
+        return false;
+    }
+
+
+    //--------------------
+    // Getters
+    //--------------------
+    public bool IsGrounded()
+    {
+        return m_bGrounded;
+    }
+
+    public bool CanDoubleJump()
+    {
+        return m_bCanDoubleJump;
+    }
+
+    public bool IsWallHanging()
+    {
+        return m_bWallHanging;
+    }
+
+    public int GetWallHangDirection()
+    {
+        return m_iWallHangDirection;
+    }
+
+    public void EndWallJump()
+    {
+        m_bWallJumping = false;
+        m_fWallJumpDirection = 0f;
+    }
 }
