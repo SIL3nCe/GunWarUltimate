@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-	public GameObject[] SpawnerLocation;
+	private PlayerSpawnerManager m_manager;
+	private float m_fDurationNewWeapon = 0.0f;
 
-	public Transform GetSpawnLocation()
+	public void SetPlayerSpawnerManager(PlayerSpawnerManager _manager)
 	{
-		int iIndex = (int)(Random.value * (SpawnerLocation.Length-1));
-		return SpawnerLocation[iIndex].transform;
+		m_manager = _manager;
+	}
+
+	public void OnDrawGizmos()
+	{
+		//
+		//
+		Gizmos.color = Color.white;
+		Gizmos.DrawIcon(transform.position, "PlayerSpawner");
 	}
 }

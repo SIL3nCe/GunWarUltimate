@@ -171,7 +171,7 @@ public class UIManager : MonoBehaviour
 
 					//
 					// Set CountdownSpawn
-					Transform newPose = spawnerManager.GetSpawnLocation(SpawnerManager.ESpawner.player);
+					Transform newPose = spawnerManager.playerSpawnerManager.GetSpawnLocation();
 					int iMaxLoopCount = 5;
 					int iLoopIndex = 0;
 					while (aSpawnLocations.Contains(newPose))
@@ -182,7 +182,7 @@ public class UIManager : MonoBehaviour
 							Assert.IsFalse(true); 
 						}
 						++iLoopIndex;
-						newPose = spawnerManager.GetSpawnLocation(SpawnerManager.ESpawner.player);
+						newPose = spawnerManager.playerSpawnerManager.GetSpawnLocation();
 					}
 					playerUI.Player.SetInitialSpawnLocation(newPose);
 
@@ -444,7 +444,7 @@ public class UIManager : MonoBehaviour
 
             if (!bFinished)
             {
-                Transform newPose = spawnerManager.GetSpawnLocation(SpawnerManager.ESpawner.player);
+                Transform newPose = spawnerManager.playerSpawnerManager.GetSpawnLocation();
                 PlayerArray[arrayId].Player.SetNextSpawnLocation(newPose);
             }
 		}

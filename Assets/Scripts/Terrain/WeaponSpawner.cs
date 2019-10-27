@@ -4,67 +4,54 @@ using UnityEngine;
 
 public class WeaponSpawner : MonoBehaviour
 {
-    //
-    // Spwan locations
-    [Header("Spawn Locations")]
-    public WeaponSpawnLocation[] m_aWeaponSpawnLocations;
-
-    //
-    // Weapons
-    [Header("Weapons prefabs")]
+	//
+	// Weapons
+	[Header("Weapons prefabs")]
     public GameObject[] m_aWeaponPrefabs;
 
     //
-    //
+    // Spawn parameters
     [Header("Spawn Parameters")]
-    public int m_iMaxWeaponCount;
     public float m_fThresholdNewWeapon;
+	public float m_fInitialVelocity;
 
 	//
 	//
-	[Header("Reset Parameters")]
-	public GameObject NewWeaponParent;
+	private WeaponSpawnerManager m_manager;
+	private float m_fDurationNewWeapon = 0.0f;
 
-	//
-	//
-	private float fDurationNewWeapon = 0.0f;
-    private int iCurrentWeaponCount = 0;
+	public void SetWeaponSpawnerManager(WeaponSpawnerManager _manager)
+	{
+		m_manager = _manager;
+	}
 
     void Update()
 	{
-		fDurationNewWeapon += Time.deltaTime;
+		m_fDurationNewWeapon += Time.deltaTime;
 
-		if(fDurationNewWeapon >= m_fThresholdNewWeapon)
+		if(m_fDurationNewWeapon >= m_fThresholdNewWeapon)
 		{
-			if(iCurrentWeaponCount < m_iMaxWeaponCount)
+			if(m_manager.CanSpawnWeapon())
 			{
 				SpawnRandomWeapon();
 
-				fDurationNewWeapon = 0.0f;
+				m_fDurationNewWeapon = 0.0f;
 			}
 		}
 	}
 
-	public Transform GetSpawnLocation()
-	{
-		GameObject spawnLocation = m_aWeaponSpawnLocations[Random.Range(0, m_aWeaponSpawnLocations.Length)].transform.gameObject;
-		return spawnLocation.transform;
-	}
-
 	public void SpawnRandomWeapon()
 	{
-		Transform newTransform = GetSpawnLocation();
-		float fInitialVelocity = newTransform.gameObject.GetComponent<WeaponSpawnLocation>().initialVelocity;
 		GameObject weaponPrefab = m_aWeaponPrefabs[Random.Range(0, m_aWeaponPrefabs.Length)];
 
-		SpawnWeapon(newTransform, fInitialVelocity, weaponPrefab);
+		SpawnWeapon(weaponPrefab);
 	}
 
-	public void SpawnWeapon(Transform spawnLocation, float fInitialVelocity, GameObject weaponPrefab)
+	public void SpawnWeapon(GameObject weaponPrefab)
 	{
-		GameObject newWeapon = Instantiate<GameObject>(weaponPrefab, spawnLocation.position, spawnLocation.localRotation);
-		newWeapon.transform.SetParent(NewWeaponParent.transform, true);	
-		newWeapon.GetComponent<Rigidbody>().velocity = spawnLocation.right * fInitialVelocity;
+		GameObject newWeapon = Instantiate<GameObject>(weaponPrefab, transform.position, transform.localRotation);
+		newWeapon.transform.SetParent(m_manager.NewWeaponParent.transform, true);	
+		newWeapon.GetComponent<Rigidbody>().velocity = transform.right * m_fInitialVelocity;
 
         WeaponShot weapon = newWeapon.GetComponent<WeaponShot>();
         if (weapon)
@@ -72,27 +59,24 @@ public class WeaponSpawner : MonoBehaviour
             weapon.InitializeLoader();
         }
 
-        ++iCurrentWeaponCount;
+		m_manager.OnWeaponSpawned();
 	}
 
 	public void OnWeaponDisappeared()
 	{
-		--iCurrentWeaponCount;
+		m_manager.OnWeaponDisappeared();
 	}
 
-    public void OnDrawGizmos()
-    {
-        //
-        //
-        Gizmos.color = Color.red;
-        foreach (var oWeaponSpawnerLocation in m_aWeaponSpawnLocations)
-        {
-            Gizmos.DrawLine(transform.position, oWeaponSpawnerLocation.transform.position);
-        }
+	public void OnDrawGizmos()
+	{
+		//
+		//
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(transform.position, transform.position + transform.right * m_fInitialVelocity);
 
-        //
-        //
-        Gizmos.color = Color.white;
-        Gizmos.DrawIcon(transform.position, "GunSpawner");
-    }
+		//
+		//
+		Gizmos.color = Color.white;
+		Gizmos.DrawIcon(transform.position, "GunSpawner");
+	}
 }
