@@ -53,11 +53,17 @@ public class WeaponSpawner : MonoBehaviour
 		newWeapon.transform.SetParent(m_manager.NewWeaponParent.transform, true);	
 		newWeapon.GetComponent<Rigidbody>().velocity = transform.right * m_fInitialVelocity;
 
-        WeaponShot weapon = newWeapon.GetComponent<WeaponShot>();
-        if (weapon)
+        WeaponShot weaponShot = newWeapon.GetComponent<WeaponShot>();
+        if (weaponShot)
         {
-            weapon.InitializeLoader();
-        }
+			weaponShot.InitializeLoader();
+		}
+
+		Weapon weapon = newWeapon.GetComponent<Weapon>();
+		if (weapon)
+		{
+			weapon.SetSpawner(this);
+		}
 
 		m_manager.OnWeaponSpawned();
 	}

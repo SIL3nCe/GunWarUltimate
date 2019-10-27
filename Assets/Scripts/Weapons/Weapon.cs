@@ -26,6 +26,15 @@ public class Weapon : MonoBehaviour
 	private float		fDroppedAccumulatedDuration = 0.0f;
 	private MeshRenderer[]	rendererArray;
 
+	//
+	// Spawner
+	private WeaponSpawner m_spawner;
+
+	public void SetSpawner(WeaponSpawner spawner)
+	{
+		m_spawner = spawner;
+	}
+
 	private void Start()
 	{
 		rendererArray = GetComponentsInChildren<MeshRenderer>();
@@ -64,6 +73,7 @@ public class Weapon : MonoBehaviour
 			{
 				Destroy(gameObject);
 				fDroppedAccumulatedDuration = 0.0f;
+				m_spawner.OnWeaponDisappeared();
 			}
 		}
 	}
