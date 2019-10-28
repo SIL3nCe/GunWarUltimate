@@ -18,17 +18,27 @@ public class CharacterSelection : MonoBehaviour
     [Header("Runner ref")]
     public RunnerGameplay RunnerScript;
 
-    //TODO array of device or deviceId, null by default and same size than CursorList
+    struct SPlayer
+    {
+        public int deviceID; // Linked device id
+        public bool bValidated; // true if selected its character
+    }
+    private SPlayer[] aPlayers;
 
     // Screen values for cursor limits
     private float fHalfHeight;
     private float fScreenWidth, fScreenHeight;
+
+    //debug only
+    private int currId;
 
     void Start()
     {
         Assert.IsTrue(CursorList.Length == 8);
         Assert.IsTrue(CharacterBoxes.Length == 8);
         Assert.IsTrue(CharacterMaterials.Length == 8);
+
+        aPlayers = new SPlayer[8];
 
         fScreenWidth = Screen.width;
         fScreenHeight = Screen.height;
@@ -42,27 +52,48 @@ public class CharacterSelection : MonoBehaviour
 
         // Special case of mouse for P1
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
-        { 
-            Vector3 vMouseLocation = Input.mousePosition;
-            KeepInCharacterPanel(ref vMouseLocation);
-            CursorList[0].transform.position = vMouseLocation;
-        }
-
-
-        // Validate action
-        // TODO handle all devices (based on input which try valide)
-        int nCharac = CharacterBoxes.Length;
-        for (int i = 0; i < nCharac; ++i)
         {
-            if (CharacterBoxes[i].bounds.Contains(CursorList[0].transform.position))
+            if (!aPlayers[0].bValidated)
             {
-                RunnerScript.OnPlayerValidated(CharacterMaterials[i], i); // TODO replace i with player id
+                Vector3 vMouseLocation = Input.mousePosition;
+                KeepInCharacterPanel(ref vMouseLocation);
+                CursorList[0].transform.position = vMouseLocation;
             }
         }
 
-        //TODO
+        // Validate action
+        // TODO handle all devices (based on input which try to valide)
+        if (Debug.isDebugBuild)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (!aPlayers[0].bValidated)
+                {
+                    int nCharac = CharacterBoxes.Length;
+                    for (int i = 0; i < nCharac; ++i)
+                    {
+                        if (CharacterBoxes[i].bounds.Contains(CursorList[0].transform.position))
+                        {
+                            // TODO block this charac (only one per game)
+                            aPlayers[0].bValidated = true;
+                            RunnerScript.OnPlayerValidated(CharacterMaterials[i], i); // TODO replace i with player id
+                            currId = i;
+                        }
+                    }
+                }
+            }
+        }
+
         // Cancel action
-        //RunnerScript.OnPlayerCanceled(playerId);
+        //TODO - Get playerid based on input device
+        if (Debug.isDebugBuild)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                aPlayers[0].bValidated = false;
+                RunnerScript.OnPlayerCanceled(currId);
+            }
+        }
     }
 
     private void KeepInCharacterPanel(ref Vector3 location)
