@@ -10,6 +10,7 @@ public class CharacterSelection : MonoBehaviour
 {
     [Header("Characters")]
     public BoxCollider2D[] CharacterBoxes;
+    public bool[] CharacterChoseState;
     public Material[] CharacterMaterials;
 
     [Header("Cursors")]
@@ -20,7 +21,8 @@ public class CharacterSelection : MonoBehaviour
 
     struct SPlayer
     {
-        //public int deviceID; // Linked device id
+        //TODO public int deviceID; // Linked device id
+        public int chosenId; // true if selected its character
         public bool bValidated; // true if selected its character
     }
     private SPlayer[] aPlayers;
@@ -37,6 +39,8 @@ public class CharacterSelection : MonoBehaviour
         Assert.IsTrue(CursorList.Length == 8);
         Assert.IsTrue(CharacterBoxes.Length == 8);
         Assert.IsTrue(CharacterMaterials.Length == 8);
+
+        CharacterChoseState = new bool[8];
 
         aPlayers = new SPlayer[8];
 
@@ -72,12 +76,16 @@ public class CharacterSelection : MonoBehaviour
                     int nCharac = CharacterBoxes.Length;
                     for (int i = 0; i < nCharac; ++i)
                     {
-                        if (CharacterBoxes[i].bounds.Contains(CursorList[0].transform.position))
+                        if (CharacterChoseState[i] == false)
                         {
-                            // TODO block this charac (only one per game)
-                            aPlayers[0].bValidated = true;
-                            RunnerScript.OnPlayerValidated(CharacterMaterials[i], i); // TODO replace i with player id
-                            currId = i;
+                            if (CharacterBoxes[i].bounds.Contains(CursorList[0].transform.position))
+                            {
+                                aPlayers[0].bValidated = true;
+                                aPlayers[0].chosenId = i;
+                                RunnerScript.OnPlayerValidated(CharacterMaterials[i], i); // TODO replace i with player id
+                                CharacterChoseState[i] = true;
+                                currId = i;
+                            }
                         }
                     }
                 }
@@ -91,6 +99,7 @@ public class CharacterSelection : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 aPlayers[0].bValidated = false;
+                CharacterChoseState[aPlayers[0].chosenId] = false;
                 RunnerScript.OnPlayerCanceled(currId);
             }
         }
