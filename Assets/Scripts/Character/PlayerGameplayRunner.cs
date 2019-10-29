@@ -71,9 +71,27 @@ public class PlayerGameplayRunner : MonoBehaviour
             rigidBody.velocity = new Vector3(0.0f, 0.0f, 0.0f);
             rigidBody.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
         }
+
+        gameObject.layer = LayerMask.NameToLayer("RunnerBlock");
+
+        StartCoroutine(Blink(4));
     }
 
-	public void HideMeshes()
+    public IEnumerator Blink(int nBlink)
+    {
+        int blink = nBlink;
+        while (0 != blink--)
+        {
+            HideMeshes();
+            yield return new WaitForSeconds(0.3f);
+            ShowMeshes();
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        gameObject.layer = LayerMask.NameToLayer("Character");
+    }
+
+    public void HideMeshes()
 	{
 		foreach (var component in GetComponentsInChildren<SkinnedMeshRenderer>())
 		{
