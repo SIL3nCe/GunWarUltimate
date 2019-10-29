@@ -2219,6 +2219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacPrefab: {fileID: 6993655524484161634, guid: d8b9d13698ee91e47b066db03170cccf,
     type: 3}
+  BlockPrefab: {fileID: 8147672097517676884, guid: 27c5bab1c8871074a8780039dc104f5a,
+    type: 3}
 --- !u!1 &1974234611
 GameObject:
   m_ObjectHideFlags: 0

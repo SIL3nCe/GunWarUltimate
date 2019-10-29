@@ -20,7 +20,7 @@ public class CharacterSelection : MonoBehaviour
 
     struct SPlayer
     {
-        public int deviceID; // Linked device id
+        //public int deviceID; // Linked device id
         public bool bValidated; // true if selected its character
     }
     private SPlayer[] aPlayers;

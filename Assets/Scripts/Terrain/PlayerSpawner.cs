@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerSpawner : MonoBehaviour
 {
 	private PlayerSpawnerManager m_manager;
-	private float m_fDurationNewWeapon = 0.0f;
 
 	public void SetPlayerSpawnerManager(PlayerSpawnerManager _manager)
 	{
