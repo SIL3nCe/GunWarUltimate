@@ -9,15 +9,17 @@ public class SpawnerManager : MonoBehaviour
 	{
 		player,
 		weapon,
+		bonus,
 	}
 
 	[Header("PlayerSpawnerManager")]
 	public PlayerSpawnerManager playerSpawnerManager;
-	
+
 	[Header("WeaponSpawnerManager")]
 	public WeaponSpawnerManager weaponSpawnerManager;
 
-	//[Header("BonusSpawner")]
+	[Header("BonusSpawnerManager")]
+	public BonusSpawnerManager bonusSpawnerManager;
 
 	private bool bInitialized;
 
@@ -35,6 +37,7 @@ public class SpawnerManager : MonoBehaviour
 
 			playerSpawnerManager.Initialize();
 			weaponSpawnerManager.Initialize();
+			bonusSpawnerManager.Initialize();
 		}
 	}
 
@@ -52,6 +55,11 @@ public class SpawnerManager : MonoBehaviour
 				weaponSpawnerManager.gameObject.SetActive(true);
 				break;
 			}
+			case ESpawner.bonus:
+			{
+				bonusSpawnerManager.gameObject.SetActive(true);
+				break;
+			}
 			default:
 			{
 				Assert.IsTrue(false);
@@ -64,6 +72,7 @@ public class SpawnerManager : MonoBehaviour
 	{
 		playerSpawnerManager.gameObject.SetActive(true);
 		weaponSpawnerManager.gameObject.SetActive(true);
+		bonusSpawnerManager.gameObject.SetActive(true);
 	}
 
 	public void DisableSpawning(ESpawner eSpawner)
@@ -80,6 +89,11 @@ public class SpawnerManager : MonoBehaviour
 				weaponSpawnerManager.gameObject.SetActive(false);
 				break;
 			}
+			case ESpawner.bonus:
+			{
+				bonusSpawnerManager.gameObject.SetActive(false);
+				break;
+			}
 			default:
 			{
 				Assert.IsTrue(false);
@@ -92,5 +106,6 @@ public class SpawnerManager : MonoBehaviour
 	{
 		playerSpawnerManager.gameObject.SetActive(false);
 		weaponSpawnerManager.gameObject.SetActive(false);
+		bonusSpawnerManager.gameObject.SetActive(false);
 	}
 }
