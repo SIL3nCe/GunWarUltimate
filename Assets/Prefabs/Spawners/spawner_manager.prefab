@@ -238,6 +238,18 @@ MonoBehaviour:
   m_aBonusType: 000000000100000002000000030000000400000005000000
   bonusPrefab: {fileID: 1871211490569003951, guid: 761e368e16653d740af6ff37ede0f8cc,
     type: 3}
+  bonusPrefabPower: {fileID: 1871211490569003951, guid: a0ae8bd06cfd45d46a60c0b67d0e5e7e,
+    type: 3}
+  bonusPrefabSpeed: {fileID: 1871211490569003951, guid: c35b97e0fdba7ba41b913f56e3258d60,
+    type: 3}
+  bonusPrefabShield: {fileID: 1871211490569003951, guid: a17926c5de8e29543b0736f20bb51c6f,
+    type: 3}
+  bonusPrefabInvincibility: {fileID: 1871211490569003951, guid: 04f6ec5718d804a4ead1774687f64134,
+    type: 3}
+  bonusPrefabTripleJump: {fileID: 1871211490569003951, guid: 0652097386b98304385fd607a6aaa69f,
+    type: 3}
+  bonusPrefabUnlimitedAmmo: {fileID: 1871211490569003951, guid: ebe8de7478cc0c4428cbeb0469e194dc,
+    type: 3}
   m_fThresholdNewBonus: 30
 --- !u!1 &7051920025193672995
 GameObject:

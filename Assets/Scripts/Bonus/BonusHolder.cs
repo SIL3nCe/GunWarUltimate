@@ -1,27 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class BonusHolder : MonoBehaviour
 {
-	[Header("BonusHolder parameters")]
-	public float fBonusDuration = 10.0f;
-
 	//
 	// Bonus-related
 	private bool[] m_abCurrentBonuses;
 	private float[] m_afCurrentBonusesDt;
+	private Bonus[] m_aCurrentBonuses;
 
-    // Start is called before the first frame update
-    void Start()
+	//
+	// private reference
+	private PlayerCharacterController m_character;
+
+	// Start is called before the first frame update
+	void Start()
     {
 		int iBonusTypeCount = System.Enum.GetValues(typeof(EBonusType)).Length;
 		m_abCurrentBonuses		= new bool[iBonusTypeCount];
 		m_afCurrentBonusesDt	= new float[iBonusTypeCount];
-}
+		m_aCurrentBonuses		= new Bonus[iBonusTypeCount];
 
-    // Update is called once per frame
-    void Update()
+		m_character = GetComponent<PlayerCharacterController>();
+		Assert.IsNotNull(m_character);
+	}
+
+// Update is called once per frame
+void Update()
     {
 		float fDt = Time.deltaTime;
 		for (int iBonusIndex = 0; iBonusIndex < m_abCurrentBonuses.Length; ++iBonusIndex)
@@ -29,7 +36,7 @@ public class BonusHolder : MonoBehaviour
 			if (m_abCurrentBonuses[iBonusIndex])
 			{
 				m_afCurrentBonusesDt[iBonusIndex] += fDt;
-				if(m_afCurrentBonusesDt[iBonusIndex] > fBonusDuration)
+				if(m_afCurrentBonusesDt[iBonusIndex] > m_aCurrentBonuses[iBonusIndex].fDuration)
 				{
 					//
 					// Bonus finished, remove effects
@@ -39,9 +46,9 @@ public class BonusHolder : MonoBehaviour
 		}
     }
 
-	public void OnBonusPickedUp(EBonusType eBonusType)
+	public void OnBonusPickedUp(Bonus bonus)
 	{
-		int iIndex = (int)eBonusType;
+		int iIndex = (int)bonus.m_eType;
 
 		//
 		// Check if already registered
@@ -56,7 +63,7 @@ public class BonusHolder : MonoBehaviour
 		// Apply bonus effect on holder
 		if(!bAlreadyRegistered)
 		{
-			ApplyBonus(eBonusType);
+			ApplyBonus(bonus);
 		}
 	}
 
@@ -76,7 +83,7 @@ public class BonusHolder : MonoBehaviour
 		// Remove bonus effect
 		if(bRegistered)
 		{
-			RemoveBonus((EBonusType)iIndex);
+			RemoveBonus(m_aCurrentBonuses[iIndex]);
 		}
 	}
 
@@ -88,57 +95,70 @@ public class BonusHolder : MonoBehaviour
 		}
 	}
 
-	private void ApplyBonus(EBonusType eBonusType)
+	private void ApplyBonus(Bonus bonus)
 	{
-		SetBonus(eBonusType, true);
+		SetBonus(bonus, true);
 	}
 
-	private void RemoveBonus(EBonusType eBonusType)
+	private void RemoveBonus(Bonus bonus)
 	{
-		SetBonus(eBonusType, false);
+		SetBonus(bonus, false);
 	}
 
-	private void SetBonus(EBonusType eBonusType, bool bEnable)
+	private void SetBonus(Bonus bonus, bool bEnable)
 	{
-		switch(eBonusType)
+		//
+		// Update bonus
+		m_aCurrentBonuses[(int)bonus.m_eType] = bonus;
+
+		//
+		// Appply Bonus
+		switch(bonus.m_eType)
 		{
-			case EBonusType.power:			{	SetBonusPower(bEnable);			break;	}
-			case EBonusType.resistance:		{	SetBonusResistance(bEnable);	break;	}
-			case EBonusType.speed:			{	SetBonusSpeed(bEnable);			break;	}
-			case EBonusType.triple_jump:	{	SetBonusTripleJump(bEnable);	break;	}
-			case EBonusType.unlimited_ammo:	{	SetBonusUnlimitedAmmo(bEnable);	break;	}
-			case EBonusType.invincibility:	{	SetBonusInvincibility(bEnable);	break;	}
-			case EBonusType.none:			{	/* nothing here */				break;	}
+			case EBonusType.power:			{	SetBonusPower(bonus, bEnable);			break;	}
+			case EBonusType.shield:			{	SetBonusShield(bonus, bEnable);			break;	}
+			case EBonusType.speed:			{	SetBonusSpeed(bonus, bEnable);			break;	}
+			case EBonusType.triple_jump:	{	SetBonusTripleJump(bonus, bEnable);		break;	}
+			case EBonusType.unlimited_ammo:	{	SetBonusUnlimitedAmmo(bonus, bEnable);	break;	}
+			case EBonusType.invincibility:	{	SetBonusInvincibility(bonus, bEnable);	break;	}
+			case EBonusType.none:			{	/* nothing here */						break;	}
 		}
 	}
 
-	private void SetBonusPower(bool bEnable)
+	private void SetBonusPower(Bonus bonus, bool bEnable)
+	{
+		// Update character's weapon damage factor
+		m_character.SetPlayerWeaponDamageFactor(bEnable ? bonus.fBonusPowerWeaponDamageFactor : 1.0f );
+	}
+
+	private void SetBonusShield(Bonus bonus, bool bEnable)
 	{
 		// TODO
 	}
 
-	private void SetBonusResistance(bool bEnable)
+	private void SetBonusSpeed(Bonus bonus, bool bEnable)
+	{
+		// Update character's player speed factor
+		m_character.SetPlayerSpeedFactor(bEnable ? bonus.fBonusSpeedFactor : 1.0f);
+	}
+
+	private void SetBonusTripleJump(Bonus bonus, bool bEnable)
 	{
 		// TODO
 	}
 
-	private void SetBonusSpeed(bool bEnable)
+	private void SetBonusUnlimitedAmmo(Bonus bonus, bool bEnable)
 	{
 		// TODO
 	}
 
-	private void SetBonusTripleJump(bool bEnable)
+	private void SetBonusInvincibility(Bonus bonus, bool bEnable)
 	{
 		// TODO
 	}
 
-	private void SetBonusUnlimitedAmmo(bool bEnable)
+	public bool IsBonusEnabled(EBonusType eBonusType)
 	{
-		// TODO
-	}
-
-	private void SetBonusInvincibility(bool bEnable)
-	{
-		// TODO
+		return m_abCurrentBonuses[(int)eBonusType];
 	}
 }

@@ -32,6 +32,8 @@ public class PlayerGameplay : MonoBehaviour
 
     private Rigidbody rigidBody;
 
+	private BonusHolder bonusHolder;
+
     void Start()
     {
         Material material = null;
@@ -50,13 +52,26 @@ public class PlayerGameplay : MonoBehaviour
         }
 
         rigidBody = gameObject.GetComponent<Rigidbody>();
-        percentage = 0.0f;
+		bonusHolder = gameObject.GetComponent<BonusHolder>();
+		percentage = 0.0f;
 
         m_audioSource = GetComponent<AudioSource>();
     }
 
     public void TakeDamages(float fDamages, Vector3 orientation, float fEjectionFactor)
     {
+		//
+		// Check for invincibility first
+		if(bonusHolder.IsBonusEnabled(EBonusType.invincibility))
+		{
+			//
+			// TODO maybe do something in shadergraph
+
+			return;
+		}
+
+		//
+		// Then take damages
         percentage = Mathf.Min(percentage + fDamages, 999.0f);
 
         //

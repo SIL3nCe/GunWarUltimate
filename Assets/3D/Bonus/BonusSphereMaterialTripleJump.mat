@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BonusMaterial
+  m_Name: BonusSphereMaterialTripleJump
   m_Shader: {fileID: -6465566751694194690, guid: 39e85bf54dba6844d8684c2e634cbfac,
     type: 3}
   m_ShaderKeywords: _RECEIVE_SHADOWS_OFF
@@ -90,7 +90,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - Color_2BB2E0FA: {r: 0.3071623, g: 0.7921569, b: 0.25882354, a: 0}
+    - Color_2BB2E0FA: {r: 0.015300751, g: 0, b: 1, a: 0}
     - _BaseColor: {r: 0.7169812, g: 0.59861165, b: 0.59861165, a: 0.7411765}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

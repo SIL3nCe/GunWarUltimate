@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1279093910058656197}
   - component: {fileID: 2686468819647893123}
   m_Layer: 15
-  m_Name: bonus
+  m_Name: bonus_unlimited_ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 00aa3a0709588534fa00cf2d404f5055, type: 2}
+  - {fileID: 2100000, guid: c2900b7220565714b83909bde2fe06c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,6 +107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_eType: 0
+  fDuration: 5
+  fBonusSpeedFactor: 3
+  fBonusPowerWeaponDamageFactor: 3
 --- !u!1 &7614558686581741103
 GameObject:
   m_ObjectHideFlags: 0

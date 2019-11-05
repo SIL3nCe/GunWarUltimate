@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class BonusSpawner : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class BonusSpawner : MonoBehaviour
 	[Header("Spawnable Bonus")]
 	public EBonusType[] m_aBonusType;
 	public GameObject bonusPrefab;
+	public GameObject bonusPrefabPower;
+	public GameObject bonusPrefabSpeed;
+	public GameObject bonusPrefabShield;
+	public GameObject bonusPrefabInvincibility;
+	public GameObject bonusPrefabTripleJump;
+	public GameObject bonusPrefabUnlimitedAmmo;
 
 	//
 	// Spawn parameters
@@ -49,7 +56,23 @@ public class BonusSpawner : MonoBehaviour
 
 	public void SpawnBonus(EBonusType eBonusType)
 	{
-		GameObject newBonus = Instantiate<GameObject>(bonusPrefab, transform.position, transform.localRotation);
+		GameObject prefabToInstanciate = null;
+		switch(eBonusType)
+		{
+			case EBonusType.power:			{	prefabToInstanciate = bonusPrefabPower;			break;	}
+			case EBonusType.speed:			{	prefabToInstanciate = bonusPrefabSpeed;			break;	}
+			case EBonusType.shield:			{	prefabToInstanciate = bonusPrefabShield;		break;	}
+			case EBonusType.invincibility:	{	prefabToInstanciate = bonusPrefabInvincibility;	break;	}
+			case EBonusType.triple_jump:	{	prefabToInstanciate = bonusPrefabTripleJump;	break;	}
+			case EBonusType.unlimited_ammo:	{	prefabToInstanciate = bonusPrefabUnlimitedAmmo;	break;	}
+			default:
+			{
+				Assert.IsTrue(false); // Implement me
+				prefabToInstanciate = bonusPrefab;
+				break;
+			}
+		}
+		GameObject newBonus = Instantiate<GameObject>(prefabToInstanciate, transform.position, transform.localRotation);
 		newBonus.transform.SetParent(m_manager.NewBonusParent.transform, true);
 
 		Bonus bonus = newBonus.GetComponent<Bonus>();

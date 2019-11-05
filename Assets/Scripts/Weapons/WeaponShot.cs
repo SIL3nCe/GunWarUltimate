@@ -46,12 +46,12 @@ public class WeaponShot : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.C))
             {
-                Shoot();
+                Shoot(1.0f, false);
             }
         }
     }
 
-    public void Shoot()
+    public void Shoot(float fDamageMultiplier, bool bAmmoUnlimited)
     {
         if (firingDt > firingRateDt && RemainingAmmos > 0)
         {
@@ -72,11 +72,14 @@ public class WeaponShot : MonoBehaviour
                 BulletGameplay bulletParams = shotBullet.GetComponent<BulletGameplay>();
                 if (null != bulletParams)
                 {
-                    bulletParams.Initialize(WeaponDatas.BulletDamages, WeaponDatas.LifeTime, WeaponDatas.EjectionFactor, WeaponDatas.HitEffect);
+                    bulletParams.Initialize(fDamageMultiplier * WeaponDatas.BulletDamages, WeaponDatas.LifeTime, WeaponDatas.EjectionFactor, WeaponDatas.HitEffect);
                 }
 
                 firingDt = 0.0f;
-                RemainingAmmos--;
+				if(!bAmmoUnlimited)
+				{
+					RemainingAmmos--;
+				}
 
                 // hide rocket for firingRateDt time if rocket is set
                 if (null != rocketMesh)

@@ -11,6 +11,7 @@ public class PlayerCharacterController : MonoBehaviour
     [Header("Movements")]
     public float m_fPlayerSpeed;
     public float m_fMovementsSmoothTime = 0.01f;
+	private float m_fPlayerSpeedFactor = 1.0f;
 
     [Header("Jump")]
     public float m_fJumpFactor = 10.0f;
@@ -57,6 +58,11 @@ public class PlayerCharacterController : MonoBehaviour
     private bool m_bJumpedTriggered = false;
     private bool m_bWaftTriggered = false;
 
+	private WeaponHolder m_weaponHolder;
+	private float m_fWeaponDamageFactor = 1.0f;
+
+	private BonusHolder m_bonusHolder;
+
     //public void Awake()
     //{
     //
@@ -92,9 +98,19 @@ public class PlayerCharacterController : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
         Assert.IsNotNull(m_rigidbody);
 
-        //
-        // Initialize / Reset
-        ResetWallJump();
+		//
+		// Ensure WeaponHolder is present
+		m_weaponHolder = GetComponent<WeaponHolder>();
+		Assert.IsNotNull(m_weaponHolder);
+
+		//
+		// Ensure BonusHolder is present
+		m_bonusHolder = GetComponent<BonusHolder>();
+		Assert.IsNotNull(m_bonusHolder);
+
+		//
+		// Initialize / Reset
+		ResetWallJump();
 
         //
         //
@@ -147,9 +163,10 @@ public class PlayerCharacterController : MonoBehaviour
         //
         if (m_inputActionShoot.ReadValue<float>() != 0.0f)  //< We use ReadValue here to trigger the action while the key is pressed
         {
-            if (null != GetComponent<WeaponHolder>().GetCurrentWeapon())
+            if (null != m_weaponHolder.GetCurrentWeapon())
             {
-                GetComponent<WeaponHolder>().GetCurrentWeapon().GetComponent<WeaponShot>().Shoot();
+				bool bUnlimitedAmmo = m_bonusHolder.IsBonusEnabled(EBonusType.unlimited_ammo);
+				m_weaponHolder.GetCurrentWeapon().GetComponent<WeaponShot>().Shoot(m_fWeaponDamageFactor, bUnlimitedAmmo);
             }
             else
             {
@@ -157,7 +174,7 @@ public class PlayerCharacterController : MonoBehaviour
                 {
                     m_audioSource.PlayOneShot(m_audioClipNoWeapon, 0.2f);
                     m_bCanPlayNoWeaponSound = false;
-                    Invoke("ResetCanPayNoWeaponSound", 0.6f);
+                    Invoke("ResetCanPlayNoWeaponSound", 0.6f);
                 }
             }
         }
@@ -166,7 +183,7 @@ public class PlayerCharacterController : MonoBehaviour
         //
         if (m_inputActionThrow.triggered)
         {
-            GetComponent<WeaponHolder>().DropWeapon();
+            m_weaponHolder.DropWeapon();
         }
 
         if (m_inputActionJump.triggered)
@@ -188,7 +205,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         Vector3 vTargetVelocity = Vector3.zero;
         float fPlayerHorizontalInput = m_inputActionMove.ReadValue<float>();
-        vTargetVelocity.x = m_inputActionMove.ReadValue<float>() * m_fPlayerSpeed;
+        vTargetVelocity.x = m_inputActionMove.ReadValue<float>() * GetPlayerSpeed();
         vTargetVelocity.y = m_rigidbody.velocity.y;
         
         if (m_bWaftTriggered)
@@ -340,7 +357,7 @@ public class PlayerCharacterController : MonoBehaviour
                         //
                         // This is a wall jump, we jump in Y and in X
                         vTargetVelocity.y = m_fJumpFactor * 1.3f;
-                        vTargetVelocity.x = m_fHangOnWallDirection * (m_fPlayerSpeed / 4.0f);
+                        vTargetVelocity.x = m_fHangOnWallDirection * (GetPlayerSpeed() / 4.0f);
 
                         //
                         // TODO: Comment
@@ -553,8 +570,33 @@ public class PlayerCharacterController : MonoBehaviour
         m_bCanPlayStepSound = true;
     }
     
-    private void ResetCanPayNoWeaponSound()
+    private void ResetCanPlayNoWeaponSound()
     {
         m_bCanPlayNoWeaponSound = true;
-    }
+	}
+
+	public void SetPlayerSpeedFactor(float fPlayerSpeedFactor)
+	{
+		m_fPlayerSpeedFactor = fPlayerSpeedFactor;
+	}
+
+	public float GetPlayerSpeedFactor()
+	{
+		return m_fPlayerSpeedFactor;
+	}
+
+	public void SetPlayerWeaponDamageFactor(float fPlayerWeaponDamageFactor)
+	{
+		m_fWeaponDamageFactor = fPlayerWeaponDamageFactor;
+	}
+
+	public float GetPlayerWeaponDamageFactor()
+	{
+		return m_fWeaponDamageFactor;
+	}
+
+	private float GetPlayerSpeed()
+	{
+		return m_fPlayerSpeed * m_fPlayerSpeedFactor;
+	}
 }
