@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/ChampSelect.unity
+    guid: a35cdb2d49baf434cb407475c2fc9da7
+  - enabled: 1
     path: Assets/Scenes/super_awesome_level.unity
     guid: 3afdf67daf5577847a6a34acd49f1071
   m_configObjects:
